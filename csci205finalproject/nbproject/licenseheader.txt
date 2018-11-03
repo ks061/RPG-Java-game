@@ -1,0 +1,15 @@
+/* *****************************************
+  * CSCI205 - Software Engineering and Design
+  * Fall 2018
+  *
+  * Team Name: PNNSD (Post-Neural Net Stress Disorder) 
+  * Team Members: Kartikeya Sharma, Logan Stiles, Claudia Shrefler, and Jason Kang
+  * Date: ${date}
+  * Time: ${time}
+  *
+  * Project: ${project.name}
+  * Package: ${package}
+  * File: ${name}
+  * Description: This file contains {name}.
+  * ****************************************
+  */
