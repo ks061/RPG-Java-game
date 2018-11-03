@@ -38,10 +38,12 @@ public class NPC extends RPGCharacter {
     }
 
     @Override
-    public void moveTo(Room room) {
-        super.getLocation().getNpcs().remove(this);
-        super.setLocation(room);
-        super.getLocation().getNpcs().add(this);
+    public String moveTo(Room room) {
+        this.getLocation().getNpcs().remove(this);
+        this.setLocation(room);
+        this.getLocation().getNpcs().add(this);
+        return String.format("%s moved to the %s", this.getName(),
+                             this.getLocation().getName());
     }
 
     public void toggleCurrentDialogue() {

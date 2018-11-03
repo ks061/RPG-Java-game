@@ -81,7 +81,7 @@ public abstract class RPGCharacter {
      *
      * @param enemy
      */
-    public void attack(RPGCharacter enemy) {
+    public String attack(RPGCharacter enemy) {
         Random RandomModifiers = new Random();
         double criticalHitModifier;
         double accuracyModifier;
@@ -104,20 +104,15 @@ public abstract class RPGCharacter {
         int trueDamage = (int) Math.round(
                 damageCalculation * criticalHitModifier * accuracyModifier);
         enemy.setHealth(enemy.getHealth() - trueDamage);
-        System.out.printf("%s did %d damage to %s", this.name, trueDamage,
-                          enemy.getName());
-
-        if (enemy.getHealth() == 0) {
-            enemy.setIsAlive(false);
-            System.out.printf("%s has died", enemy.getName());
-        }
+        return String.format("%s did %d damage to %s", this.name, trueDamage,
+                             enemy.getName());
     }
 
     public boolean isInventoryFull() {
         return this.inventory.size() == this.inventorySize;
     }
 
-    public abstract void moveTo(Room room);
+    public abstract String moveTo(Room room);
 
     public String getName() {
         return name;
@@ -175,12 +170,12 @@ public abstract class RPGCharacter {
         this.inventory = inventory;
     }
 
-    public Equipment getSword() {
-        return sword;
+    public Equipment getWeapon() {
+        return weapon;
     }
 
-    public void setSword(Equipment sword) {
-        this.sword = sword;
+    public void setWeapon(Equipment weapon) {
+        this.weapon = weapon;
     }
 
     public Equipment getShield() {

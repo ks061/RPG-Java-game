@@ -32,18 +32,21 @@ public class Player extends RPGCharacter {
     }
 
     @Override
-    public void moveTo(Room room) {
-        super.getLocation().setPlayer(null);
-        super.setLocation(room);
-        super.getLocation().setPlayer(this);
+    public String moveTo(Room room) {
+        this.getLocation().setPlayer(null);
+        this.setLocation(room);
+        this.getLocation().setPlayer(this);
+        return String.format("You moved to the %s",
+                             this.getLocation().getName());
     }
 
-    public void talk(NPC npc) {
-        System.out.println(npc.getCurrentDialogue());
+    public String talk(NPC npc) {
+        String dialogue = npc.getCurrentDialogue();
         npc.toggleCurrentDialogue();
+        return dialogue;
     }
 
-    public void trade(NPC npc) {
+    public String trade(NPC npc) {
         Item desiredItemOfNPC = npc.getDesiredItem();
         if (this.getInventory().contains(desiredItemOfNPC)) {
             Item desiredItemOfPlayer = npc.getInventory().get(0);
@@ -51,56 +54,56 @@ public class Player extends RPGCharacter {
             this.getInventory().remove(desiredItemOfNPC);
             npc.getInventory().add(desiredItemOfNPC);
             this.getInventory().add(desiredItemOfPlayer);
-            System.out.println("You have traded the %s for the %s",
-                               desiredItemOfNPC.getName(),
-                               desiredItemOfPlayer.getName());
+            return String.format("You have traded the %s for the %s",
+                                 desiredItemOfNPC.getName(),
+                                 desiredItemOfPlayer.getName());
         }
         else {
-            System.out.printf("You do not have the item that %s wants",
-                              npc.getName());
+            return String.format("You do not have the item that %s wants",
+                                 npc.getName());
         }
     }
 
-    public void search(Room room) {
+    public String search(Room room) {
         if (room.getHiddenItems().isEmpty()) {
-            System.out.println("Searched %s and found nothing", room.getName());
+            return String.format("Searched %s and found nothing", room.getName());
         }
         else if (this.isInventoryFull()) {
-            System.out.println("Found %s but your inventory is full",
-                               room.getHiddenItems().get(0).getName());
+            return String.format("Found %s but your inventory is full",
+                                 room.getHiddenItems().get(0).getName());
         }
         else {
             Item hiddenItem = room.getHiddenItems.get(0);
             this.getInventory().add(hiddenItem);
             room.getHiddenItems().remove(hiddenItem);
-            System.out.println("Found %s an added it to your inventory",
-                               hiddenItem.getName());
+            return String.format("Found %s an added it to your inventory",
+                                 hiddenItem.getName());
         }
     }
 
-    public void search(NPC npc) {
+    public String search(NPC npc) {
         if (npc.isIsAlive()) {
-            System.out.println(
-                    "Cannot search the bodies of characters who are alive");
+            return "Cannot search the bodies of characters who are alive";
         }
         else {
             Item item = npc.getInventory().get();
             if (this.isInventoryFull()) {
-                System.out.printf("Found %s on %s but your inventory is full",
-                                  item.name, npc.name)
+                return String.format("Found %s on %s but your inventory is full",
+                                     item.getName(), npc.getName());
             }
             else {
                 this.getInventory().add(item);
                 npc.getInventory().remove(item);
-                System.out.println("Took %s off the body of %s", item.getName(),
-                                   npc.getName());
+                return String.format("Took %s off the body of %s",
+                                     item.getName(),
+                                     npc.getName());
             }
         }
     }
 
-    public void startBattle(NPC npc) {
+    public String startBattle(NPC npc) {
         if (npc.isIsFriendly()) {
-            System.out.println("Cannot starts fights with friendly characters");
+            return "Cannot starts fights with friendly characters";
         }
         else {
             while (this.isIsAlive() || npc.isIsAlive()) {
@@ -108,6 +111,12 @@ public class Player extends RPGCharacter {
                 if (npc.isIsAlive()) {
                     npc.attack(this);
                 }
+            }
+            if (this.isIsAlive()) {
+                return String.format("You have killed %s", npc.getName());
+            }
+            else {
+                return String.format("%s has killed you", npc.getName());
             }
         }
     }
