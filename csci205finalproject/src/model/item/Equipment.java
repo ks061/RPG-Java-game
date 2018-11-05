@@ -43,4 +43,12 @@ public class Equipment extends Item {
     }
 
     //Unequip method may be necessary later on
+    public EquipmentType getType() {
+        return type;
+    }
+
+    public void setType(EquipmentType type) {
+        this.type = type;
+    }
+
 }
