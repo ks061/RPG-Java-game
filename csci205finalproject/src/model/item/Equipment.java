@@ -42,7 +42,18 @@ public class Equipment extends Item {
         }
     }
 
-    //Unequip method may be necessary later on
+    public void unequip() {
+        if (this.type == EquipmentType.WEAPON) {
+            super.getOwner().setWeapon(null);
+        }
+        else if (this.type == EquipmentType.ARMOR) {
+            super.getOwner().setArmor(null);
+        }
+        else if (this.type == EquipmentType.SHIELD) {
+            super.getOwner().setShield(null);
+        }
+    }
+
     public EquipmentType getType() {
         return type;
     }
