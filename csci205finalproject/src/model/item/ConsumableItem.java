@@ -27,7 +27,7 @@ public class ConsumableItem extends Item {
         super(name, deltaHealth, deltaAttack, deltaDefense, deltaInventory);
     }
 
-    public void consume() {
+    public String consume() {
         //For HEALTH potions
         int curHealth = super.getOwner().getHealth();
         if (curHealth + super.getDeltaHealth() > super.getOwner().getMaxHealth()) {
@@ -46,6 +46,7 @@ public class ConsumableItem extends Item {
         //For DEFENSE potions
         super.getOwner().setDefense(
                 super.getOwner().getDefense() + super.getDeltaDefense());
+        return String.format("Consumed the %s", this.getName());
     }
 
 }
