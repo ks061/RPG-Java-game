@@ -40,13 +40,14 @@ public class ConsumableItem extends Item {
         }
 
         //For ATTACK potions
-        super.getOwner().setAtatck(
+        super.getOwner().setAttack(
                 super.getOwner().getAttack() + super.getDeltaAttack());
 
         //For DEFENSE potions
         super.getOwner().setDefense(
                 super.getOwner().getDefense() + super.getDeltaDefense());
-        return String.format("Consumed the %s", this.getName());
+        return String.format("%s consumed the %s", this.getOwner().getName(),
+                             this.getName());
     }
 
 }

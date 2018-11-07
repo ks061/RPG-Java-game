@@ -15,6 +15,9 @@
  */
 package model.character;
 
+import model.item.Item;
+import model.map.Room;
+
 /**
  *
  * @author lts010
@@ -37,7 +40,6 @@ public class NPC extends RPGCharacter {
         this.isFriendly = isFriendly;
     }
 
-    @Override
     public String moveTo(Room room) {
         this.getLocation().getNpcs().remove(this);
         this.setLocation(room);

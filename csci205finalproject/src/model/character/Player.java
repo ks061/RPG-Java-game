@@ -15,6 +15,9 @@
  */
 package model.character;
 
+import model.item.Item;
+import model.map.Room;
+
 /**
  *
  * @author lts010
@@ -73,7 +76,7 @@ public class Player extends RPGCharacter {
                                  room.getHiddenItems().get(0).getName());
         }
         else {
-            Item hiddenItem = room.getHiddenItems.get(0);
+            Item hiddenItem = room.getHiddenItems().get(0);
             this.getInventory().add(hiddenItem);
             room.getHiddenItems().remove(hiddenItem);
             return String.format("Found %s an added it to your inventory",
@@ -86,7 +89,7 @@ public class Player extends RPGCharacter {
             return "Cannot search the bodies of characters who are alive";
         }
         else {
-            Item item = npc.getInventory().get();
+            Item item = npc.getInventory().get(0);
             if (this.isInventoryFull()) {
                 return String.format("Found %s on %s but your inventory is full",
                                      item.getName(), npc.getName());

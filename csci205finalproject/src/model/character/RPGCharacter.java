@@ -17,6 +17,8 @@ package model.character;
 
 import java.util.ArrayList;
 import java.util.Random;
+import model.item.*;
+import model.map.*;
 
 /**
  * Abstract class for all characters
@@ -40,9 +42,9 @@ public abstract class RPGCharacter {
     public static final double DEFAULT_MISS_CHANCE = 0.2;
     public static final double DEFAULT_CRITICAL_CHANCE = 0.0625;
 
-    public abstract RPGCharacter(String name, int maxHealth, int attack,
-                                 int defense,
-                                 int inventorySize) {
+    public RPGCharacter(String name, int maxHealth, int attack,
+                        int defense,
+                        int inventorySize) {
         this.name = name;
         this.maxHealth = maxHealth;
         this.health = health;
@@ -52,15 +54,18 @@ public abstract class RPGCharacter {
         this.isAlive = true;
     }
 
-    public void use(Item item) {
-        if (item instanceof Consumable) {
-            item.use();
+    public String use(Item item) {
+        if (item instanceof ConsumableItem) {
+            ConsumableItem consumable = (ConsumableItem) item;
+            return consumable.consume();
         }
-        else if (item instanceof Equipment && this.isEquipped(item)) {
-            item.unequip();
+        else if (item instanceof Equipment && this.isEquipped((Equipment) item)) {
+            Equipment equipment = (Equipment) item;
+            return equipment.unequip();
         }
         else {
-            item.equip();
+            Equipment equipment = (Equipment) item;
+            return equipment.equip();
         }
     }
 
