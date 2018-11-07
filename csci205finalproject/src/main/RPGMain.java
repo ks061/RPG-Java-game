@@ -53,6 +53,9 @@ public class RPGMain extends Application {
     @Override
     public void init() throws Exception {
         super.init();
+
+        theModel = new RPGModel();
+        theView = new RPGView(theModel);
     }
 
     /**
