@@ -17,7 +17,6 @@ package main;
 
 import controller.RPGController;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.RPGModel;
@@ -67,6 +66,8 @@ public class RPGMain extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+        theCtrl = new RPGController(theModel, theView);
+
         Scene scene = new Scene(this.theView.getRootNode());
 
         primaryStage.setTitle("RPG Game");
