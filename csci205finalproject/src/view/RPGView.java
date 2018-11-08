@@ -74,10 +74,10 @@ public class RPGView {
         this.root.setPrefHeight(PREF_WINDOW_HEIGHT);
         this.root.setPadding(new Insets(PREF_PADDING));
 
-        this.toRoomAbove = new Button();
-        this.toRoomBelow = new Button();
-        this.toRoomToLeft = new Button();
-        this.toRoomToRight = new Button();
+        this.toRoomAbove = new Button("Above");
+        this.toRoomBelow = new Button("Below");
+        this.toRoomToLeft = new Button("Left");
+        this.toRoomToRight = new Button("Right");
 
         updateTravelButtons();
     }

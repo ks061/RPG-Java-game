@@ -16,9 +16,9 @@
  */
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 import model.RPGModel;
 import view.RPGView;
 
@@ -28,7 +28,7 @@ import view.RPGView;
  *
  * @author ks061
  */
-public class RPGController implements EventHandler<MouseEvent> {
+public class RPGController implements EventHandler<ActionEvent> {
 
     /**
      * Model of the application
@@ -52,6 +52,11 @@ public class RPGController implements EventHandler<MouseEvent> {
                          RPGView theView) {
         this.theModel = theModel;
         this.theView = theView;
+
+        this.theView.getToRoomAbove().setOnAction(this);
+        this.theView.getToRoomBelow().setOnAction(this);
+        this.theView.getToRoomToLeft().setOnAction(this);
+        this.theView.getToRoomToRight().setOnAction(this);
     }
 
     /**
@@ -62,7 +67,7 @@ public class RPGController implements EventHandler<MouseEvent> {
      * @author ks061
      */
     @Override
-    public void handle(MouseEvent event) {
+    public void handle(ActionEvent event) {
         if (event.getSource() instanceof Button) {
             handleButtonClick(event);
         }
@@ -75,7 +80,7 @@ public class RPGController implements EventHandler<MouseEvent> {
      *
      * @author ks061
      */
-    private void handleButtonClick(MouseEvent event) {
+    private void handleButtonClick(ActionEvent event) {
         if (event.getSource() == this.theView.getToRoomAbove()) {
             this.theModel.setCurrentRoom(
                     this.theModel.getCurrentRoom().getNorth());
