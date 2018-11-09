@@ -97,6 +97,6 @@ public class RPGController implements EventHandler<ActionEvent> {
             this.theModel.setCurrentRoom(
                     this.theModel.getCurrentRoom().getEast());
         }
-        theView.updateTravelButtons();
+        theView.newUpdateTravelButtons();
     }
 }
