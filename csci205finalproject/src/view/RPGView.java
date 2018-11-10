@@ -271,6 +271,10 @@ public class RPGView {
     public void newUpdateTravelButtons() {
         ArrayList<Node> aList = new ArrayList<>();
         HBox leftRight = new HBox();
+
+        //resetting the VBox so we don't get duplicate nodes error
+        this.toRoomButtons.getChildren().clear();
+
         if (theModel.getCurrentRoom().getNorth() != null) {
             aList.add(this.toRoomAbove);
         }
