@@ -18,6 +18,7 @@ package view;
 import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,29 +44,6 @@ public class RPGView {
      * Root node on the stage in the GUI
      */
     private BorderPane root;
-    /**
-     * Button that allows player to move to the room above the current room
-     */
-    private Button toRoomAbove;
-    /**
-     * Button that allows player to move to the room below the current room
-     */
-    private Button toRoomBelow;
-    /**
-     * Button that allows player to move to the room to the left of the current
-     * room
-     */
-    private Button toRoomToLeft;
-    /**
-     * Button that allows player to move to the room to the right of the current
-     * room
-     */
-    private Button toRoomToRight;
-
-    /**
-     * Containers for the buttons
-     */
-    private VBox toRoomButtons;
 
     //NEW THINGS ADDED TO BORDERPANE
     //topPane
@@ -87,6 +65,29 @@ public class RPGView {
     private VBox rightPane;
     private Button buttonEquipment;
     private Button buttonItem;
+    private BorderPane toRoomButtons;
+    /**
+     * Button that allows player to move to the room above the current room
+     */
+    private Button toRoomAbove;
+    /**
+     * Button that allows player to move to the room below the current room
+     */
+    private Button toRoomBelow;
+    /**
+     * Button that allows player to move to the room to the left of the current
+     * room
+     */
+    private Button toRoomToLeft;
+    /**
+     * Button that allows player to move to the room to the right of the current
+     * room
+     */
+    private Button toRoomToRight;
+    private Button nullButton1;
+    private Button nullButton2;
+    private Button nullButton3;
+    private Button nullButton4;
 
     //bottomPane
     private FlowPane bottomPane;
@@ -95,6 +96,10 @@ public class RPGView {
     private static final int PREF_WINDOW_WIDTH = 1000;
     private static final int PREF_WINDOW_HEIGHT = 800;
     private static final int PREF_PADDING = 15;
+
+    private static final double TRAVEL_BUTTON_WIDTH = 57.0;
+
+    private static final double RIGHT_PANE_MIN_WIDTH = 2 * TRAVEL_BUTTON_WIDTH;
 
     /**
      * Constructor that initializes a pointer to the model of the application
@@ -112,18 +117,6 @@ public class RPGView {
         this.root.setPrefWidth(PREF_WINDOW_WIDTH);
         this.root.setPrefHeight(PREF_WINDOW_HEIGHT);
         this.root.setPadding(new Insets(PREF_PADDING));
-
-        //Buttons to change rooms
-        //Contained in VBox to keep directional orientation for room changes
-        this.toRoomButtons = new VBox();
-        this.toRoomAbove = new Button("Above");
-        this.toRoomBelow = new Button("Below");
-        this.toRoomToLeft = new Button("Left");
-        this.toRoomToRight = new Button("Right");
-        //this.toRoomButtons.getChildren().add(this.toRoomAbove);
-        //this.toRoomButtons.getChildren().add(new HBox(this.toRoomToLeft,
-        //                                              this.toRoomToRight));
-        //this.toRoomButtons.getChildren().add(this.toRoomBelow);
 
         //topPane
         this.topPane = new FlowPane(Orientation.HORIZONTAL);
@@ -151,6 +144,7 @@ public class RPGView {
                                                      playerAttack));
         this.leftPane.getChildren().add(new FlowPane(playerArmorLabel,
                                                      playerArmor));
+        this.leftPane.setAlignment(Pos.CENTER);
 
         //rightPane
         //Vbox containing buttons
@@ -159,7 +153,30 @@ public class RPGView {
         this.buttonItem = new Button("Item");
         this.rightPane.getChildren().add(this.buttonEquipment);
         this.rightPane.getChildren().add(this.buttonItem);
+
+        //Buttons to change rooms
+        //Contained in VBox to keep directional orientation for room changes
+        this.toRoomButtons = new BorderPane();
+        this.toRoomAbove = new Button("Above");
+        this.toRoomAbove.setMinWidth(TRAVEL_BUTTON_WIDTH);
+        this.toRoomBelow = new Button("Below");
+        this.toRoomBelow.setMinWidth(TRAVEL_BUTTON_WIDTH);
+        this.toRoomToLeft = new Button("Left");
+        this.toRoomToLeft.setMinWidth(TRAVEL_BUTTON_WIDTH);
+        this.toRoomToRight = new Button("Right");
+        this.toRoomToRight.setMinWidth(TRAVEL_BUTTON_WIDTH);
+        this.nullButton1 = new Button("     ");
+        this.nullButton1.setMinWidth(TRAVEL_BUTTON_WIDTH);
+        this.nullButton2 = new Button("     ");
+        this.nullButton2.setMinWidth(TRAVEL_BUTTON_WIDTH);
+        this.nullButton3 = new Button("     ");
+        this.nullButton3.setMinWidth(TRAVEL_BUTTON_WIDTH);
+        this.nullButton4 = new Button("     ");
+        this.nullButton4.setMinWidth(TRAVEL_BUTTON_WIDTH);
         this.rightPane.getChildren().add(this.toRoomButtons);
+
+        this.rightPane.setAlignment(Pos.CENTER);
+        this.rightPane.setMinWidth(RIGHT_PANE_MIN_WIDTH);
 
         //bottomPane
         this.bottomPane = new FlowPane(Orientation.HORIZONTAL);
@@ -173,7 +190,7 @@ public class RPGView {
         this.root.setRight(this.rightPane);
         this.root.setBottom(this.bottomPane);
 
-        newUpdateTravelButtons();
+        updateTravelButtons();
     }
 
     /**
@@ -238,28 +255,32 @@ public class RPGView {
      */
     public void updateTravelButtons() {
         if (theModel.getCurrentRoom().getNorth() != null) {
-            this.root.setTop(this.toRoomAbove);
+            this.toRoomButtons.setTop(this.toRoomAbove);
+            BorderPane.setAlignment(this.toRoomAbove, Pos.CENTER);
         }
         else {
-            this.root.setTop(null);
+            this.toRoomButtons.setTop(this.nullButton1);
+            BorderPane.setAlignment(this.nullButton1, Pos.CENTER);
         }
         if (theModel.getCurrentRoom().getSouth() != null) {
-            this.root.setBottom(this.toRoomBelow);
+            this.toRoomButtons.setBottom(this.toRoomBelow);
+            BorderPane.setAlignment(this.toRoomBelow, Pos.CENTER);
         }
         else {
-            this.root.setBottom(null);
+            this.toRoomButtons.setBottom(this.nullButton2);
+            BorderPane.setAlignment(this.nullButton2, Pos.CENTER);
         }
         if (theModel.getCurrentRoom().getWest() != null) {
-            this.root.setLeft(this.toRoomToLeft);
+            this.toRoomButtons.setLeft(this.toRoomToLeft);
         }
         else {
-            this.root.setLeft(null);
+            this.toRoomButtons.setLeft(this.nullButton3);
         }
         if (theModel.getCurrentRoom().getEast() != null) {
-            this.root.setRight(this.toRoomToRight);
+            this.toRoomButtons.setRight(this.toRoomToRight);
         }
         else {
-            this.root.setRight(null);
+            this.toRoomButtons.setRight(this.nullButton4);
         }
     }
 
