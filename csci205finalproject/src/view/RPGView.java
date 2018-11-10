@@ -15,17 +15,14 @@
  */
 package view;
 
-import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.RPGModel;
 
@@ -281,40 +278,6 @@ public class RPGView {
         }
         else {
             this.toRoomButtons.setRight(this.nullButton4);
-        }
-    }
-
-    /**
-     * Jason's Version with updated view
-     *
-     * @author ishk001
-     */
-    public void newUpdateTravelButtons() {
-        ArrayList<Node> aList = new ArrayList<>();
-        HBox leftRight = new HBox();
-
-        //resetting the VBox so we don't get duplicate nodes error
-        this.toRoomButtons.getChildren().clear();
-
-        if (theModel.getCurrentRoom().getNorth() != null) {
-            aList.add(this.toRoomAbove);
-        }
-        if (theModel.getCurrentRoom().getWest() != null && theModel.getCurrentRoom().getEast() == null) {
-            aList.add(this.toRoomToLeft);
-        }
-        if (theModel.getCurrentRoom().getWest() == null && theModel.getCurrentRoom().getEast() != null) {
-            aList.add(this.toRoomToRight);
-        }
-        if (theModel.getCurrentRoom().getWest() != null && theModel.getCurrentRoom().getEast() != null) {
-            leftRight.getChildren().add(this.toRoomToLeft);
-            leftRight.getChildren().add(this.toRoomToRight);
-            aList.add(leftRight);
-        }
-        if (theModel.getCurrentRoom().getSouth() != null) {
-            aList.add(this.toRoomBelow);
-        }
-        for (Node node : aList) {
-            this.toRoomButtons.getChildren().add(node);
         }
     }
 }
