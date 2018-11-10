@@ -17,6 +17,11 @@ package model.character;
 
 import java.util.ArrayList;
 import java.util.Random;
+import model.item.ConsumableItem;
+import model.item.Equipment;
+import model.item.EquipmentType;
+import model.item.Item;
+import model.map.Room;
 
 /**
  * Abstract class for all characters
@@ -40,27 +45,31 @@ public abstract class RPGCharacter {
     public static final double DEFAULT_MISS_CHANCE = 0.2;
     public static final double DEFAULT_CRITICAL_CHANCE = 0.0625;
 
-    public abstract RPGCharacter(String name, int maxHealth, int attack,
-                                 int defense,
-                                 int inventorySize) {
+    public RPGCharacter(String name, int maxHealth, int attack,
+                        int defense,
+                        int inventorySize) {
         this.name = name;
         this.maxHealth = maxHealth;
-        this.health = health;
+        this.health = this.maxHealth;
         this.attack = attack;
+        this.defense = defense;
         this.inventorySize = inventorySize;
         this.inventory = new ArrayList<>();
         this.isAlive = true;
     }
 
     public void use(Item item) {
-        if (item instanceof Consumable) {
-            item.use();
+        if (item instanceof ConsumableItem) {
+            ConsumableItem consumable = (ConsumableItem) item;
+            consumable.consume();
         }
-        else if (item instanceof Equipment && this.isEquipped(item)) {
-            item.unequip();
+        else if (item instanceof Equipment && this.isEquipped((Equipment) item)) {
+            Equipment equipment = (Equipment) item;
+            equipment.unequip();
         }
         else {
-            item.equip();
+            Equipment equipment = (Equipment) item;
+            equipment.equip();
         }
     }
 
@@ -76,11 +85,6 @@ public abstract class RPGCharacter {
         }
     }
 
-    /**
-     * Damage calculations based on formulas taken from bulbapedia
-     *
-     * @param enemy
-     */
     public String attack(RPGCharacter enemy) {
         Random RandomModifiers = new Random();
         double criticalHitModifier;
@@ -100,19 +104,28 @@ public abstract class RPGCharacter {
             criticalHitModifier = 1.0;
         }
 
-        double damageCalculation = (10 * (this.attack / enemy.getDefense())) / 50 + 2;
+        double damageCalculation = this.attack - enemy.getDefense();
         int trueDamage = (int) Math.round(
                 damageCalculation * criticalHitModifier * accuracyModifier);
         enemy.setHealth(enemy.getHealth() - trueDamage);
+        if (enemy.getHealth() <= 0) {
+            enemy.setIsAlive(false);
+        }
+        if (accuracyModifier == 0) {
+            return String.format("%s missed and did no damage to %s", this.name,
+                                 enemy.getName());
+        }
+        if (criticalHitModifier == 1.5) {
+            return String.format("Critical Hit! %s did %d damage to %s",
+                                 this.name, trueDamage, enemy.getName());
+        }
         return String.format("%s did %d damage to %s", this.name, trueDamage,
                              enemy.getName());
     }
 
     public boolean isInventoryFull() {
-        return this.inventory.size() == this.inventorySize;
+        return this.inventory.size() >= this.inventorySize;
     }
-
-    public abstract String moveTo(Room room);
 
     public String getName() {
         return name;

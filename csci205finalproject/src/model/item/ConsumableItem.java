@@ -40,12 +40,17 @@ public class ConsumableItem extends Item {
         }
 
         //For ATTACK potions
-        super.getOwner().setAtatck(
+        super.getOwner().setAttack(
                 super.getOwner().getAttack() + super.getDeltaAttack());
 
         //For DEFENSE potions
         super.getOwner().setDefense(
                 super.getOwner().getDefense() + super.getDeltaDefense());
+
+        //For items that permanantely increase inventory size
+        super.getOwner().setInventorySize(
+                super.getOwner().getInventorySize() + super.getDeltaInventory());
+        this.getOwner().getInventory().remove(this);
         return String.format("Consumed the %s", this.getName());
     }
 

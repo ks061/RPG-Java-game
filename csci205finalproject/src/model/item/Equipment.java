@@ -31,6 +31,14 @@ public class Equipment extends Item {
     }
 
     public String equip() {
+        this.getOwner().setMaxHealth(
+                this.getOwner().getMaxHealth() + this.getDeltaHealth());
+        this.getOwner().setAttack(
+                this.getOwner().getAttack() + this.getDeltaAttack());
+        this.getOwner().setDefense(
+                this.getOwner().getDefense() + this.getDeltaDefense());
+        this.getOwner().setInventorySize(
+                this.getOwner().getInventorySize() + this.getDeltaInventory());
         switch (this.type) {
             case WEAPON:
                 if (this.getOwner().getWeapon() != null) {
@@ -81,16 +89,21 @@ public class Equipment extends Item {
             super.getOwner().setShield(null);
         }
         this.getOwner().getInventory().add(this);
-        return String.format("Unequipped the %s an added it to your inventory",
+        this.getOwner().setMaxHealth(
+                this.getOwner().getMaxHealth() - this.getDeltaHealth());
+        this.getOwner().setAttack(
+                this.getOwner().getAttack() - this.getDeltaAttack());
+        this.getOwner().setDefense(
+                this.getOwner().getDefense() - this.getDeltaDefense());
+        this.getOwner().setInventorySize(
+                this.getOwner().getInventorySize() - this.getDeltaInventory());
+        return String.format("Unequipped the %s and added it to your inventory",
                              this.getName());
-
     }
 
     public String swapEquipment(Equipment currentlyEquippedItem) {
         currentlyEquippedItem.unequip();
         this.getOwner().getInventory().remove(this);
-        currentlyEquippedItem.getOwner().getInventory().add(
-                currentlyEquippedItem);
         switch (this.type) {
             case WEAPON:
                 this.getOwner().setWeapon(this);
@@ -102,7 +115,7 @@ public class Equipment extends Item {
                 this.getOwner().setShield(this);
                 break;
         }
-        return String.format("Took off the %s and equipped the %s",
+        return String.format("Unequipped the %s and equipped the %s",
                              currentlyEquippedItem.getName(), this.getName());
     }
 

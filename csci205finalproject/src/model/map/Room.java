@@ -16,6 +16,9 @@
 package model.map;
 
 import java.util.ArrayList;
+import model.character.NPC;
+import model.character.Player;
+import model.item.Item;
 
 /**
  * Room is a room in the map.
@@ -201,7 +204,7 @@ public class Room {
      *
      * @author ks061
      */
-    public NPC removeNpcs(NPC npc) {
+    public boolean removeNpcs(NPC npc) {
         return this.npcs.remove(npc);
     }
 
@@ -230,7 +233,7 @@ public class Room {
      *
      * @author ks061
      */
-    public Item removeItems(Item hiddenItem) {
+    public boolean removeItems(Item hiddenItem) {
         return this.hiddenItems.remove(hiddenItem);
     }
 

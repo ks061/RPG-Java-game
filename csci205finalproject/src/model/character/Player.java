@@ -15,6 +15,9 @@
  */
 package model.character;
 
+import model.item.Item;
+import model.map.Room;
+
 /**
  *
  * @author lts010
@@ -31,13 +34,12 @@ public class Player extends RPGCharacter {
               Player.DEFAULT_DEFENSE, Player.DEFAULT_INVENTORY_SIZE);
     }
 
-    @Override
     public String moveTo(Room room) {
         this.getLocation().setPlayer(null);
         this.setLocation(room);
         this.getLocation().setPlayer(this);
-        return String.format("You moved to the %s",
-                             this.getLocation().getName());
+        return String.format("%s moved to the %s",
+                             this.getName(), this.getLocation().getName());
     }
 
     public String talk(NPC npc) {
@@ -47,6 +49,9 @@ public class Player extends RPGCharacter {
     }
 
     public String trade(NPC npc) {
+        if (npc.getDesiredItem() == null) {
+            return String.format("%s does not want to trade", npc.getName());
+        }
         Item desiredItemOfNPC = npc.getDesiredItem();
         if (this.getInventory().contains(desiredItemOfNPC)) {
             Item desiredItemOfPlayer = npc.getInventory().get(0);
@@ -54,30 +59,37 @@ public class Player extends RPGCharacter {
             this.getInventory().remove(desiredItemOfNPC);
             npc.getInventory().add(desiredItemOfNPC);
             this.getInventory().add(desiredItemOfPlayer);
-            return String.format("You have traded the %s for the %s",
+            desiredItemOfPlayer.setOwner(this);
+            desiredItemOfNPC.setOwner(npc);
+            npc.setDesiredItem(desiredItemOfPlayer);
+            return String.format("%s traded the %s for the %s",
+                                 this.getName(),
                                  desiredItemOfNPC.getName(),
                                  desiredItemOfPlayer.getName());
         }
         else {
-            return String.format("You do not have the item that %s wants",
-                                 npc.getName());
+            return String.format("%s does not have the item that %s wants",
+                                 this.getName(), npc.getName());
         }
     }
 
     public String search(Room room) {
         if (room.getHiddenItems().isEmpty()) {
-            return String.format("Searched %s and found nothing", room.getName());
+            return String.format("%s searched %s but found nothing",
+                                 this.getName(), room.getName());
         }
         else if (this.isInventoryFull()) {
-            return String.format("Found %s but your inventory is full",
+            return String.format("%s found %s but their inventory is full",
+                                 this.getName(),
                                  room.getHiddenItems().get(0).getName());
         }
         else {
-            Item hiddenItem = room.getHiddenItems.get(0);
+            Item hiddenItem = room.getHiddenItems().get(0);
             this.getInventory().add(hiddenItem);
+            hiddenItem.setOwner(this);
             room.getHiddenItems().remove(hiddenItem);
-            return String.format("Found %s an added it to your inventory",
-                                 hiddenItem.getName());
+            return String.format("%s found %s and added it to their inventory",
+                                 this.getName(), hiddenItem.getName());
         }
     }
 
@@ -86,16 +98,22 @@ public class Player extends RPGCharacter {
             return "Cannot search the bodies of characters who are alive";
         }
         else {
-            Item item = npc.getInventory().get();
+            if (npc.getInventory().isEmpty()) {
+                return String.format("%s searched %s but found nothing",
+                                     this.getName(), npc.getName());
+            }
+            Item item = npc.getInventory().get(0);
             if (this.isInventoryFull()) {
-                return String.format("Found %s on %s but your inventory is full",
-                                     item.getName(), npc.getName());
+                return String.format(
+                        "%s found %s on %s but their inventory is full",
+                        this.getName(), item.getName(), npc.getName());
             }
             else {
                 this.getInventory().add(item);
                 npc.getInventory().remove(item);
-                return String.format("Took %s off the body of %s",
-                                     item.getName(),
+                item.setOwner(this);
+                return String.format("%s took %s off the body of %s",
+                                     this.getName(), item.getName(),
                                      npc.getName());
             }
         }
@@ -103,20 +121,22 @@ public class Player extends RPGCharacter {
 
     public String startBattle(NPC npc) {
         if (npc.isIsFriendly()) {
-            return "Cannot starts fights with friendly characters";
+            return "Cannot start fights with friendly characters";
         }
         else {
-            while (this.isIsAlive() || npc.isIsAlive()) {
+            while (this.isIsAlive() & npc.isIsAlive()) {
                 this.attack(npc);
                 if (npc.isIsAlive()) {
                     npc.attack(this);
                 }
             }
             if (this.isIsAlive()) {
-                return String.format("You have killed %s", npc.getName());
+                return String.format("%s have killed %s", this.getName(),
+                                     npc.getName());
             }
             else {
-                return String.format("%s has killed you", npc.getName());
+                return String.format("%s has killed %s", npc.getName(),
+                                     this.getName());
             }
         }
     }

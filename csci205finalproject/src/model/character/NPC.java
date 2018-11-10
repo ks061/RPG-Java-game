@@ -15,6 +15,8 @@
  */
 package model.character;
 
+import model.item.Item;
+
 /**
  *
  * @author lts010
@@ -35,15 +37,6 @@ public class NPC extends RPGCharacter {
         this.currentDialogue = dialogue1;
         this.dialogue2 = dialogue2;
         this.isFriendly = isFriendly;
-    }
-
-    @Override
-    public String moveTo(Room room) {
-        this.getLocation().getNpcs().remove(this);
-        this.setLocation(room);
-        this.getLocation().getNpcs().add(this);
-        return String.format("%s moved to the %s", this.getName(),
-                             this.getLocation().getName());
     }
 
     public void toggleCurrentDialogue() {

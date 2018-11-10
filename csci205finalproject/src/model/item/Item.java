@@ -15,6 +15,8 @@
  */
 package model.item;
 
+import model.character.RPGCharacter;
+
 /**
  * An abstract class that can be extended to either a consumable or an equipable
  * item
@@ -28,7 +30,7 @@ public abstract class Item {
     private int deltaAttack;
     private int deltaDefense;
     private int deltaInventory;
-    private Player owner;
+    private RPGCharacter owner;
 
     public Item(String name, int deltaHealth, int deltaAttack, int deltaDefense,
                 int deltaInventory) {
@@ -36,7 +38,7 @@ public abstract class Item {
         this.deltaHealth = deltaHealth;
         this.deltaAttack = deltaAttack;
         this.deltaDefense = deltaDefense;
-        this.deltaInventory = this.deltaInventory;
+        this.deltaInventory = deltaInventory;
     }
 
     public String getName() {
@@ -64,15 +66,15 @@ public abstract class Item {
      * the item. We'll use the delta values in this class to update the stats of
      * the character.
      *
-     * @return the player
+     * @return the owner
      *
      * @author Jason Kang
      */
-    public Player getOwner() {
+    public RPGCharacter getOwner() {
         return owner;
     }
 
-    public void setOwner(Player owner) {
+    public void setOwner(RPGCharacter owner) {
         this.owner = owner;
     }
 
