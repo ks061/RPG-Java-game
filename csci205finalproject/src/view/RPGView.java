@@ -20,7 +20,6 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -33,69 +32,84 @@ import model.RPGModel;
  */
 public class RPGView {
 
-    /**
-     * Models for the application
+    /*
+    Models for the application
      */
     private RPGModel theModel;
-    /**
-     * Root node on the stage in the GUI
+    /*
+    Root node on the stage in the GUI
      */
     private BorderPane root;
 
-    //NEW THINGS ADDED TO BORDERPANE
-    //topPane
+    /*
+    topPane
+    -Variables involved in the top pane of the border pane root
+    -Contains the name of the current room the player is in (i.e. BRKI 164)
+     */
     private FlowPane topPane;
-    private TextField roomName;
+    private Label roomName;
     private Label roomNameLabel;
 
-    //leftPane
+    /*
+    leftPane
+    -Variables involved in the left pane of the border pane root
+    -Contains the player's stats (health, attack, and armor)
+     */
     private VBox leftPane;
     private Label playerStatLabel;
     private Label playerHealthLabel;
-    private TextField playerHealth;
+    private Label playerHealth;
     private Label playerAttackLabel;
-    private TextField playerAttack;
+    private Label playerAttack;
     private Label playerArmorLabel;
-    private TextField playerArmor;
+    private Label playerArmor;
 
-    //rightPane
+    /*
+    rightPane
+    -Variables involved in the left pane of the border pane root
+    -Contains buttons that the player can click to perform different actions
+     */
     private VBox rightPane;
     private Button buttonEquipment;
     private Button buttonItem;
+    /*
+    Buttons are stored in a BorderPane for organizational purposes.
+    These buttons make the player go to different rooms in the north, east,
+    west, and south of its current location, so we chose this instead of
+    putting everything in, for example, an HBox.
+     */
     private BorderPane toRoomButtons;
-    /**
-     * Button that allows player to move to the room above the current room
+    /*
+    Buttons starting with "to" moves the player to another adjacent room.
+    Buttons starting with null are there as a filler for the "to" buttons
+    because we don't want players moving to the left if they are already on
+    the left edge of the map.
      */
     private Button toRoomAbove;
-    /**
-     * Button that allows player to move to the room below the current room
-     */
-    private Button toRoomBelow;
-    /**
-     * Button that allows player to move to the room to the left of the current
-     * room
-     */
     private Button toRoomToLeft;
-    /**
-     * Button that allows player to move to the room to the right of the current
-     * room
-     */
     private Button toRoomToRight;
+    private Button toRoomBelow;
     private Button nullButton1;
     private Button nullButton2;
     private Button nullButton3;
     private Button nullButton4;
 
-    //bottomPane
+    /*
+    bottomPane
+    -Variables involved in the bottom pane of the border pane root
+    -Contains the reference point for the model to output the plot line
+     */
     private FlowPane bottomPane;
-    private TextField storyTextOutput;
+    private Label storyTextOutput;
 
+    /*
+    Static finals for the view
+    Recommended by Prof. Dancy :)
+     */
     private static final int PREF_WINDOW_WIDTH = 1000;
     private static final int PREF_WINDOW_HEIGHT = 800;
     private static final int PREF_PADDING = 15;
-
     private static final double TRAVEL_BUTTON_WIDTH = 57.0;
-
     private static final double RIGHT_PANE_MIN_WIDTH = 2 * TRAVEL_BUTTON_WIDTH;
 
     /**
@@ -109,31 +123,41 @@ public class RPGView {
     public RPGView(RPGModel theModel) {
         this.theModel = theModel;
 
-        //Creation of the BorderPane
+        /*
+        BorderPane created
+        -set preferred height and width as well as padding
+         */
         this.root = new BorderPane();
         this.root.setPrefWidth(PREF_WINDOW_WIDTH);
         this.root.setPrefHeight(PREF_WINDOW_HEIGHT);
         this.root.setPadding(new Insets(PREF_PADDING));
 
-        //topPane
+        /*
+        TopPane created
+        -Labels to display the room name has been added
+        -Alignment has been set to center
+         */
         this.topPane = new FlowPane(Orientation.HORIZONTAL);
         this.roomNameLabel = new Label("Room Name:");
-        this.roomName = new TextField("TEST TEXT ROOM NAME");
+        this.roomName = new Label(" TEST TEXT ROOM NAME");
         this.topPane.getChildren().add(roomNameLabel);
         this.topPane.getChildren().add(roomName);
+        this.topPane.setAlignment(Pos.CENTER);
 
-        //leftPane
-        //VBox containing Flowpanes
+        /*
+        LeftPane created
+        -Labels for the player's stats have been added
+        -Alignment has been set to center
+         */
         this.leftPane = new VBox();
+        this.leftPane.setSpacing(PREF_PADDING);
         this.playerStatLabel = new Label("Player Stats");
-        this.playerHealthLabel = new Label("Health");
-        this.playerHealth = new TextField("100");
-        this.playerAttackLabel = new Label("Attack");
-        this.playerAttack = new TextField("100");
-        this.playerArmorLabel = new Label("Armor");
-        this.playerArmor = new TextField("100");
-
-        //Should I create a flowpane for each of these, or is this format fine?
+        this.playerHealthLabel = new Label("Health:");
+        this.playerHealth = new Label(" 100");
+        this.playerAttackLabel = new Label("Attack:");
+        this.playerAttack = new Label(" 100");
+        this.playerArmorLabel = new Label("Armor:");
+        this.playerArmor = new Label(" 100");
         this.leftPane.getChildren().add(new FlowPane(playerStatLabel));
         this.leftPane.getChildren().add(new FlowPane(playerHealthLabel,
                                                      playerHealth));
@@ -143,16 +167,23 @@ public class RPGView {
                                                      playerArmor));
         this.leftPane.setAlignment(Pos.CENTER);
 
-        //rightPane
-        //Vbox containing buttons
+        /*
+        RightPane created
+        -Buttons have been created and added for player's action choices
+        -Alignment has been set to center
+         */
         this.rightPane = new VBox();
+        this.rightPane.setSpacing(PREF_PADDING);
         this.buttonEquipment = new Button("Equipment");
         this.buttonItem = new Button("Item");
         this.rightPane.getChildren().add(this.buttonEquipment);
         this.rightPane.getChildren().add(this.buttonItem);
 
-        //Buttons to change rooms
-        //Contained in VBox to keep directional orientation for room changes
+        /*
+        Button settings
+        -Width of the buttons have been set to constants because RightPane would
+        automatically update the width and be bothersome to the players
+         */
         this.toRoomButtons = new BorderPane();
         this.toRoomAbove = new Button("Above");
         this.toRoomAbove.setMinWidth(TRAVEL_BUTTON_WIDTH);
@@ -175,13 +206,19 @@ public class RPGView {
         this.rightPane.setAlignment(Pos.CENTER);
         this.rightPane.setMinWidth(RIGHT_PANE_MIN_WIDTH);
 
-        //bottomPane
+        /*
+        BottomPane created
+        -Spaces to dispaly the story in text form
+        -Position has been set to center
+         */
         this.bottomPane = new FlowPane(Orientation.HORIZONTAL);
-        this.storyTextOutput = new TextField("TEST TEXT STORY");
+        this.storyTextOutput = new Label("TEST TEXT STORY");
         this.bottomPane.getChildren().add(this.storyTextOutput);
+        this.bottomPane.setAlignment(Pos.CENTER);
 
-        //centerPane (NOT YET ADDED) What should we add?
-        //Combining everything
+        /*
+        Everything is now added to the root node
+         */
         this.root.setTop(this.topPane);
         this.root.setLeft(this.leftPane);
         this.root.setRight(this.rightPane);
@@ -249,6 +286,8 @@ public class RPGView {
      * Updates the view of the buttons to travel from one room to another based
      * upon whether or not that room has a room adjacent to it (on each of its
      * four sides)
+     *
+     * @author ks061, ishk001
      */
     public void updateTravelButtons() {
         if (theModel.getCurrentRoom().getNorth() != null) {
