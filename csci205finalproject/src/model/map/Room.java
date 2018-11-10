@@ -20,7 +20,8 @@ import java.util.ArrayList;
 /**
  * Room is a room in the map.
  *
- * @author ks061
+ * @author Kartikeya Sharma
+ * @version 0.1
  */
 public class Room {
 
