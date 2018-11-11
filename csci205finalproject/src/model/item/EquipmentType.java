@@ -19,6 +19,7 @@ package model.item;
  * created to determine which inventory slot an item belongs in
  *
  * @author Jason Kang
+ * @version 0.1
  */
 public enum EquipmentType {
     WEAPON, SHIELD, ARMOR;

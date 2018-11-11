@@ -19,17 +19,36 @@ package model.item;
  * An item that can be used multiple times
  *
  * @author Jason Kang
+ * @version 0.1
  */
 public class Equipment extends Item {
 
+    /**
+     * Type of equipment
+     */
     private EquipmentType type;
 
+    /**
+     * Constructor that initializes attributes of equipment
+     *
+     * @param name - name of equipment
+     * @param deltaHealth - delta health variable (how much it will change by)
+     * @param deltaAttack - delta attack variable
+     * @param deltaDefense - delta defense variable
+     * @param deltaInventory - delta inventory variable
+     * @param type - type of equipment
+     */
     public Equipment(String name, int deltaHealth, int deltaAttack,
                      int deltaDefense, int deltaInventory, EquipmentType type) {
         super(name, deltaHealth, deltaAttack, deltaDefense, deltaInventory);
         this.type = type;
     }
 
+    /**
+     * Equips the equipment based on its type
+     *
+     * @return String representing what was equipped
+     */
     public String equip() {
         this.getOwner().setMaxHealth(
                 this.getOwner().getMaxHealth() + this.getDeltaHealth());
@@ -73,6 +92,11 @@ public class Equipment extends Item {
                              this.type.name());
     }
 
+    /**
+     * Unequips the equipment and adds it to inventory
+     *
+     * @return String representing equipment unequipped
+     */
     public String unequip() {
         if (this.getOwner().isInventoryFull()) {
             return String.format(
@@ -101,6 +125,12 @@ public class Equipment extends Item {
                              this.getName());
     }
 
+    /**
+     * Swaps the current equipment with something from the inventory
+     *
+     * @param currentlyEquippedItem - current Equipment on body
+     * @return String representing what items were swapped
+     */
     public String swapEquipment(Equipment currentlyEquippedItem) {
         currentlyEquippedItem.unequip();
         this.getOwner().getInventory().remove(this);
@@ -119,10 +149,20 @@ public class Equipment extends Item {
                              currentlyEquippedItem.getName(), this.getName());
     }
 
+    /**
+     * Gets the type of equipment
+     *
+     * @return type of equipment
+     */
     public EquipmentType getType() {
         return type;
     }
 
+    /**
+     * Sets the type of the equipment
+     *
+     * @param type - type for equipment type to be set to
+     */
     public void setType(EquipmentType type) {
         this.type = type;
     }
