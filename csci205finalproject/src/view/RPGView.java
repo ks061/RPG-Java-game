@@ -20,6 +20,8 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
@@ -101,6 +103,18 @@ public class RPGView {
      */
     private FlowPane bottomPane;
     private Label storyTextOutput;
+
+    /*
+    Image representation of the npc for the purpose of testing the first product
+    imcrement
+     */
+    private Image npcImage;
+
+    /*
+    centerPane
+
+     */
+    private ImageView centerPane;
 
     /*
     Static finals for the view
@@ -217,12 +231,23 @@ public class RPGView {
         this.bottomPane.setAlignment(Pos.CENTER);
 
         /*
+        CenterPane created
+         */
+        this.npcImage = new Image(RPGView.class.getResourceAsStream("npc.jpg"));
+        this.centerPane = new ImageView();
+        this.centerPane.setImage(this.npcImage);
+        this.centerPane.setFitHeight(200);
+        this.centerPane.setFitWidth(200);
+
+        /*
         Everything is now added to the root node
          */
         this.root.setTop(this.topPane);
         this.root.setLeft(this.leftPane);
         this.root.setRight(this.rightPane);
         this.root.setBottom(this.bottomPane);
+        this.root.setCenter(this.centerPane);
+        BorderPane.setAlignment(this.centerPane, Pos.CENTER_LEFT);
 
         updateTravelButtons();
     }
@@ -282,6 +307,14 @@ public class RPGView {
         return toRoomToRight;
     }
 
+    public BorderPane getToRoomButtons() {
+        return toRoomButtons;
+    }
+
+    public Image getNpcImage() {
+        return npcImage;
+    }
+
     /**
      * Updates the view of the buttons to travel from one room to another based
      * upon whether or not that room has a room adjacent to it (on each of its
@@ -319,4 +352,8 @@ public class RPGView {
             this.toRoomButtons.setRight(this.nullButton4);
         }
     }
+
+//    public void updateStoryTextOutput() {
+//        theModel.getCurrentRoom().
+//    }
 }
