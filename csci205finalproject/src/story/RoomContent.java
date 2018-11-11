@@ -15,6 +15,9 @@
  */
 package story;
 
+import model.character.NPC;
+import model.item.Equipment;
+
 /**
  * Contains the room name, the NPCs, and the items in each room. Used when
  * initializing map to randomize the content of each room.
@@ -57,8 +60,8 @@ public class RoomContent {
      *
      * @return List of NPCs
      */
-    public NPC[] getNPCs() {
-        return this.npcs;
+    public NPC getNPCs() {
+        return this.npc;
     }
 
     /**
@@ -66,8 +69,8 @@ public class RoomContent {
      *
      * @return List of items
      */
-    public Equipment[] getRoomItems() {
-        return this.roomItems;
+    public Equipment getRoomItems() {
+        return this.roomItem;
     }
 
 }

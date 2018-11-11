@@ -16,6 +16,10 @@
 package story;
 
 import java.util.ArrayList;
+import model.character.NPC;
+import model.item.Equipment;
+import static model.item.EquipmentType.*;
+import model.map.Room;
 
 /**
  *
@@ -68,14 +72,14 @@ public class Story {
 
     public Story() {
 
-        npc1 = new NPC("Dr. Dance", 20, null, null,
+        npc1 = new NPC("Dr. Dance", 20, 0, 0,
                        "Class dismissed. Work on your"
                        + " homework and DON’T PROCRASTINATE...and R E F A C T O R ! Your textbook and the "
                        + "Java API are your best friends",
                        "Don't forget to REFACTOR!", true);
-        npc2 = new NPC("Muz", 20, null, null, "Yo homie! We got this!",
+        npc2 = new NPC("Muz", 20, 0, 0, "Yo homie! We got this!",
                        "Yo homie, don't give up! You can do this!", true);
-        npc3 = new NPC("Reef", 20, null, null, "Come thru, bro",
+        npc3 = new NPC("Reef", 20, 0, 0, "Come thru, bro",
                        "My name is not Reef", true);
         npc4 = new NPC("Izi", 25, 2, 3,
                        "Food insecurity is a major problem on Bucknell's campus!",
@@ -83,12 +87,12 @@ public class Story {
         npc5 = new NPC("Angry Dance", 30, 8, 8,
                        "Karti B, stop slacking me so many questions!",
                        "I told you to R E F A C T O R !!!", false);
-        npc6 = new NPC("Dr. King", 20, null, null, "Watch the videos!",
+        npc6 = new NPC("Dr. King", 20, 0, 0, "Watch the videos!",
                        "Take Data Science!", true);
         npc7 = new NPC("Martin", 25, 4, 3, "I'll grade labs 9-12 by Monday!",
                        "I'll grade labs 9-12 by Friday!", false);
         npc8 = new NPC("Dustin", 25, 4, 3, "something", "something", false);
-        npc9 = new NPC("someone", 20, null, null, "something", "something", true);
+        npc9 = new NPC("someone", 20, 0, 0, "something", "something", true);
 
         weapon1 = new Equipment("weapon1", 0, 1, 0, 1, WEAPON);
         shield1 = new Equipment("shield1", 1, 0, 0, 1, SHIELD);
