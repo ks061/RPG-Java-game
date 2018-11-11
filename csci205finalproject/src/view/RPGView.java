@@ -352,4 +352,8 @@ public class RPGView {
             this.toRoomButtons.setRight(this.nullButton4);
         }
     }
+
+//    public void updateStoryTextOutput() {
+//        theModel.getCurrentRoom().
+//    }
 }
