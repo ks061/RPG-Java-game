@@ -18,7 +18,8 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Button;
+import javafx.scene.Node;
+import javafx.scene.image.Image;
 import model.RPGModel;
 import view.RPGView;
 
@@ -57,6 +58,12 @@ public class RPGController implements EventHandler<ActionEvent> {
         this.theView.getToRoomBelow().setOnAction(this);
         this.theView.getToRoomToLeft().setOnAction(this);
         this.theView.getToRoomToRight().setOnAction(this);
+
+        this.theView.getNpcImage().setOnMouseClicked(MouseEvent e
+
+
+        ) -> {
+                         };
     }
 
     /**
@@ -68,19 +75,27 @@ public class RPGController implements EventHandler<ActionEvent> {
      */
     @Override
     public void handle(ActionEvent event) {
-        if (event.getSource() instanceof Button) {
-            handleButtonClick(event);
+        if (event.getSource() instanceof Node) {
+            if (this.theView.getToRoomButtons().getChildren().contains(
+                    (Node) event.getSource())) {
+                handleTravelButtonClick(event);
+            }
+        }
+        if (event.getSource() instanceof Image) {
+            if (event.getSource() == this.theView.getNpcImage()) {
+                handleNpcClick(event);
+            }
         }
     }
 
     /**
-     * Handles events when the player clicks a button
+     * Handles events when the player clicks on a travel button
      *
-     * @param event event of a player clicking a button
+     * @param event event of a player clicking on a travel button
      *
      * @author ks061
      */
-    private void handleButtonClick(ActionEvent event) {
+    private void handleTravelButtonClick(ActionEvent event) {
         if (event.getSource() == this.theView.getToRoomAbove()) {
             this.theModel.setCurrentRoom(
                     this.theModel.getCurrentRoom().getNorth());
@@ -98,5 +113,19 @@ public class RPGController implements EventHandler<ActionEvent> {
                     this.theModel.getCurrentRoom().getEast());
         }
         theView.updateTravelButtons();
+    }
+
+    /**
+     * Handles events when the player clicks on an NPC
+     *
+     * @param event event of a player clicking on an NPC
+     *
+     * @author ks061
+     */
+    private void handleNpcClick(ActionEvent event) {
+        if (event.getSource() == this.theView.getNpcImage()) {
+            NPC npcInCurrentRoom = this.theModel.getCurrentRoom().getNpc();
+            this.theModel.getPlayer().talk(npcInCurrentRoom);
+        }
     }
 }
