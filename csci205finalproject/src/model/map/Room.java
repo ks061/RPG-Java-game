@@ -15,7 +15,6 @@
  */
 package model.map;
 
-import java.util.ArrayList;
 import model.character.NPC;
 import model.character.Player;
 import model.item.Item;
@@ -23,8 +22,7 @@ import model.item.Item;
 /**
  * Room is a room in the map.
  *
- * @author Kartikeya Sharma
- * @version 0.1
+ * @author ks061
  */
 public class Room {
 
@@ -39,11 +37,11 @@ public class Room {
     /**
      * NPCs in the room
      */
-    private ArrayList<NPC> npcs;
+    private NPC npc;
     /**
      * Items hidden in the room
      */
-    private ArrayList<Item> hiddenItems;
+    private Item hiddenItem;
 
     /**
      * Room above this room
@@ -74,8 +72,8 @@ public class Room {
     public Room(String name) {
         this.name = name;
         this.player = null;
-        this.npcs = new ArrayList<>();
-        this.hiddenItems = new ArrayList<>();
+        this.npc = null;
+        this.hiddenItem = null;
 
         this.north = null;
         this.south = null;
@@ -103,28 +101,6 @@ public class Room {
      */
     public Player getPlayer() {
         return player;
-    }
-
-    /**
-     * Gets the NPCs in the room
-     *
-     * @return NPCs in the room
-     *
-     * @author ks061
-     */
-    public ArrayList<NPC> getNpcs() {
-        return npcs;
-    }
-
-    /**
-     * Gets the items hidden in the room
-     *
-     * @return items hidden in the room
-     *
-     * @author ks061
-     */
-    public ArrayList<Item> getHiddenItems() {
-        return hiddenItems;
     }
 
     /**
@@ -183,59 +159,47 @@ public class Room {
     }
 
     /**
-     * Adds an NPC to the collection of NPCs in the room
+     * Adds an NPC to the room
      *
-     * @param npc NPC to be added to the collection of NPCs in the room
-     *
-     * @return true if the NPC is added to the collection of NPCs; otherwise
-     * false
+     * @param npc NPC to be added to the room
      *
      * @author ks061
      */
-    public boolean addNpcs(NPC npc) {
-        return this.npcs.add(npc);
+    public void setNpc(NPC npc) {
+        this.npc = npc;
     }
 
     /**
-     * Removes an NPC from the collection of NPCs in the room
+     * Gets the NPC in the room
      *
-     * @param npc NPC to be removed from the collection of NPCs in the room
-     *
-     * @return NPC removed from the list
+     * @return NPC in the room
      *
      * @author ks061
      */
-    public boolean removeNpcs(NPC npc) {
-        return this.npcs.remove(npc);
+    public NPC getNpc() {
+        return npc;
     }
 
     /**
-     * Adds a hidden item from the collection of NPCs in the room
+     * Sets a hidden item in the room
      *
-     * @param hiddenItem hidden item to be added to the collection of NPCs in
-     * the room
-     *
-     * @return true if the NPC is added to the collection of NPCs; otherwise
-     * false;
+     * @param hiddenItem hidden item set to the room
      *
      * @author ks061
      */
-    public boolean addHiddenItems(Item hiddenItem) {
-        return this.hiddenItems.add(hiddenItem);
+    public void setHiddenItem(Item hiddenItem) {
+        this.hiddenItem = hiddenItem;
     }
 
     /**
-     * Removes a hidden item from the collection of NPCs in the room
+     * Gets the item hidden in the room
      *
-     * @param hiddenItem hidden item to be removed from the collection of hidden
-     * items in the room
-     *
-     * @return hidden item removed from the list
+     * @return item hidden in the room
      *
      * @author ks061
      */
-    public boolean removeItems(Item hiddenItem) {
-        return this.hiddenItems.remove(hiddenItem);
+    public Item getHiddenItem() {
+        return hiddenItem;
     }
 
     /**
@@ -282,4 +246,14 @@ public class Room {
         this.west = west;
     }
 
+    /**
+     * Sets the name of the room
+     *
+     * @param name name of the room
+     *
+     * @author ks061
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 }
