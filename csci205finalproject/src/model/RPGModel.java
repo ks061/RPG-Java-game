@@ -16,7 +16,10 @@
 package model;
 
 import java.util.ArrayList;
-import map.SimpleRoom;
+import model.character.Player;
+import model.map.Room;
+import model.story.RoomContent;
+import model.story.Story;
 
 /**
  * RPGModel serves as the model for the RPG game application.
@@ -26,9 +29,17 @@ import map.SimpleRoom;
 public class RPGModel {
 
     /**
+     * Map of rooms
+     */
+    private ArrayList<ArrayList<Room>> map;
+    /**
      * Current room that the player is in
      */
-    private SimpleRoom currentRoom;
+    private Room currentRoom;
+    /**
+     * Selected player
+     */
+    private Player player;
 
     /**
      * Row index of the room that the player will start in
@@ -56,7 +67,9 @@ public class RPGModel {
      * @author ks061
      */
     public RPGModel() {
-        currentRoom = initGridOfRooms();
+        this.currentRoom = initGridOfRooms();
+
+        this.player = new Player("Student");
     }
 
     /**
@@ -66,25 +79,28 @@ public class RPGModel {
      *
      * @author ks061
      */
-    private SimpleRoom initGridOfRooms() {
-        ArrayList<ArrayList<SimpleRoom>> map = new ArrayList<>();
+    private Room initGridOfRooms() {
+        this.map = new ArrayList<>();
 
         String roomName;
 
         for (int rowIndex = 0; rowIndex < NUM_ROWS; rowIndex++) {
-            map.add(new ArrayList<>());
+            this.map.add(new ArrayList<>());
             for (int colIndex = 0; colIndex < NUM_ROOMS_PER_ROW; colIndex++) {
                 roomName = "Room " + Integer.toString(
                         rowIndex * NUM_ROOMS_PER_ROW + colIndex);
-                map.get(rowIndex).add(new SimpleRoom(roomName));
+                this.map.get(rowIndex).add(new Room(roomName));
             }
         }
 
-        connectGridOfRooms(map);
+        connectGridOfRooms();
 
-        if (ROW_INDEX_OF_STARTING_ROOM < map.size()) {
-            if (COL_INDEX_OF_STARTING_ROOM < map.get(ROW_INDEX_OF_STARTING_ROOM).size()) {
-                return map.get(ROW_INDEX_OF_STARTING_ROOM).get(
+        initializeMapContent();
+
+        if (ROW_INDEX_OF_STARTING_ROOM < this.map.size()) {
+            if (COL_INDEX_OF_STARTING_ROOM < this.map.get(
+                    ROW_INDEX_OF_STARTING_ROOM).size()) {
+                return this.map.get(ROW_INDEX_OF_STARTING_ROOM).get(
                         COL_INDEX_OF_STARTING_ROOM);
             }
         }
@@ -97,34 +113,54 @@ public class RPGModel {
      *
      * @author ks061
      */
-    private void connectGridOfRooms(ArrayList<ArrayList<SimpleRoom>> map) {
-        SimpleRoom roomAbove;
-        SimpleRoom roomBelow;
-        SimpleRoom roomToLeft;
-        SimpleRoom roomToRight;
+    private void connectGridOfRooms() {
+        Room roomAbove;
+        Room roomBelow;
+        Room roomToLeft;
+        Room roomToRight;
 
         for (int rowIndex = 0; rowIndex < NUM_ROWS; rowIndex++) {
             for (int colIndex = 0; colIndex < NUM_ROOMS_PER_ROW; colIndex++) {
                 try {
-                    roomAbove = map.get(rowIndex - 1).get(colIndex);
-                    map.get(rowIndex).get(colIndex).setNorth(roomAbove);
+                    roomAbove = this.map.get(rowIndex - 1).get(colIndex);
+                    this.map.get(rowIndex).get(colIndex).setNorth(roomAbove);
                 } catch (IndexOutOfBoundsException ex) {
                 }
                 try {
-                    roomBelow = map.get(rowIndex + 1).get(colIndex);
-                    map.get(rowIndex).get(colIndex).setSouth(roomBelow);
+                    roomBelow = this.map.get(rowIndex + 1).get(colIndex);
+                    this.map.get(rowIndex).get(colIndex).setSouth(roomBelow);
                 } catch (IndexOutOfBoundsException ex) {
                 }
                 try {
-                    roomToLeft = map.get(rowIndex).get(colIndex - 1);
-                    map.get(rowIndex).get(colIndex).setWest(roomToLeft);
+                    roomToLeft = this.map.get(rowIndex).get(colIndex - 1);
+                    this.map.get(rowIndex).get(colIndex).setWest(roomToLeft);
                 } catch (IndexOutOfBoundsException ex) {
                 }
                 try {
-                    roomToRight = map.get(rowIndex).get(colIndex + 1);
-                    map.get(rowIndex).get(colIndex).setEast(roomToRight);
+                    roomToRight = this.map.get(rowIndex).get(colIndex + 1);
+                    this.map.get(rowIndex).get(colIndex).setEast(roomToRight);
                 } catch (IndexOutOfBoundsException ex) {
                 }
+            }
+        }
+    }
+
+    /**
+     * Initializes each room in the map with the content coded into the story
+     * within the model
+     *
+     * @author ks061
+     */
+    private void initializeMapContent() {
+        Story.initStory();
+
+        RoomContent roomContent = null;
+        for (ArrayList<Room> mapRow : map) {
+            for (Room r : mapRow) {
+                roomContent = Story.getRandomRoomContent();
+                r.setName(roomContent.getRoomName());
+                r.setNpc(roomContent.getNPC());
+                r.setHiddenItem(roomContent.getRoomItem());
             }
         }
     }
@@ -136,7 +172,7 @@ public class RPGModel {
      *
      * @author ks061
      */
-    public SimpleRoom getCurrentRoom() {
+    public Room getCurrentRoom() {
         return this.currentRoom;
     }
 
@@ -147,8 +183,19 @@ public class RPGModel {
      *
      * @author ks061
      */
-    public void setCurrentRoom(SimpleRoom room) {
+    public void setCurrentRoom(Room room) {
         this.currentRoom = room;
+    }
+
+    /**
+     * Gets the selected player
+     *
+     * @return selected player
+     *
+     * @author ks061
+     */
+    public Player getPlayer() {
+        return player;
     }
 
 }

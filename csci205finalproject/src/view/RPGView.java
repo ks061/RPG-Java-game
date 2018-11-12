@@ -24,6 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.RPGModel;
 
@@ -108,13 +109,13 @@ public class RPGView {
     Image representation of the npc for the purpose of testing the first product
     imcrement
      */
-    private Image npcImage;
+    private ImageView npcImageView;
 
     /*
     centerPane
 
      */
-    private ImageView centerPane;
+    private Pane centerPane;
 
     /*
     Static finals for the view
@@ -152,8 +153,8 @@ public class RPGView {
         -Alignment has been set to center
          */
         this.topPane = new FlowPane(Orientation.HORIZONTAL);
-        this.roomNameLabel = new Label("Room Name:");
-        this.roomName = new Label(" TEST TEXT ROOM NAME");
+        this.roomNameLabel = new Label("Room Name: ");
+        this.roomName = new Label(theModel.getCurrentRoom().getName());
         this.topPane.getChildren().add(roomNameLabel);
         this.topPane.getChildren().add(roomName);
         this.topPane.setAlignment(Pos.CENTER);
@@ -226,18 +227,23 @@ public class RPGView {
         -Position has been set to center
          */
         this.bottomPane = new FlowPane(Orientation.HORIZONTAL);
-        this.storyTextOutput = new Label("TEST TEXT STORY");
+        this.storyTextOutput = new Label("");
         this.bottomPane.getChildren().add(this.storyTextOutput);
         this.bottomPane.setAlignment(Pos.CENTER);
 
         /*
         CenterPane created
          */
-        this.npcImage = new Image(RPGView.class.getResourceAsStream("npc.jpg"));
-        this.centerPane = new ImageView();
-        this.centerPane.setImage(this.npcImage);
-        this.centerPane.setFitHeight(200);
-        this.centerPane.setFitWidth(200);
+        this.npcImageView = new ImageView();
+        Image npcImage = new Image(RPGView.class.getResourceAsStream(
+                "npc.jpg"));
+        this.npcImageView.setImage(npcImage);
+        this.npcImageView.setFitWidth(50);
+        this.npcImageView.setFitHeight(50);
+        this.npcImageView.setY(250);
+        this.centerPane = new Pane();
+        this.centerPane.getChildren().add(this.npcImageView);
+        this.centerPane.setPrefSize(200, 200);
 
         /*
         Everything is now added to the root node
@@ -307,12 +313,26 @@ public class RPGView {
         return toRoomToRight;
     }
 
+    /**
+     * Gets the pane of travel buttons
+     *
+     * @return pane of travel buttons
+     *
+     * @author ks061, ishk001
+     */
     public BorderPane getToRoomButtons() {
         return toRoomButtons;
     }
 
-    public Image getNpcImage() {
-        return npcImage;
+    /**
+     * Gets the displayed image of the NPC
+     *
+     * @return displayed image of the NPC
+     *
+     * @author ks061, ishk001
+     */
+    public ImageView getNpcImageView() {
+        return npcImageView;
     }
 
     /**
@@ -353,7 +373,25 @@ public class RPGView {
         }
     }
 
-//    public void updateStoryTextOutput() {
-//        theModel.getCurrentRoom().
-//    }
+    /**
+     * Updates the dialog displayed at the bottom of the view
+     *
+     * @param dialog dialog displayed at the bottom of the view
+     *
+     * @author ks061
+     */
+    public void updateStoryTextOutput(String dialog) {
+        this.storyTextOutput.setText(dialog);
+    }
+
+    /**
+     * Updates the name of the room to display
+     *
+     * @param roomName name of the room to display
+     *
+     * @author ks061
+     */
+    public void updateRoomName(String roomName) {
+        this.roomName.setText(roomName);
+    }
 }

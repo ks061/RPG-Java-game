@@ -19,8 +19,9 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import model.RPGModel;
+import model.character.NPC;
 import view.RPGView;
 
 /**
@@ -54,36 +55,37 @@ public class RPGController implements EventHandler<ActionEvent> {
         this.theModel = theModel;
         this.theView = theView;
 
+        setEventHandlerOfComponents();
+    }
+
+    /**
+     * Sets the event handlers of components in the GUI
+     *
+     * @author ks061
+     */
+    private void setEventHandlerOfComponents() {
         this.theView.getToRoomAbove().setOnAction(this);
         this.theView.getToRoomBelow().setOnAction(this);
         this.theView.getToRoomToLeft().setOnAction(this);
         this.theView.getToRoomToRight().setOnAction(this);
 
-        this.theView.getNpcImage().setOnMouseClicked(MouseEvent e
-
-
-        ) -> {
-                         };
+        this.theView.getNpcImageView().setOnMouseClicked((MouseEvent event) -> {
+            handleNpcClick(event);
+        });
     }
 
     /**
-     * Handles events that occur in the application
+     * Handles an action event that occurs in the application
      *
-     * @param event event that occurs in the application
+     * @param event action event that occurs in the application
      *
      * @author ks061
      */
-    @Override
     public void handle(ActionEvent event) {
         if (event.getSource() instanceof Node) {
             if (this.theView.getToRoomButtons().getChildren().contains(
                     (Node) event.getSource())) {
                 handleTravelButtonClick(event);
-            }
-        }
-        if (event.getSource() instanceof Image) {
-            if (event.getSource() == this.theView.getNpcImage()) {
-                handleNpcClick(event);
             }
         }
     }
@@ -113,6 +115,8 @@ public class RPGController implements EventHandler<ActionEvent> {
                     this.theModel.getCurrentRoom().getEast());
         }
         theView.updateTravelButtons();
+        theView.updateRoomName(theModel.getCurrentRoom().getName());
+        theView.updateStoryTextOutput("");
     }
 
     /**
@@ -122,10 +126,10 @@ public class RPGController implements EventHandler<ActionEvent> {
      *
      * @author ks061
      */
-    private void handleNpcClick(ActionEvent event) {
-        if (event.getSource() == this.theView.getNpcImage()) {
-            NPC npcInCurrentRoom = this.theModel.getCurrentRoom().getNpc();
-            this.theModel.getPlayer().talk(npcInCurrentRoom);
-        }
+    private void handleNpcClick(MouseEvent event) {
+        NPC npcInCurrentRoom = this.theModel.getCurrentRoom().getNpc();
+        String dialog = this.theModel.getPlayer().talk(npcInCurrentRoom);
+        this.theView.updateStoryTextOutput(
+                npcInCurrentRoom.getName() + ": " + dialog);
     }
 }
