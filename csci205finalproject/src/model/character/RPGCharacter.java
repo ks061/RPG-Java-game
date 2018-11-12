@@ -201,14 +201,13 @@ public abstract class RPGCharacter {
         return this.inventory.size() >= this.inventorySize;
     }
 
-    /**
-     * Abstract moveTo method to be implemented by other classes
-     *
-     * @param room - Room to move to
-     * @return String representing who moved where
-     */
-    public abstract String moveTo(Room room);
-
+//    /**
+//     * Abstract moveTo method to be implemented by other classes
+//     *
+//     * @param room - Room to move to
+//     * @return String representing who moved where
+//     */
+//    public abstract String moveTo(Room room);
     /**
      * Gets the name of the character
      *
