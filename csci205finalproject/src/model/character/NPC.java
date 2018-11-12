@@ -16,7 +16,6 @@
 package model.character;
 
 import model.item.Item;
-import model.map.Room;
 
 /**
  * NPC Class creates constructor and methods associated with the NPCs throughout
@@ -72,21 +71,20 @@ public class NPC extends RPGCharacter {
         this.isFriendly = isFriendly;
     }
 
-    /**
-     * Overrides moveTo in the RPGCharacter class.
-     *
-     * @param room - room to move to
-     * @return String describing which NPC moved to what room
-     */
-    @Override
-    public String moveTo(Room room) {
-        this.getLocation().getNpcs().remove(this);
-        this.setLocation(room);
-        this.getLocation().getNpcs().add(this);
-        return String.format("%s moved to the %s", this.getName(),
-                             this.getLocation().getName());
-    }
-
+//    /**
+//     * Overrides moveTo in the RPGCharacter class.
+//     *
+//     * @param room - room to move to
+//     * @return String describing which NPC moved to what room
+//     */
+//    @Override
+//    public String moveTo(Room room) {
+//        this.getLocation().getNpc().remove(this);
+//        this.setLocation(room);
+//        this.getLocation().getNpc().add(this);
+//        return String.format("%s moved to the %s", this.getName(),
+//                             this.getLocation().getName());
+//    }
     /**
      * Toggles the current dialogue between dialogue 1 and 2
      */
