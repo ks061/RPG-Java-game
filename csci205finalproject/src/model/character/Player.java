@@ -120,20 +120,21 @@ public class Player extends RPGCharacter {
      * inventory
      */
     public String search(Room room) {
-        if (room.getHiddenItems().isEmpty()) {
+        if (room.getHiddenItem() == null) {
             return String.format("%s searched %s but found nothing",
                                  this.getName(), room.getName());
         }
         else if (this.isInventoryFull()) {
             return String.format("%s found %s but their inventory is full",
                                  this.getName(),
-                                 room.getHiddenItems().get(0).getName());
+                                 room.getHiddenItem().getName());
         }
         else {
-            Item hiddenItem = room.getHiddenItems().get(0);
+            Item hiddenItem = room.getHiddenItem();
             this.getInventory().add(hiddenItem);
             hiddenItem.setOwner(this);
-            room.getHiddenItems().remove(hiddenItem);
+            // room.getHiddenItem().remove(hiddenItem);
+            room.setHiddenItem(null);
             return String.format("%s found %s and added it to their inventory",
                                  this.getName(), hiddenItem.getName());
         }
