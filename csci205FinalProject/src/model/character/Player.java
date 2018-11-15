@@ -76,7 +76,7 @@ public class Player extends RPGCharacter {
      */
     public String talk(NPC npc) {
         String dialogue = npc.getCurrentDialogue();
-        npc.toggleCurrentDialogue();
+        npc.nextDialogueToSpeak();
         return dialogue;
     }
 
@@ -180,7 +180,7 @@ public class Player extends RPGCharacter {
      * @return String describing who was killed in battle
      */
     public String startBattle(NPC npc) {
-        if (npc.isIsFriendly()) {
+        if (npc.isFriendly()) {
             return "Cannot start fights with friendly characters";
         }
         else {

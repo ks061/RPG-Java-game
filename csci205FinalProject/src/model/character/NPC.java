@@ -15,6 +15,8 @@
  */
 package model.character;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import model.item.Item;
 
 /**
@@ -29,15 +31,15 @@ public class NPC extends RPGCharacter {
     /**
      * Current dialogue for the NPC
      */
-    private String currentDialogue;
+    private String dialogueToSpeak;
     /**
-     * First line of dialogue
+     * Lines of dialogue
      */
-    private String dialogue1;
+    private ArrayList<String> dialogues;
     /**
-     * Second line of dialogue
+     * Iterator for lines of dialogue
      */
-    private String dialogue2;
+    private Iterator<String> dialogueIterator;
     /**
      * Item desired
      */
@@ -58,104 +60,94 @@ public class NPC extends RPGCharacter {
      * @param maxHealth - maximum health NPC can achieve
      * @param attack - attack attribute of NPC
      * @param defense - defense attribute of NPC
-     * @param dialogue1 - first dialogue
-     * @param dialogue2 - second dialogue
+     * @param dialogues - series of dialogues
      * @param isFriendly - friendly or hostile attribute
+     *
+     * @author lts010, ks061
      */
     public NPC(String name, int maxHealth, int attack, int defense,
-               String dialogue1, String dialogue2, boolean isFriendly) {
+               ArrayList<String> dialogues, boolean isFriendly) {
         super(name, maxHealth, attack, defense, NPC.DEFAULT_INVENTORY_SIZE);
-        this.dialogue1 = dialogue1;
-        this.currentDialogue = dialogue1;
-        this.dialogue2 = dialogue2;
+
+        this.dialogues = dialogues;
+        if (this.dialogues.isEmpty()) {
+            this.dialogueIterator = null;
+        }
+        else {
+            dialogueIterator = dialogues.iterator();
+            if (dialogueIterator.hasNext()) {
+                this.dialogueToSpeak = dialogueIterator.next();
+            }
+            else {
+                this.dialogueToSpeak = null;
+            }
+        }
+
         this.isFriendly = isFriendly;
     }
 
-//    /**
-//     * Overrides moveTo in the RPGCharacter class.
-//     *
-//     * @param room - room to move to
-//     * @return String describing which NPC moved to what room
-//     */
-//    @Override
-//    public String moveTo(Room room) {
-//        this.getLocation().getNpc().remove(this);
-//        this.setLocation(room);
-//        this.getLocation().getNpc().add(this);
-//        return String.format("%s moved to the %s", this.getName(),
-//                             this.getLocation().getName());
-//    }
     /**
-     * Toggles the current dialogue between dialogue 1 and 2
+     * Returns whether the dialogue iterator is null
+     *
+     * @return true if dialogue iterator is null; otherwise false
+     *
+     * @author ks061
      */
-    public void toggleCurrentDialogue() {
-        if (this.currentDialogue.contentEquals(dialogue1)) {
-            this.currentDialogue = this.dialogue2;
+    public boolean isDialogueIteratorNull() {
+        if (this.dialogueIterator == null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Sets up the next dialogue for the NPC to communicate
+     *
+     * @author ks061
+     */
+    public void nextDialogueToSpeak() {
+        if (isDialogueIteratorNull()) {
+            return;
+        }
+
+        if (dialogueIterator.hasNext()) {
+            this.dialogueToSpeak = dialogueIterator.next();
         }
         else {
-            this.currentDialogue = this.dialogue1;
+            this.dialogueIterator = this.dialogues.iterator();
+            nextDialogueToSpeak();
         }
     }
 
     /**
      * Gets the current dialog
      *
-     * @return String of currentDialogue
+     * @return String of dialogueToSpeak
+     *
+     * @author lts010, ks061
      */
     public String getCurrentDialogue() {
-        return currentDialogue;
+        return dialogueToSpeak;
     }
 
     /**
      * Sets the current dialogue
      *
-     * @param currentDialogue - String representing what currentDialogue should
+     * @param currentDialogue - String representing what dialogueToSpeak should
      * be set to
+     *
+     * @author lts010, ks061
      */
     public void setCurrentDialogue(String currentDialogue) {
-        this.currentDialogue = currentDialogue;
-    }
-
-    /**
-     * Gets the first dialogue
-     *
-     * @return String for dialogue1
-     */
-    public String getDialogue1() {
-        return dialogue1;
-    }
-
-    /**
-     * Sets the first dialogue
-     *
-     * @param dialogue1 - String to set dialogue1 to
-     */
-    public void setDialogue1(String dialogue1) {
-        this.dialogue1 = dialogue1;
-    }
-
-    /**
-     * Gets the second dialogue
-     *
-     * @return String for dialogue2
-     */
-    public String getDialogue2() {
-        return dialogue2;
-    }
-
-    /**
-     * Sets the second dialogue
-     *
-     * @param dialogue2 - String to set dialogue2 to
-     */
-    public void setDialogue2(String dialogue2) {
-        this.dialogue2 = dialogue2;
+        this.dialogueToSpeak = currentDialogue;
     }
 
     /**
      * Gets the desired item
      *
      * @return Item representing the desired item
+     *
+     * @author lts010
      */
     public Item getDesiredItem() {
         return desiredItem;
@@ -165,6 +157,8 @@ public class NPC extends RPGCharacter {
      * Sets the desired item
      *
      * @param desiredItem - Item to set desiredItem to
+     *
+     * @author lts010
      */
     public void setDesiredItem(Item desiredItem) {
         this.desiredItem = desiredItem;
@@ -174,15 +168,19 @@ public class NPC extends RPGCharacter {
      * Gets the friendly/hostile attribute of the NPC
      *
      * @return boolean representing if the NPC is friendly
+     *
+     * @author lts010, ks061
      */
-    public boolean isIsFriendly() {
+    public boolean isFriendly() {
         return isFriendly;
     }
 
     /**
      * Sets the friendly/hostile attribute of the NPC
      *
-     * @param isFriendly - true for is friendly and false otherwise
+     * @param isFriendly true for is friendly and false otherwise
+     *
+     * @author lts010, ks061
      */
     public void setIsFriendly(boolean isFriendly) {
         this.isFriendly = isFriendly;

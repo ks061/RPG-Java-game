@@ -62,9 +62,9 @@ public class RoomContent {
      *
      * @return List of NPCs
      *
-     * @author cjs051
+     * @author cjs051, ks061
      */
-    public NPC getNPCs() {
+    public NPC getNPC() {
         return this.npc;
     }
 
@@ -73,9 +73,9 @@ public class RoomContent {
      *
      * @return List of items
      *
-     * @author cjs051
+     * @author cjs051, ks061
      */
-    public Equipment getRoomItems() {
+    public Equipment getRoomItem() {
         return this.roomItem;
     }
 

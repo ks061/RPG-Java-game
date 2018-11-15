@@ -152,12 +152,11 @@ public class RPGModel {
      * @author ks061
      */
     private void initializeMapContent() {
-        Story.initStory();
 
         RoomContent roomContent = null;
         for (ArrayList<Room> mapRow : map) {
             for (Room r : mapRow) {
-                roomContent = Story.getRandomRoomContent();
+                roomContent = Story.getInstance().getRandomRoomContent();
                 r.setName(roomContent.getRoomName());
                 r.setNpc(roomContent.getNPC());
                 r.setHiddenItem(roomContent.getRoomItem());
