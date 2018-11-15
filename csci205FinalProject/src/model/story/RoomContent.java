@@ -58,24 +58,24 @@ public class RoomContent {
     }
 
     /**
-     * Gets the NPC in a room
+     * Gets the NPCs in a room
      *
-     * @return NPC in room
+     * @return List of NPCs
      *
      * @author cjs051
      */
-    public NPC getNPC() {
+    public NPC getNPCs() {
         return this.npc;
     }
 
     /**
-     * Gets the item in a room
+     * Gets the items in a room
      *
-     * @return item in a room
+     * @return List of items
      *
      * @author cjs051
      */
-    public Equipment getRoomItem() {
+    public Equipment getRoomItems() {
         return this.roomItem;
     }
 
