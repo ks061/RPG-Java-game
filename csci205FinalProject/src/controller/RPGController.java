@@ -52,6 +52,7 @@ public class RPGController {
          *
          * @author ks061
          */
+        @Override
         public void handle(ActionEvent event) {
             if (event.getSource() instanceof Node) {
                 if (theView.getToRoomButtonsDisplay().getChildren().contains(
@@ -106,7 +107,8 @@ public class RPGController {
         public void handle(MouseEvent event) {
             NPC npcInCurrentRoom = null;
             if (event.getSource() instanceof ImageView) {
-                npcInCurrentRoom = mapImageViewToNPC.get(event.getSource());
+                npcInCurrentRoom = mapImageViewToNPC.get(
+                        (ImageView) event.getSource());
             }
             try {
                 String dialog = theModel.getPlayer().talk(npcInCurrentRoom);
@@ -215,7 +217,7 @@ public class RPGController {
         else {
             nullButton = this.theView.getNewNullButton();
             this.theView.getToRoomButtonsDisplay().setBottom(nullButton);
-            BorderPane.setAlignment(this.theView.getNewNullButton(), Pos.CENTER);
+            BorderPane.setAlignment(nullButton, Pos.CENTER);
         }
         if (this.theModel.getCurrentRoom().getWest() != null) {
             this.theView.getToRoomButtonsDisplay().setLeft(

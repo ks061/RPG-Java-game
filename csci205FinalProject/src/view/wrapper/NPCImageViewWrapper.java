@@ -15,6 +15,7 @@
  */
 package view.wrapper;
 
+import java.io.File;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -51,10 +52,10 @@ public class NPCImageViewWrapper {
         this.npc = npc;
 
         String imagePath = IMAGE_PATH_PARENT_DIR + imageFilename;
+        imagePath = new File(imagePath).toURI().toString();
         Image npcImage = new Image(imagePath);
 
-        this.npcImageView = new ImageView();
-        this.npcImageView.setImage(npcImage);
+        this.npcImageView = new ImageView(npcImage);
         this.npcImageView.setFitWidth(NPC_VIEW_WIDTH);
         this.npcImageView.setFitHeight(NPC_VIEW_HEIGHT);
         this.npcImageView.setX(location.getX());
