@@ -16,10 +16,9 @@
 package model.item;
 
 /**
- * An item that can be used multiple times
+ * A durable, reusable item
  *
- * @author Jason Kang
- * @version 0.1
+ * @author ishk001
  */
 public class Equipment extends Item {
 
@@ -37,6 +36,8 @@ public class Equipment extends Item {
      * @param deltaDefense - delta defense variable
      * @param deltaInventory - delta inventory variable
      * @param type - type of equipment
+     *
+     * @author ishk001
      */
     public Equipment(String name, int deltaHealth, int deltaAttack,
                      int deltaDefense, int deltaInventory, EquipmentType type) {
@@ -48,14 +49,16 @@ public class Equipment extends Item {
      * Equips the equipment based on its type
      *
      * @return String representing what was equipped
+     *
+     * @author ishk001
      */
     public String equip() {
-        this.getOwner().setMaxHealth(
-                this.getOwner().getMaxHealth() + this.getDeltaHealth());
-        this.getOwner().setAttack(
-                this.getOwner().getAttack() + this.getDeltaAttack());
-        this.getOwner().setDefense(
-                this.getOwner().getDefense() + this.getDeltaDefense());
+        this.getOwner().getCharacterStats().setMaxHealth(
+                this.getOwner().getCharacterStats().getMaxHealth() + this.getDeltaHealth());
+        this.getOwner().getCharacterStats().setAttack(
+                this.getOwner().getCharacterStats().getAttack() + this.getDeltaAttack());
+        this.getOwner().getCharacterStats().setDefense(
+                this.getOwner().getCharacterStats().getDefense() + this.getDeltaDefense());
         this.getOwner().setInventorySize(
                 this.getOwner().getInventorySize() + this.getDeltaInventory());
         switch (this.type) {
@@ -96,6 +99,8 @@ public class Equipment extends Item {
      * Unequips the equipment and adds it to inventory
      *
      * @return String representing equipment unequipped
+     *
+     * @author ishk001
      */
     public String unequip() {
         if (this.getOwner().isInventoryFull()) {
@@ -113,12 +118,12 @@ public class Equipment extends Item {
             super.getOwner().setShield(null);
         }
         this.getOwner().getInventory().add(this);
-        this.getOwner().setMaxHealth(
-                this.getOwner().getMaxHealth() - this.getDeltaHealth());
-        this.getOwner().setAttack(
-                this.getOwner().getAttack() - this.getDeltaAttack());
-        this.getOwner().setDefense(
-                this.getOwner().getDefense() - this.getDeltaDefense());
+        this.getOwner().getCharacterStats().setMaxHealth(
+                this.getOwner().getCharacterStats().getMaxHealth() - this.getDeltaHealth());
+        this.getOwner().getCharacterStats().setAttack(
+                this.getOwner().getCharacterStats().getAttack() - this.getDeltaAttack());
+        this.getOwner().getCharacterStats().setDefense(
+                this.getOwner().getCharacterStats().getDefense() - this.getDeltaDefense());
         this.getOwner().setInventorySize(
                 this.getOwner().getInventorySize() - this.getDeltaInventory());
         return String.format("Unequipped the %s and added it to your inventory",
@@ -130,6 +135,8 @@ public class Equipment extends Item {
      *
      * @param currentlyEquippedItem - current Equipment on body
      * @return String representing what items were swapped
+     *
+     * @author ishk001
      */
     public String swapEquipment(Equipment currentlyEquippedItem) {
         currentlyEquippedItem.unequip();
@@ -153,6 +160,8 @@ public class Equipment extends Item {
      * Gets the type of equipment
      *
      * @return type of equipment
+     *
+     * @author ishk001
      */
     public EquipmentType getType() {
         return type;
@@ -162,6 +171,8 @@ public class Equipment extends Item {
      * Sets the type of the equipment
      *
      * @param type - type for equipment type to be set to
+     *
+     * @author ishk001
      */
     public void setType(EquipmentType type) {
         this.type = type;
