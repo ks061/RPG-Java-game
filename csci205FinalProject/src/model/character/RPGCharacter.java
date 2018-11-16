@@ -17,7 +17,6 @@ package model.character;
 
 import java.util.ArrayList;
 import java.util.Random;
-import model.item.ConsumableItem;
 import model.item.Equipment;
 import model.item.EquipmentType;
 import model.item.Item;
@@ -91,26 +90,25 @@ public abstract class RPGCharacter {
         this.isAlive = true;
     }
 
-    /**
-     * Uses a consumable item or equips/unequips an equipment item
-     *
-     * @param item - item to be used
-     */
-    public void use(Item item) {
-        if (item instanceof ConsumableItem) {
-            ConsumableItem consumable = (ConsumableItem) item;
-            consumable.consume();
-        }
-        else if (item instanceof Equipment && this.isEquipped((Equipment) item)) {
-            Equipment equipment = (Equipment) item;
-            equipment.unequip();
-        }
-        else {
-            Equipment equipment = (Equipment) item;
-            equipment.equip();
-        }
-    }
-
+//    /**
+//     * Uses a consumable item or equips/unequips an equipment item
+//     *
+//     * @param item - item to be used
+//     */
+//    public void use(Item item) {
+//        if (item instanceof ConsumableItem) {
+//            ConsumableItem consumable = (ConsumableItem) item;
+//            consumable.consume();
+//        }
+//        else if (item instanceof Equipment && this.isEquipped((Equipment) item)) {
+//            Equipment equipment = (Equipment) item;
+//            equipment.unequip();
+//        }
+//        else {
+//            Equipment equipment = (Equipment) item;
+//            equipment.equip();
+//        }
+//    }
     /**
      * Determines the type of equipment and equips it
      *

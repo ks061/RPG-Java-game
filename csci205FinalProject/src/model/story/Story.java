@@ -23,6 +23,7 @@ import model.character.RPGCharacterStats;
 import model.item.Equipment;
 import static model.item.EquipmentType.*;
 import model.item.Item;
+import model.item.ItemStatistics;
 import view.wrapper.NPCImageViewWrapper;
 
 /**
@@ -113,17 +114,32 @@ public class Story {
                        }
                    }, true);
 
-        Equipment weapon1 = new Equipment("weapon1", 0, 1, 0, 1, WEAPON);
-        Equipment shield1 = new Equipment("shield1", 1, 0, 0, 1, SHIELD);
-        Equipment armor1 = new Equipment("armor1", 0, 0, 1, 1, ARMOR);
+        Equipment weapon1 = new Equipment("weapon1", new ItemStatistics(0, 1, 0,
+                                                                        1),
+                                          WEAPON);
+        Equipment shield1 = new Equipment("shield1", new ItemStatistics(1, 0, 0,
+                                                                        1),
+                                          SHIELD);
+        Equipment armor1 = new Equipment("armor1",
+                                         new ItemStatistics(0, 0, 1, 1), ARMOR);
 
-        Equipment weapon2 = new Equipment("weapon2", 0, 2, 0, 1, WEAPON);
-        Equipment shield2 = new Equipment("shield2", 2, 0, 0, 1, SHIELD);
-        Equipment armor2 = new Equipment("armor2", 0, 0, 2, 1, ARMOR);
+        Equipment weapon2 = new Equipment("weapon2", new ItemStatistics(0, 2, 0,
+                                                                        1),
+                                          WEAPON);
+        Equipment shield2 = new Equipment("shield2", new ItemStatistics(2, 0, 0,
+                                                                        1),
+                                          SHIELD);
+        Equipment armor2 = new Equipment("armor2",
+                                         new ItemStatistics(0, 0, 2, 1), ARMOR);
 
-        Equipment weapon3 = new Equipment("weapon3", 0, 3, 0, 1, WEAPON);
-        Equipment shield3 = new Equipment("shield3", 3, 0, 0, 1, SHIELD);
-        Equipment armor3 = new Equipment("armor3", 0, 0, 3, 1, ARMOR);
+        Equipment weapon3 = new Equipment("weapon3", new ItemStatistics(0, 3, 0,
+                                                                        1),
+                                          WEAPON);
+        Equipment shield3 = new Equipment("shield3", new ItemStatistics(3, 0, 0,
+                                                                        1),
+                                          SHIELD);
+        Equipment armor3 = new Equipment("armor3",
+                                         new ItemStatistics(0, 0, 3, 1), ARMOR);
 
         Point2D npcLocation = new Point2D(0, 200);
         RoomContent rc1 = new RoomContent("room1",

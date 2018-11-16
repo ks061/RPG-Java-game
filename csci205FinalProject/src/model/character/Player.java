@@ -15,14 +15,11 @@
  */
 package model.character;
 
-import model.item.Item;
-
 /**
  * Player class creates constructor and methods associated with the Players
  * throughout the RPG. It's a child of RPCCharacter.
  *
- * @author Logan Stiles
- * @version o.1
+ * @author lts010
  */
 public class Player extends RPGCharacter {
 
@@ -81,38 +78,38 @@ public class Player extends RPGCharacter {
         return dialogue;
     }
 
-    /**
-     * Trades desired item of player with desired item of NPC and adds these to
-     * inventory
-     *
-     * @param npc - NPC to trade with
-     * @return String represented what items have been traded
-     */
-    public String trade(NPC npc) {
-        if (npc.getDesiredItem() == null) {
-            return String.format("%s does not want to trade", npc.getName());
-        }
-        Item desiredItemOfNPC = npc.getDesiredItem();
-        if (this.getInventory().contains(desiredItemOfNPC)) {
-            Item desiredItemOfPlayer = npc.getInventory().get(0);
-            npc.getInventory().remove(desiredItemOfPlayer);
-            this.getInventory().remove(desiredItemOfNPC);
-            npc.getInventory().add(desiredItemOfNPC);
-            this.getInventory().add(desiredItemOfPlayer);
-            desiredItemOfPlayer.setOwner(this);
-            desiredItemOfNPC.setOwner(npc);
-            npc.setDesiredItem(desiredItemOfPlayer);
-            return String.format("%s traded the %s for the %s",
-                                 this.getName(),
-                                 desiredItemOfNPC.getName(),
-                                 desiredItemOfPlayer.getName());
-        }
-        else {
-            return String.format("%s does not have the item that %s wants",
-                                 this.getName(), npc.getName());
-        }
-    }
-
+// TODO: Discuss implementation
+//    /**
+//     * Trades desired item of player with desired item of NPC and adds these to
+//     * inventory
+//     *
+//     * @param npc - NPC to trade with
+//     * @return String represented what items have been traded
+//     */
+//    public String trade(NPC npc) {
+//        if (npc.getDesiredItem() == null) {
+//            return String.format("%s does not want to trade", npc.getName());
+//        }
+//        Item desiredItemOfNPC = npc.getDesiredItem();
+//        if (this.getInventory().contains(desiredItemOfNPC)) {
+//            Item desiredItemOfPlayer = npc.getInventory().get(0);
+//            npc.getInventory().remove(desiredItemOfPlayer);
+//            this.getInventory().remove(desiredItemOfNPC);
+//            npc.getInventory().add(desiredItemOfNPC);
+//            this.getInventory().add(desiredItemOfPlayer);
+//            desiredItemOfPlayer.setOwner(this);
+//            desiredItemOfNPC.setOwner(npc);
+//            npc.setDesiredItem(desiredItemOfPlayer);
+//            return String.format("%s traded the %s for the %s",
+//                                 this.getName(),
+//                                 desiredItemOfNPC.getName(),
+//                                 desiredItemOfPlayer.getName());
+//        }
+//        else {
+//            return String.format("%s does not have the item that %s wants",
+//                                 this.getName(), npc.getName());
+//        }
+//    }
     // TODO: Discuss implementation of search in Room or Player class and
     // logic behind the method.
     /**
