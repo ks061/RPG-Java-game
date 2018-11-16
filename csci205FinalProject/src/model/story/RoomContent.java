@@ -15,35 +15,39 @@
  */
 package model.story;
 
-import model.character.NPC;
-import model.item.Equipment;
+import java.util.ArrayList;
+import model.item.Item;
+import view.wrapper.NPCImageViewWrapper;
 
 /**
  * Contains the room name, the NPCs, and the items in each room. Used when
  * initializing map to randomize the content of each room.
  *
- * @author cjs051
+ * @author cjs051, ks061
  */
 public class RoomContent {
 
-    private String roomName;
+    private String name;
 
-    private Equipment roomItem;
-    private NPC npc;
+    private ArrayList<NPCImageViewWrapper> npcWrappers;
+
+    private ArrayList<Item> items;
 
     /**
      * Constructor that initializes the content of a room
      *
-     * @param roomName - name of room
-     * @param npc - list of NPCs in a room
-     * @param roomItem - list of items in a room
+     * @param name name of room
+     * @param npcWrappers list of NPC Wrapper objects containing the NPC and the
+     * image view of the NPC
+     * @param items list of items in a room
      *
-     * @author cjs051
+     * @author cjs051, ks061
      */
-    public RoomContent(String roomName, NPC npc, Equipment roomItem) {
-        this.roomName = roomName;
-        this.npc = npc;
-        this.roomItem = roomItem;
+    public RoomContent(String name, ArrayList<NPCImageViewWrapper> npcWrappers,
+                       ArrayList<Item> items) {
+        this.name = name;
+        this.npcWrappers = npcWrappers;
+        this.items = items;
     }
 
     /**
@@ -53,30 +57,30 @@ public class RoomContent {
      *
      * @author cjs051
      */
-    public String getRoomName() {
-        return this.roomName;
+    public String getName() {
+        return this.name;
     }
 
     /**
-     * Gets the NPC in a room
+     * Gets the list of NPC wrapper objects of NPCs in the room
      *
-     * @return NPC in room
+     * @return list of NPC wrapper objects of NPCs in the room
      *
-     * @author cjs051
+     * @author cjs051, ks061
      */
-    public NPC getNPC() {
-        return this.npc;
+    public ArrayList<NPCImageViewWrapper> getNPCWrappers() {
+        return this.npcWrappers;
     }
 
     /**
-     * Gets the item in a room
+     * Gets the list of equipment items in a room
      *
-     * @return item in a room
+     * @return list of equipment items
      *
-     * @author cjs051
+     * @author cjs051, ks061
      */
-    public Equipment getRoomItem() {
-        return this.roomItem;
+    public ArrayList<Item> getItems() {
+        return this.items;
     }
 
 }
