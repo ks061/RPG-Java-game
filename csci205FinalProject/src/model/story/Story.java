@@ -17,9 +17,13 @@ package model.story;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.geometry.Point2D;
 import model.character.NPC;
+import view.wrapper.NPCImageViewWrapper;
+import model.character.RPGCharacterStats;
 import model.item.Equipment;
 import static model.item.EquipmentType.*;
+import model.item.Item;
 
 /**
  * Story contains the starting data and/or story-line behind the game map and
@@ -42,7 +46,8 @@ public class Story {
     private Story() {
         roomContents = new ArrayList<>();
 
-        NPC npc1 = new NPC("Dr. Dance", 20, 0, 0, new ArrayList<String>() {
+        NPC npc1 = new NPC("Dr. Dance", new RPGCharacterStats(20, 0, 0),
+                           new ArrayList<String>() {
                        {
                            add("Class dismissed. Work on your"
                                + " homework and DON’T PROCRASTINATE...and R E F A C T O R ! Your textbook and the "
@@ -51,51 +56,57 @@ public class Story {
                        }
                    },
                            true);
-        NPC npc2 = new NPC("Muz", 20, 0, 0, new ArrayList<String>() {
+        NPC npc2 = new NPC("Muz", new RPGCharacterStats(20, 0, 0),
+                           new ArrayList<String>() {
                        {
                            add("Yo homie! We got this!");
                            add("Yo homie, don't give up! You can do this!");
                        }
                    }, true);
-        NPC npc3 = new NPC("Reef", 20, 0, 0, new ArrayList<String>() {
+        NPC npc3 = new NPC("Reef", new RPGCharacterStats(20, 0, 0),
+                           new ArrayList<String>() {
                        {
                            add("Come thru, bro");
                            add("My name is not Reef");
                        }
                    }, true);
-        NPC npc4 = new NPC("Izi", 25, 2, 3, new ArrayList<String>() {
+        NPC npc4 = new NPC("Izi", new RPGCharacterStats(25, 2, 3),
+                           new ArrayList<String>() {
                        {
                            add("Food insecurity is a major problem on Bucknell's campus!");
                            add("I'm gonna email Bravman.");
                        }
                    }, false);
-        NPC npc5 = new NPC("Angry Dance", 30, 8, 8,
+        NPC npc5 = new NPC("Angry Dance", new RPGCharacterStats(30, 8, 8),
                            new ArrayList<String>() {
                        {
                            add("Karti B, stop slacking me so many questions!");
                            add("I told you to R E F A C T O R !!!");
                        }
                    }, false);
-        NPC npc6 = new NPC("Dr. King", 20, 0, 0, new ArrayList<String>() {
+        NPC npc6 = new NPC("Dr. King", new RPGCharacterStats(20, 0, 0),
+                           new ArrayList<String>() {
                        {
                            add("Watch the videos!");
                            add("Take Data Science!");
                        }
                    }, true);
-        NPC npc7 = new NPC("Martin", 25, 4, 3,
+        NPC npc7 = new NPC("Martin", new RPGCharacterStats(25, 4, 3),
                            new ArrayList<String>() {
                        {
                            add("I'll grade labs 9-12 by Monday!");
                            add("I'll grade labs 9-12 by Friday!");
                        }
                    }, false);
-        NPC npc8 = new NPC("Dustin", 25, 4, 3, new ArrayList<String>() {
+        NPC npc8 = new NPC("Dustin", new RPGCharacterStats(25, 4, 3),
+                           new ArrayList<String>() {
                        {
                            add("something");
                            add("something");
                        }
                    }, false);
-        NPC npc9 = new NPC("someone", 20, 0, 0, new ArrayList<String>() {
+        NPC npc9 = new NPC("someone", new RPGCharacterStats(20, 0, 0),
+                           new ArrayList<String>() {
                        {
                            add("something");
                            add("something");
@@ -114,24 +125,115 @@ public class Story {
         Equipment shield3 = new Equipment("shield3", 3, 0, 0, 1, SHIELD);
         Equipment armor3 = new Equipment("armor3", 0, 0, 3, 1, ARMOR);
 
-        RoomContent rc1 = new RoomContent("room1", npc1, weapon1);
-        RoomContent rc2 = new RoomContent("room2", npc2, shield1);
-        RoomContent rc3 = new RoomContent("room3", npc3, armor1);
-        RoomContent rc4 = new RoomContent("room4", npc4, weapon2);
-        RoomContent rc5 = new RoomContent("room5", npc5, shield2);
-        RoomContent rc6 = new RoomContent("room6", npc6, armor2);
-        RoomContent rc7 = new RoomContent("room7", npc7, weapon3);
-        RoomContent rc8 = new RoomContent("room8", npc8, shield3);
-        RoomContent rc9 = new RoomContent("room9", npc9, armor3);
+        Point2D npcLocation = new Point2D(0, 200);
+        RoomContent rc1 = new RoomContent("room1", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc1, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  }, new ArrayList<Item>() {
+                                      {
+                                          add(weapon1);
+                                      }
+                                  });
+        RoomContent rc2 = new RoomContent("room2", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc2, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  }, new ArrayList<Item>() {
+                                      {
+                                          add(shield1);
+                                      }
+                                  });
+        RoomContent rc3 = new RoomContent("room3", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc3, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  }, new ArrayList<Item>() {
+                                      {
+                                          add(armor1);
+                                      }
+                                  });
+        RoomContent rc4 = new RoomContent("room4", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc4, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  }, new ArrayList<Item>() {
+                                      {
+                                          add(weapon2);
+                                      }
+                                  });
+        RoomContent rc5 = new RoomContent("room5", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc5, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  }, new ArrayList<Item>() {
+                                      {
+                                          add(shield2);
+                                      }
+                                  });
+        RoomContent rc6 = new RoomContent("room6", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc6, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  }, new ArrayList<Item>() {
+                                      {
+                                          add(armor2);
+                                      }
+                                  });
+        RoomContent rc7 = new RoomContent("room7", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc7, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  }, new ArrayList<Item>() {
+                                      {
+                                          add(weapon3);
+                                      }
+                                  });
+        RoomContent rc8 = new RoomContent("room8", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc8, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  }, new ArrayList<Item>() {
+                                      {
+                                          add(shield3);
+                                      }
+                                  });
+        RoomContent rc9 = new RoomContent("room9", new ArrayList<NPCImageViewWrapper>() {
+                                      {
+                                          add(new NPCImageViewWrapper(npc9, "npc.jpg",
+                                                             npcLocation));
+                                      }
+                                  },
+                                          new ArrayList<Item>() {
+                                      {
+                                          add(armor3);
+                                      }
+                                  });
 
         roomContents.add(rc1);
+
         roomContents.add(rc2);
+
         roomContents.add(rc3);
+
         roomContents.add(rc4);
+
         roomContents.add(rc5);
+
         roomContents.add(rc6);
+
         roomContents.add(rc7);
+
         roomContents.add(rc8);
+
         roomContents.add(rc9);
     }
 
@@ -158,7 +260,9 @@ public class Story {
      * @author ks061
      */
     public RoomContent getRandomRoomContent() {
-        return roomContents.remove(new Random().nextInt(roomContents.size()));
+        return roomContents.remove(
+                new Random().nextInt(
+                        roomContents.size()));
     }
 
 }

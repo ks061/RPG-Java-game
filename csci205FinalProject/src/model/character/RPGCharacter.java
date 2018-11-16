@@ -26,8 +26,7 @@ import model.map.Room;
 /**
  * Abstract class for all characters
  *
- * @author Logan Stiles
- * @version 0.1
+ * @author lts010, ks061
  */
 public abstract class RPGCharacter {
 
@@ -36,21 +35,9 @@ public abstract class RPGCharacter {
      */
     private String name;
     /**
-     * Maximum health attribute
+     * Character statistics
      */
-    private int maxHealth;
-    /**
-     * Health attribute of character
-     */
-    private int health;
-    /**
-     * Attack attribute of player
-     */
-    private int attack;
-    /**
-     * Defense attribute of player
-     */
-    private int defense;
+    private RPGCharacterStats characterStats;
     /**
      * Current size of inventory
      */
@@ -91,20 +78,14 @@ public abstract class RPGCharacter {
     /**
      * Constructor for RPGCharacter initializing all its attributes
      *
-     * @param name - name of character
-     * @param maxHealth - maximum health attribute
-     * @param attack - attack attribute
-     * @param defense - defense attribute
-     * @param inventorySize - size of the inventory
+     * @param name name of character
+     * @param characterStats character stats
+     * @param inventorySize size of the inventory
      */
-    public RPGCharacter(String name, int maxHealth, int attack,
-                        int defense,
+    public RPGCharacter(String name, RPGCharacterStats characterStats,
                         int inventorySize) {
         this.name = name;
-        this.maxHealth = maxHealth;
-        this.health = this.maxHealth;
-        this.attack = attack;
-        this.defense = defense;
+        this.characterStats = characterStats;
         this.inventorySize = inventorySize;
         this.inventory = new ArrayList<>();
         this.isAlive = true;
@@ -173,11 +154,12 @@ public abstract class RPGCharacter {
             criticalHitModifier = 1.0;
         }
 
-        double damageCalculation = this.attack - enemy.getDefense();
+        double damageCalculation = this.characterStats.getAttack() - enemy.characterStats.getDefense();
         int trueDamage = (int) Math.round(
                 damageCalculation * criticalHitModifier * accuracyModifier);
-        enemy.setHealth(enemy.getHealth() - trueDamage);
-        if (enemy.getHealth() <= 0) {
+        enemy.characterStats.setHealth(
+                enemy.characterStats.getHealth() - trueDamage);
+        if (enemy.characterStats.getHealth() <= 0) {
             enemy.setIsAlive(false);
         }
         if (accuracyModifier == 0) {
@@ -199,6 +181,17 @@ public abstract class RPGCharacter {
      */
     public boolean isInventoryFull() {
         return this.inventory.size() >= this.inventorySize;
+    }
+
+    /**
+     * Gets the character statistics of this character
+     *
+     * @return character statistics of this character
+     *
+     * @author ks061
+     */
+    public RPGCharacterStats getCharacterStats() {
+        return characterStats;
     }
 
 //    /**
@@ -224,78 +217,6 @@ public abstract class RPGCharacter {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * Gets the max health of the character
-     *
-     * @return the max health
-     */
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    /**
-     * Sets the maximum health attribute
-     *
-     * @param maxHealth - number for max health to be set to
-     */
-    public void setMaxHealth(int maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    /**
-     * Gets the health attribute of character
-     *
-     * @return integer representing the health
-     */
-    public int getHealth() {
-        return health;
-    }
-
-    /**
-     * Sets the current health of character
-     *
-     * @param health - integer for current health to be set to
-     */
-    public void setHealth(int health) {
-        this.health = health;
-    }
-
-    /**
-     * Gets the attack attribute
-     *
-     * @return integer representing attack attribute
-     */
-    public int getAttack() {
-        return attack;
-    }
-
-    /**
-     * Sets the attack attribute
-     *
-     * @param attack - integer for attack to be set to
-     */
-    public void setAttack(int attack) {
-        this.attack = attack;
-    }
-
-    /**
-     * Gets the defense attribute
-     *
-     * @return integer representing defense stat
-     */
-    public int getDefense() {
-        return defense;
-    }
-
-    /**
-     * Sets the defense stat
-     *
-     * @param defense integer for defense to be set to
-     */
-    public void setDefense(int defense) {
-        this.defense = defense;
     }
 
     /**

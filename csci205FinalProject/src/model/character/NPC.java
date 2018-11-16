@@ -57,17 +57,15 @@ public class NPC extends RPGCharacter {
      * Constructor for the NPC which initializes its values
      *
      * @param name - name of NPC
-     * @param maxHealth - maximum health NPC can achieve
-     * @param attack - attack attribute of NPC
-     * @param defense - defense attribute of NPC
+     * @param npcStats - statistics of the NPC
      * @param dialogues - series of dialogues
      * @param isFriendly - friendly or hostile attribute
      *
      * @author lts010, ks061
      */
-    public NPC(String name, int maxHealth, int attack, int defense,
+    public NPC(String name, RPGCharacterStats npcStats,
                ArrayList<String> dialogues, boolean isFriendly) {
-        super(name, maxHealth, attack, defense, NPC.DEFAULT_INVENTORY_SIZE);
+        super(name, npcStats, NPC.DEFAULT_INVENTORY_SIZE);
 
         this.dialogues = dialogues;
         if (this.dialogues.isEmpty()) {

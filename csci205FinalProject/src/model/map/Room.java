@@ -15,9 +15,9 @@
  */
 package model.map;
 
-import model.character.NPC;
-import model.character.Player;
+import java.util.ArrayList;
 import model.item.Item;
+import view.wrapper.NPCImageViewWrapper;
 
 /**
  * Room is a room in the map.
@@ -31,17 +31,13 @@ public class Room {
      */
     private String name;
     /**
-     * Player in this room; null if no player is in this room
-     */
-    private Player player;
-    /**
      * NPCs in the room
      */
-    private NPC npc;
+    private ArrayList<NPCImageViewWrapper> npcWrappers;
     /**
      * Items hidden in the room
      */
-    private Item hiddenItem;
+    private ArrayList<Item> hiddenItems;
 
     /**
      * Room above this room
@@ -71,14 +67,104 @@ public class Room {
      */
     public Room(String name) {
         this.name = name;
-        this.player = null;
-        this.npc = null;
-        this.hiddenItem = null;
+        this.npcWrappers = null;
+        this.hiddenItems = null;
 
         this.north = null;
         this.south = null;
         this.east = null;
         this.west = null;
+    }
+
+    /**
+     * Adds a list of NPC wrapper objects containing the NPCs to the room
+     *
+     * @param npcWrappers list of NPC wrapper objects containing the NPCs to be
+     * added to the room
+     *
+     * @author ks061
+     */
+    public void setNPCViewWrappers(ArrayList<NPCImageViewWrapper> npcWrappers) {
+        this.npcWrappers = npcWrappers;
+    }
+
+    /**
+     * Gets a list of NPC wrapper objects containing the NPCs in the room
+     *
+     * @return list of NPC wrapper objects containing the NPCs in the room
+     *
+     * @author ks061
+     */
+    public ArrayList<NPCImageViewWrapper> getNPCViewWrappers() {
+        return npcWrappers;
+    }
+
+    /**
+     * Sets the list of hidden items in the room
+     *
+     * @param hiddenItems list of hidden items to be added to the room
+     *
+     * @author ks061
+     */
+    public void setHiddenItems(ArrayList<Item> hiddenItems) {
+        this.hiddenItems = hiddenItems;
+    }
+
+    /**
+     * Gets the list of hidden items in the room
+     *
+     * @return list of hidden items in the room
+     *
+     * @author ks061
+     */
+    public ArrayList<Item> getHiddenItems() {
+        return this.hiddenItems;
+    }
+
+    /**
+     * Adds a hidden item to the room
+     *
+     * @param hiddenItem hidden item to be added to the room
+     *
+     * @return true if inputted element removed as a result of calling the
+     * method
+     *
+     * @see
+     * <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html#add-E-">Java
+     * 8 API Collections</a>
+     *
+     * @author ks061
+     */
+    public boolean addHiddenItem(Item hiddenItem) {
+        return this.hiddenItems.add(hiddenItem);
+    }
+
+    /**
+     * Removes a hidden item from the room
+     *
+     * @param hiddenItem hidden item to be removed from the room
+     *
+     * @return true if collection changes from calling this method
+     *
+     * @see
+     * <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html#remove-E-">Java
+     * 8 API Collections</a>
+     *
+     * @author ks061
+     */
+    public boolean removeHiddenItem(Item hiddenItem) {
+        return this.hiddenItems.remove(hiddenItem);
+    }
+
+    /**
+     * Sets the name of the room
+     *
+     * @param name name of the room
+     *
+     * @author ks061
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -89,18 +175,7 @@ public class Room {
      * @author ks061
      */
     public String getName() {
-        return name;
-    }
-
-    /**
-     * Gets the player currently in the room
-     *
-     * @return player currently in the room
-     *
-     * @author ks061
-     */
-    public Player getPlayer() {
-        return player;
+        return this.name;
     }
 
     /**
@@ -148,61 +223,6 @@ public class Room {
     }
 
     /**
-     * Sets the player currently in this room
-     *
-     * @param player player currently in this room
-     *
-     * @author ks061
-     */
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
-    /**
-     * Adds an NPC to the room
-     *
-     * @param npc NPC to be added to the room
-     *
-     * @author ks061
-     */
-    public void setNpc(NPC npc) {
-        this.npc = npc;
-    }
-
-    /**
-     * Gets the NPC in the room
-     *
-     * @return NPC in the room
-     *
-     * @author ks061
-     */
-    public NPC getNpc() {
-        return npc;
-    }
-
-    /**
-     * Sets a hidden item in the room
-     *
-     * @param hiddenItem hidden item set to the room
-     *
-     * @author ks061
-     */
-    public void setHiddenItem(Item hiddenItem) {
-        this.hiddenItem = hiddenItem;
-    }
-
-    /**
-     * Gets the item hidden in the room
-     *
-     * @return item hidden in the room
-     *
-     * @author ks061
-     */
-    public Item getHiddenItem() {
-        return hiddenItem;
-    }
-
-    /**
      * Sets the room to be above this room
      *
      * @param north room to be above this room
@@ -244,16 +264,5 @@ public class Room {
      */
     public void setWest(Room west) {
         this.west = west;
-    }
-
-    /**
-     * Sets the name of the room
-     *
-     * @param name name of the room
-     *
-     * @author ks061
-     */
-    public void setName(String name) {
-        this.name = name;
     }
 }

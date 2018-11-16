@@ -157,9 +157,9 @@ public class RPGModel {
         for (ArrayList<Room> mapRow : map) {
             for (Room r : mapRow) {
                 roomContent = Story.getInstance().getRandomRoomContent();
-                r.setName(roomContent.getRoomName());
-                r.setNpc(roomContent.getNPC());
-                r.setHiddenItem(roomContent.getRoomItem());
+                r.setName(roomContent.getName());
+                r.setNPCViewWrappers(roomContent.getNPCWrappers());
+                r.setHiddenItems(roomContent.getItems());
             }
         }
     }

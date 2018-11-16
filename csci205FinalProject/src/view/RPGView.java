@@ -20,8 +20,6 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
@@ -50,8 +48,8 @@ public class RPGView {
     -Contains the name of the current room the player is in (i.e. BRKI 164)
      */
     private FlowPane topPane;
-    private Label roomName;
     private Label roomNameLabel;
+    private Label roomName;
 
     /*
     leftPane
@@ -92,10 +90,6 @@ public class RPGView {
     private Button toRoomToLeft;
     private Button toRoomToRight;
     private Button toRoomBelow;
-    private Button nullButton1;
-    private Button nullButton2;
-    private Button nullButton3;
-    private Button nullButton4;
 
     /*
     bottomPane
@@ -106,14 +100,7 @@ public class RPGView {
     private Label storyTextOutput;
 
     /*
-    Image representation of the npc for the purpose of testing the first product
-    imcrement
-     */
-    private ImageView npcImageView;
-
-    /*
     centerPane
-
      */
     private Pane centerPane;
 
@@ -208,14 +195,6 @@ public class RPGView {
         this.toRoomToLeft.setMinWidth(TRAVEL_BUTTON_WIDTH);
         this.toRoomToRight = new Button("Right");
         this.toRoomToRight.setMinWidth(TRAVEL_BUTTON_WIDTH);
-        this.nullButton1 = new Button("     ");
-        this.nullButton1.setMinWidth(TRAVEL_BUTTON_WIDTH);
-        this.nullButton2 = new Button("     ");
-        this.nullButton2.setMinWidth(TRAVEL_BUTTON_WIDTH);
-        this.nullButton3 = new Button("     ");
-        this.nullButton3.setMinWidth(TRAVEL_BUTTON_WIDTH);
-        this.nullButton4 = new Button("     ");
-        this.nullButton4.setMinWidth(TRAVEL_BUTTON_WIDTH);
         this.rightPane.getChildren().add(this.toRoomButtons);
 
         this.rightPane.setAlignment(Pos.CENTER);
@@ -234,15 +213,7 @@ public class RPGView {
         /*
         CenterPane created
          */
-        this.npcImageView = new ImageView();
-        Image npcImage = new Image(RPGView.class.getResourceAsStream(
-                "npc.jpg"));
-        this.npcImageView.setImage(npcImage);
-        this.npcImageView.setFitWidth(50);
-        this.npcImageView.setFitHeight(50);
-        this.npcImageView.setY(250);
         this.centerPane = new Pane();
-        this.centerPane.getChildren().add(this.npcImageView);
         this.centerPane.setPrefSize(200, 200);
 
         /*
@@ -254,8 +225,6 @@ public class RPGView {
         this.root.setBottom(this.bottomPane);
         this.root.setCenter(this.centerPane);
         BorderPane.setAlignment(this.centerPane, Pos.CENTER_LEFT);
-
-        updateTravelButtons();
     }
 
     /**
@@ -320,63 +289,38 @@ public class RPGView {
      *
      * @author ks061, ishk001
      */
-    public BorderPane getToRoomButtons() {
+    public BorderPane getToRoomButtonsDisplay() {
         return toRoomButtons;
     }
 
     /**
-     * Gets the displayed image of the NPC
+     * Creates and returns an empty button to replace a travel button
      *
-     * @return displayed image of the NPC
+     * @return empty button to replace a travel button
      *
-     * @author ks061, ishk001
+     * @author ks061
      */
-    public ImageView getNpcImageView() {
-        return npcImageView;
+    public Button getNewNullButton() {
+        Button newNullButton = new Button("     ");
+        newNullButton.setMinWidth(TRAVEL_BUTTON_WIDTH);
+        return newNullButton;
     }
 
     /**
-     * Updates the view of the buttons to travel from one room to another based
-     * upon whether or not that room has a room adjacent to it (on each of its
-     * four sides)
+     * Gets the center pane of the view
      *
-     * @author ks061, ishk001
+     * @return center pane of the view
+     *
+     * @author ks061
      */
-    public void updateTravelButtons() {
-        if (theModel.getCurrentRoom().getNorth() != null) {
-            this.toRoomButtons.setTop(this.toRoomAbove);
-            BorderPane.setAlignment(this.toRoomAbove, Pos.CENTER);
-        }
-        else {
-            this.toRoomButtons.setTop(this.nullButton1);
-            BorderPane.setAlignment(this.nullButton1, Pos.CENTER);
-        }
-        if (theModel.getCurrentRoom().getSouth() != null) {
-            this.toRoomButtons.setBottom(this.toRoomBelow);
-            BorderPane.setAlignment(this.toRoomBelow, Pos.CENTER);
-        }
-        else {
-            this.toRoomButtons.setBottom(this.nullButton2);
-            BorderPane.setAlignment(this.nullButton2, Pos.CENTER);
-        }
-        if (theModel.getCurrentRoom().getWest() != null) {
-            this.toRoomButtons.setLeft(this.toRoomToLeft);
-        }
-        else {
-            this.toRoomButtons.setLeft(this.nullButton3);
-        }
-        if (theModel.getCurrentRoom().getEast() != null) {
-            this.toRoomButtons.setRight(this.toRoomToRight);
-        }
-        else {
-            this.toRoomButtons.setRight(this.nullButton4);
-        }
+    public Pane getCenterPane() {
+        return centerPane;
     }
 
     /**
-     * Updates the dialog displayed at the bottom of the view
+     * Updates the dialog displayed in the story text output
      *
-     * @param dialog dialog displayed at the bottom of the view
+     * @param dialog dialog displayed in the story text output
      *
      * @author ks061
      */
@@ -385,13 +329,12 @@ public class RPGView {
     }
 
     /**
-     * Updates the name of the room to display
-     *
-     * @param roomName name of the room to display
+     * Updates the room name based on the current room
      *
      * @author ks061
      */
-    public void updateRoomName(String roomName) {
-        this.roomName.setText(roomName);
+    public void refreshRoomName() {
+        this.roomName.setText(this.theModel.getCurrentRoom().getName());
     }
+
 }

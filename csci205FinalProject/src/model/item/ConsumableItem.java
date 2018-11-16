@@ -45,23 +45,25 @@ public class ConsumableItem extends Item {
      */
     public String consume() {
         //For HEALTH potions
-        int curHealth = super.getOwner().getHealth();
-        if (curHealth + super.getDeltaHealth() > super.getOwner().getMaxHealth()) {
+        int curHealth = super.getOwner().getCharacterStats().getHealth();
+        if (curHealth + super.getDeltaHealth() > super.getOwner().getCharacterStats().getMaxHealth()) {
             //sets the health of the player to max health if health + potion turns
             //out to fill up the health bar of the player
-            super.getOwner().setHealth(super.getOwner().getMaxHealth());
+            super.getOwner().getCharacterStats().setHealth(
+                    super.getOwner().getCharacterStats().getMaxHealth());
         }
         else {
-            super.getOwner().setHealth(curHealth + super.getDeltaHealth());
+            super.getOwner().getCharacterStats().setHealth(
+                    curHealth + super.getDeltaHealth());
         }
 
         //For ATTACK potions
-        super.getOwner().setAttack(
-                super.getOwner().getAttack() + super.getDeltaAttack());
+        super.getOwner().getCharacterStats().setAttack(
+                super.getOwner().getCharacterStats().getAttack() + super.getDeltaAttack());
 
         //For DEFENSE potions
-        super.getOwner().setDefense(
-                super.getOwner().getDefense() + super.getDeltaDefense());
+        super.getOwner().getCharacterStats().setDefense(
+                super.getOwner().getCharacterStats().getDefense() + super.getDeltaDefense());
 
         //For items that permanantely increase inventory size
         super.getOwner().setInventorySize(
