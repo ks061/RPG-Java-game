@@ -140,7 +140,8 @@ public class RPGView {
         -Alignment has been set to center
          */
         this.topPane = new FlowPane(Orientation.HORIZONTAL);
-        this.roomNameLabel = new Label("Room Name: ");
+        this.roomNameLabel = new Label(String.format("%s is in ",
+                                                     this.theModel.getPlayer().getName()));
         this.roomName = new Label(theModel.getCurrentRoom().getName());
         this.topPane.getChildren().add(roomNameLabel);
         this.topPane.getChildren().add(roomName);
