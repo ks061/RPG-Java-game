@@ -181,6 +181,24 @@ public class RPGModel {
         this.propPlayerCurrentHealth.setValue(currentHealthString);
         this.propPlayerAttack.setValue(attackString);
         this.propPlayerDefense.setValue(defenseString);
+        if (this.player.getWeapon() == null) {
+            this.propPlayerWeapon.setValue("None");
+        }
+        else {
+            this.propPlayerWeapon.setValue(this.player.getWeapon().getName());
+        }
+        if (this.player.getArmor() == null) {
+            this.propPlayerArmor.setValue("None");
+        }
+        else {
+            this.propPlayerArmor.setValue(this.player.getArmor().getName());
+        }
+        if (this.player.getShield() == null) {
+            this.propPlayerShield.setValue("None");
+        }
+        else {
+            this.propPlayerShield.setValue(this.player.getShield().getName());
+        }
     }
 
     /**
@@ -235,26 +253,68 @@ public class RPGModel {
         return player;
     }
 
+    /**
+     * Gets the string property representing the player's current health
+     *
+     * @return the string property representing the player's current health
+     *
+     * @author lts010
+     */
     public StringProperty getPropPlayerCurrentHealth() {
         return propPlayerCurrentHealth;
     }
 
+    /**
+     * Gets the string property representing the player's current attack
+     *
+     * @return the string property representing the player's current attack
+     *
+     * @author lts010
+     */
     public StringProperty getPropPlayerAttack() {
         return propPlayerAttack;
     }
 
+    /**
+     * Gets the string property representing the player's current defense
+     *
+     * @return the string property representing the player's current defense
+     *
+     * @author lts010
+     */
     public StringProperty getPropPlayerDefense() {
         return propPlayerDefense;
     }
 
+    /**
+     * Gets the string property representing the player's current weapon
+     *
+     * @return the string property representing the player's current weapon
+     *
+     * @author lts010
+     */
     public StringProperty getPropPlayerWeapon() {
         return propPlayerWeapon;
     }
 
+    /**
+     * Gets the string property representing the player's current armor
+     *
+     * @return the string property representing the player's current armor
+     *
+     * @author lts010
+     */
     public StringProperty getPropPlayerArmor() {
         return propPlayerArmor;
     }
 
+    /**
+     * Gets the string property representing the player's current armor
+     *
+     * @return the string property representing the player's current armor
+     *
+     * @author lts010
+     */
     public StringProperty getPropPlayerShield() {
         return propPlayerShield;
     }

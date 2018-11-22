@@ -168,8 +168,12 @@ public class RPGController {
                 this.theModel.getPropPlayerAttack());
         this.theView.getPlayerDefense().textProperty().bind(
                 this.theModel.getPropPlayerDefense());
-        this.theModel.updateProperties();
-
+        this.theView.getPlayerWeapon().textProperty().bind(
+                this.theModel.getPropPlayerWeapon());
+        this.theView.getPlayerArmor().textProperty().bind(
+                this.theModel.getPropPlayerArmor());
+        this.theView.getPlayerShield().textProperty().bind(
+                this.theModel.getPropPlayerShield());
         refresh();
     }
 
@@ -187,13 +191,15 @@ public class RPGController {
     }
 
     /**
-     * Updates the travel buttons and NPCs in the room based on the current room
+     * Updates the travel buttons and NPCs in the room based on the current
+     * room, as well as the players stats and equipment
      *
      * @author ks061
      */
     public void refresh() {
         updateTravelButtons();
         updateNPCsInRoom();
+        this.theModel.updateProperties();
         this.theView.refreshRoomName();
         this.theView.updateStoryTextOutput("");
     }

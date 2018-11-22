@@ -56,6 +56,7 @@ public class RPGView {
     leftPane
     -Variables involved in the left pane of the border pane root
     -Contains the player's stats (health, attack, and armor)
+    -Also contains the player's current equipment (weapon, armor, shield)
      */
     private VBox leftPane;
     private Label playerStatLabel;
@@ -65,6 +66,13 @@ public class RPGView {
     private Text playerAttack;
     private Label playerDefenseLabel;
     private Text playerDefense;
+    public Text playerShield;
+    public Text playerArmor;
+    public Text playerWeapon;
+    public Label ShieldLabel;
+    public Label ArmorLabel;
+    public Label WeaponLabel;
+    public Label EquipmentLabel;
 
     /*
     rightPane
@@ -163,10 +171,13 @@ public class RPGView {
         this.playerDefenseLabel = new Label("Defense: ");
         this.playerDefense = new Text();
 
-        Label EquipmentLabel = new Label("Equipment");
-        Label WeaponLabel = new Label("Your Weapon:");
-        Label ArmorLabel = new Label("Your Armor:");
-        Label ShieldLabel = new Label("Your Shield:");
+        EquipmentLabel = new Label("Equipment");
+        WeaponLabel = new Label("Your Weapon:");
+        ArmorLabel = new Label("Your Armor:");
+        ShieldLabel = new Label("Your Shield:");
+        playerWeapon = new Text();
+        playerArmor = new Text();
+        playerShield = new Text();
         this.leftPane.getChildren().add(new FlowPane(playerStatLabel));
         this.leftPane.getChildren().add(new FlowPane(playerHealthLabel,
                                                      playerHealth));
@@ -177,11 +188,11 @@ public class RPGView {
         this.leftPane.getChildren().add(new FlowPane());
         this.leftPane.getChildren().add(new FlowPane(EquipmentLabel));
         this.leftPane.getChildren().add(new FlowPane(WeaponLabel));
-        this.leftPane.getChildren().add(new FlowPane());
+        this.leftPane.getChildren().add(new FlowPane(playerWeapon));
         this.leftPane.getChildren().add(new FlowPane(ArmorLabel));
-        this.leftPane.getChildren().add(new FlowPane());
+        this.leftPane.getChildren().add(new FlowPane(playerArmor));
         this.leftPane.getChildren().add(new FlowPane(ShieldLabel));
-        this.leftPane.getChildren().add(new FlowPane());
+        this.leftPane.getChildren().add(new FlowPane(playerShield));
         this.leftPane.setAlignment(Pos.CENTER);
 
         /*
@@ -383,5 +394,38 @@ public class RPGView {
      */
     public Text getPlayerDefense() {
         return playerDefense;
+    }
+
+    /**
+     * Gets the text representing the player's shield
+     *
+     * @return the text representing the player's defense
+     *
+     * @author lts010
+     */
+    public Text getPlayerShield() {
+        return playerShield;
+    }
+
+    /**
+     * Gets the text representing the player's armor
+     *
+     * @return the text representing the player's defense
+     *
+     * @author lts010
+     */
+    public Text getPlayerArmor() {
+        return playerArmor;
+    }
+
+    /**
+     * Gets the text representing the player's weapon
+     *
+     * @return the text representing the player's defense
+     *
+     * @author lts010
+     */
+    public Text getPlayerWeapon() {
+        return playerWeapon;
     }
 }
