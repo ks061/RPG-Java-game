@@ -60,14 +60,14 @@ public class Story {
         NPC npc2 = new NPC("Muz", new RPGCharacterStats(20, 0, 0),
                            new ArrayList<String>() {
                        {
-                           add("Yo homie! We got this!");
+                           add("Yo Dancee, lookin' sharp!");
                            add("Yo homie, don't give up! You can do this!");
                        }
                    }, true);
         NPC npc3 = new NPC("Reef", new RPGCharacterStats(20, 0, 0),
                            new ArrayList<String>() {
                        {
-                           add("Come thru, bro");
+                           add("*watching fork-knife*");
                            add("My name is not Reef");
                        }
                    }, true);
@@ -85,7 +85,7 @@ public class Story {
                            add("I told you to R E F A C T O R !!!");
                        }
                    }, false);
-        NPC npc6 = new NPC("Dr. King", new RPGCharacterStats(20, 0, 0),
+        NPC npc6 = new NPC("Dr. Queen", new RPGCharacterStats(20, 0, 0),
                            new ArrayList<String>() {
                        {
                            add("Watch the videos!");
@@ -102,47 +102,67 @@ public class Story {
         NPC npc8 = new NPC("Dustin", new RPGCharacterStats(25, 4, 3),
                            new ArrayList<String>() {
                        {
-                           add("something");
-                           add("something");
+                           add("I recoded Java last night. Took me a couple hours...");
+                           add("Are you a double? The thought of you always floats inside my head. B)");
                        }
                    }, false);
         NPC npc9 = new NPC("Beck", new RPGCharacterStats(20, 0, 0),
                            new ArrayList<String>() {
                        {
-                           add("something");
-                           add("something");
+                           add("I'm gonna grade lab13 while skydiving.");
+                           add("Ow, my head.");
                        }
                    }, true);
+//        NPC npc10 = new NPC("Robo-Dustin", new RPGCharacterStats(20, 0, 0),
+//                            new ArrayList<String>() {
+//                        {
+//                            add("I... AM... Hello World... DUSTIN");
+//                            add("Error Error Error Error Error Error!!!");
+//                        }
+//                    }, true);
+//        NPC npc11 = new NPC("Dill", new RPGCharacterStats(20, 0, 0),
+//                            new ArrayList<String>() {
+//                        {
+//                            add("I will rule over the world!");
+//                            add("Pickles are the best.");
+//                        }
+//                    }, true);
 
-        Equipment weapon1 = new Equipment("weapon1", new ItemStatistics(0, 1, 0,
-                                                                        1),
+        //Set 1
+        Equipment weapon1 = new Equipment("weapon1",
+                                          new ItemStatistics(0, 1, 0, 1),
                                           WEAPON);
-        Equipment shield1 = new Equipment("shield1", new ItemStatistics(1, 0, 0,
-                                                                        1),
+        Equipment shield1 = new Equipment("shield1",
+                                          new ItemStatistics(1, 0, 0, 1),
                                           SHIELD);
         Equipment armor1 = new Equipment("armor1",
-                                         new ItemStatistics(0, 0, 1, 1), ARMOR);
+                                         new ItemStatistics(0, 0, 1, 1),
+                                         ARMOR);
 
-        Equipment weapon2 = new Equipment("weapon2", new ItemStatistics(0, 2, 0,
-                                                                        1),
+        //Set 2
+        Equipment weapon2 = new Equipment("weapon2",
+                                          new ItemStatistics(0, 2, 0, 1),
                                           WEAPON);
-        Equipment shield2 = new Equipment("shield2", new ItemStatistics(2, 0, 0,
-                                                                        1),
+        Equipment shield2 = new Equipment("shield2",
+                                          new ItemStatistics(2, 0, 0, 1),
                                           SHIELD);
         Equipment armor2 = new Equipment("armor2",
-                                         new ItemStatistics(0, 0, 2, 1), ARMOR);
+                                         new ItemStatistics(0, 0, 2, 1),
+                                         ARMOR);
 
-        Equipment weapon3 = new Equipment("weapon3", new ItemStatistics(0, 3, 0,
-                                                                        1),
+        //Set 3
+        Equipment weapon3 = new Equipment("weapon3",
+                                          new ItemStatistics(0, 3, 0, 1),
                                           WEAPON);
-        Equipment shield3 = new Equipment("shield3", new ItemStatistics(3, 0, 0,
-                                                                        1),
+        Equipment shield3 = new Equipment("shield3",
+                                          new ItemStatistics(3, 0, 0, 1),
                                           SHIELD);
         Equipment armor3 = new Equipment("armor3",
-                                         new ItemStatistics(0, 0, 3, 1), ARMOR);
+                                         new ItemStatistics(0, 0, 3, 1),
+                                         ARMOR);
 
         Point2D npcLocation = new Point2D(0, 200);
-        RoomContent rc1 = new RoomContent("room1",
+        RoomContent rc1 = new RoomContent("Bana 340",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc1,
@@ -154,7 +174,7 @@ public class Story {
                                           add(weapon1);
                                       }
                                   });
-        RoomContent rc2 = new RoomContent("room2",
+        RoomContent rc2 = new RoomContent("SAE",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc2,
@@ -166,7 +186,7 @@ public class Story {
                                           add(shield1);
                                       }
                                   });
-        RoomContent rc3 = new RoomContent("room3",
+        RoomContent rc3 = new RoomContent("Cana 213",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc3,
@@ -178,7 +198,7 @@ public class Story {
                                           add(armor1);
                                       }
                                   });
-        RoomContent rc4 = new RoomContent("room4",
+        RoomContent rc4 = new RoomContent("Out and about",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc4,
@@ -190,7 +210,7 @@ public class Story {
                                           add(weapon2);
                                       }
                                   });
-        RoomContent rc5 = new RoomContent("room5",
+        RoomContent rc5 = new RoomContent("Penn State University",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc5,
@@ -202,7 +222,7 @@ public class Story {
                                           add(shield2);
                                       }
                                   });
-        RoomContent rc6 = new RoomContent("room6",
+        RoomContent rc6 = new RoomContent("Crackmetal 169",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc6,
@@ -214,7 +234,7 @@ public class Story {
                                           add(armor2);
                                       }
                                   });
-        RoomContent rc7 = new RoomContent("room7",
+        RoomContent rc7 = new RoomContent("Crackmetal 164",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc7,
@@ -226,7 +246,7 @@ public class Story {
                                           add(weapon3);
                                       }
                                   });
-        RoomContent rc8 = new RoomContent("room8",
+        RoomContent rc8 = new RoomContent("Secret Lab in Bana",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc8,
@@ -238,7 +258,7 @@ public class Story {
                                           add(shield3);
                                       }
                                   });
-        RoomContent rc9 = new RoomContent("room9",
+        RoomContent rc9 = new RoomContent("In the sky",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc9,
@@ -251,6 +271,32 @@ public class Story {
                                           add(armor3);
                                       }
                                   });
+//        RoomContent rc10 = new RoomContent("Rooke Chapel",
+//                                           new ArrayList<NPCImageViewWrapper>() {
+//                                       {
+//                                           add(new NPCImageViewWrapper(npc10,
+//                                                                       "RoboDustin.png",
+//                                                                       npcLocation));
+//                                       }
+//                                   },
+//                                           new ArrayList<Item>() {
+//                                       {
+//                                           add(armor3);
+//                                       }
+//                                   });
+//        RoomContent rc11 = new RoomContent("Dill",
+//                                           new ArrayList<NPCImageViewWrapper>() {
+//                                       {
+//                                           add(new NPCImageViewWrapper(npc11,
+//                                                                       "Dill.png",
+//                                                                       npcLocation));
+//                                       }
+//                                   },
+//                                           new ArrayList<Item>() {
+//                                       {
+//                                           add(armor3);
+//                                       }
+//                                   });
 
         roomContents.add(rc1);
 
@@ -269,6 +315,9 @@ public class Story {
         roomContents.add(rc8);
 
         roomContents.add(rc9);
+
+        ///roomContents.add(rc10);
+        //roomContents.add(rc11);
     }
 
     /**
