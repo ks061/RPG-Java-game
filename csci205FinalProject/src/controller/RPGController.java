@@ -162,6 +162,14 @@ public class RPGController {
 
         setEventHandlerOfComponents();
 
+        this.theView.getPlayerHealth().textProperty().bind(
+                this.theModel.getPropPlayerCurrentHealth());
+        this.theView.getPlayerAttack().textProperty().bind(
+                this.theModel.getPropPlayerAttack());
+        this.theView.getPlayerDefense().textProperty().bind(
+                this.theModel.getPropPlayerDefense());
+        this.theModel.updateProperties();
+
         refresh();
     }
 
@@ -253,5 +261,4 @@ public class RPGController {
                                   npcViewWrapper.getNpc());
         }
     }
-
 }

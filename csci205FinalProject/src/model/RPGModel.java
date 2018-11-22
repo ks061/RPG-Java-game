@@ -16,6 +16,8 @@
 package model;
 
 import java.util.ArrayList;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import model.character.Player;
 import model.map.Room;
 import model.story.RoomContent;
@@ -62,14 +64,33 @@ public class RPGModel {
     private static final int NUM_ROWS = 3;
 
     /**
+     * The properties that represent the current statistics of the player
+     */
+    private StringProperty propPlayerCurrentHealth;
+    private StringProperty propPlayerAttack;
+    private StringProperty propPlayerDefense;
+
+    /**
+     * The properties that represent the player's current equipment
+     */
+    private StringProperty propPlayerWeapon;
+    private StringProperty propPlayerArmor;
+    private StringProperty propPlayerShield;
+
+    /**
      * Constructor that initializes the model of the application
      *
      * @author ks061
      */
     public RPGModel() {
-        this.currentRoom = initGridOfRooms();
-
+        this.propPlayerCurrentHealth = new SimpleStringProperty("");
+        this.propPlayerAttack = new SimpleStringProperty("");
+        this.propPlayerDefense = new SimpleStringProperty("");
+        this.propPlayerWeapon = new SimpleStringProperty("");
+        this.propPlayerArmor = new SimpleStringProperty("");
+        this.propPlayerShield = new SimpleStringProperty("");
         this.player = new Player("Student");
+        this.currentRoom = initGridOfRooms();
     }
 
     /**
@@ -146,6 +167,23 @@ public class RPGModel {
     }
 
     /**
+     * Updates the properties representing the player's statistics and equipment
+     * to keep them current with the player
+     */
+    public void updateProperties() {
+        String currentHealthString = String.format("%d",
+                                                   this.player.getCharacterStats().getHealth());
+        String attackString = String.format("%d",
+                                            this.player.getCharacterStats().getAttack());
+        String defenseString = String.format("%d",
+                                             this.player.getCharacterStats().getDefense());
+
+        this.propPlayerCurrentHealth.setValue(currentHealthString);
+        this.propPlayerAttack.setValue(attackString);
+        this.propPlayerDefense.setValue(defenseString);
+    }
+
+    /**
      * Initializes each room in the map with the content coded into the story
      * within the model
      *
@@ -195,6 +233,30 @@ public class RPGModel {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    public StringProperty getPropPlayerCurrentHealth() {
+        return propPlayerCurrentHealth;
+    }
+
+    public StringProperty getPropPlayerAttack() {
+        return propPlayerAttack;
+    }
+
+    public StringProperty getPropPlayerDefense() {
+        return propPlayerDefense;
+    }
+
+    public StringProperty getPropPlayerWeapon() {
+        return propPlayerWeapon;
+    }
+
+    public StringProperty getPropPlayerArmor() {
+        return propPlayerArmor;
+    }
+
+    public StringProperty getPropPlayerShield() {
+        return propPlayerShield;
     }
 
 }

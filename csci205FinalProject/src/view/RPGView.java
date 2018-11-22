@@ -24,6 +24,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import model.RPGModel;
 
 /**
@@ -59,11 +60,11 @@ public class RPGView {
     private VBox leftPane;
     private Label playerStatLabel;
     private Label playerHealthLabel;
-    private Label playerHealth;
+    private Text playerHealth;
     private Label playerAttackLabel;
-    private Label playerAttack;
-    private Label playerArmorLabel;
-    private Label playerArmor;
+    private Text playerAttack;
+    private Label playerDefenseLabel;
+    private Text playerDefense;
 
     /*
     rightPane
@@ -154,20 +155,33 @@ public class RPGView {
          */
         this.leftPane = new VBox();
         this.leftPane.setSpacing(PREF_PADDING);
-        this.playerStatLabel = new Label("Player Stats");
-        this.playerHealthLabel = new Label("Health:");
-        this.playerHealth = new Label(" 100");
-        this.playerAttackLabel = new Label("Attack:");
-        this.playerAttack = new Label(" 100");
-        this.playerArmorLabel = new Label("Armor:");
-        this.playerArmor = new Label(" 100");
+        this.playerStatLabel = new Label("Player Status");
+        this.playerHealthLabel = new Label("Health: ");
+        this.playerHealth = new Text();
+        this.playerAttackLabel = new Label("Attack: ");
+        this.playerAttack = new Text();
+        this.playerDefenseLabel = new Label("Defense: ");
+        this.playerDefense = new Text();
+
+        Label EquipmentLabel = new Label("Equipment");
+        Label WeaponLabel = new Label("Your Weapon:");
+        Label ArmorLabel = new Label("Your Armor:");
+        Label ShieldLabel = new Label("Your Shield:");
         this.leftPane.getChildren().add(new FlowPane(playerStatLabel));
         this.leftPane.getChildren().add(new FlowPane(playerHealthLabel,
                                                      playerHealth));
         this.leftPane.getChildren().add(new FlowPane(playerAttackLabel,
                                                      playerAttack));
-        this.leftPane.getChildren().add(new FlowPane(playerArmorLabel,
-                                                     playerArmor));
+        this.leftPane.getChildren().add(new FlowPane(playerDefenseLabel,
+                                                     playerDefense));
+        this.leftPane.getChildren().add(new FlowPane());
+        this.leftPane.getChildren().add(new FlowPane(EquipmentLabel));
+        this.leftPane.getChildren().add(new FlowPane(WeaponLabel));
+        this.leftPane.getChildren().add(new FlowPane());
+        this.leftPane.getChildren().add(new FlowPane(ArmorLabel));
+        this.leftPane.getChildren().add(new FlowPane());
+        this.leftPane.getChildren().add(new FlowPane(ShieldLabel));
+        this.leftPane.getChildren().add(new FlowPane());
         this.leftPane.setAlignment(Pos.CENTER);
 
         /*
@@ -338,4 +352,36 @@ public class RPGView {
         this.roomName.setText(this.theModel.getCurrentRoom().getName());
     }
 
+    /**
+     * Gets the text representing the player's current health
+     *
+     * @return the text representing the player's current health
+     *
+     * @author lts010
+     */
+    public Text getPlayerHealth() {
+        return playerHealth;
+    }
+
+    /**
+     * Gets the text representing the player's attack
+     *
+     * @return the text representing the player's attack
+     *
+     * @author lts010
+     */
+    public Text getPlayerAttack() {
+        return playerAttack;
+    }
+
+    /**
+     * Gets the text representing the player's defense
+     *
+     * @return the text representing the player's defense
+     *
+     * @author lts010
+     */
+    public Text getPlayerDefense() {
+        return playerDefense;
+    }
 }
