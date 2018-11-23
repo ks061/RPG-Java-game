@@ -188,6 +188,8 @@ public class RPGController {
         updateNPCsInRoom();
         this.theView.refreshRoomName();
         this.theView.updateStoryTextOutput("");
+        this.theView.loadCenterBackground(
+                "img/" + this.theModel.getCurrentRoom().getName() + ".png");
     }
 
     /**
