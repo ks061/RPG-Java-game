@@ -155,6 +155,9 @@ public abstract class RPGCharacter {
         double damageCalculation = this.characterStats.getAttack() - enemy.characterStats.getDefense();
         int trueDamage = (int) Math.round(
                 damageCalculation * criticalHitModifier * accuracyModifier);
+        if (enemy.getCharacterStats().getMaxHealth() == enemy.getCharacterStats().getHealth() && trueDamage >= enemy.getCharacterStats().getMaxHealth()) {
+            trueDamage = enemy.getCharacterStats().getMaxHealth() - 1;
+        }
         enemy.characterStats.setHealth(
                 enemy.characterStats.getHealth() - trueDamage);
         if (enemy.characterStats.getHealth() <= 0) {
