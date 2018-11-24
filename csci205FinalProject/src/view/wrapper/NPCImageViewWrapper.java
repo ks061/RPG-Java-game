@@ -15,10 +15,7 @@
  */
 package view.wrapper;
 
-import java.io.File;
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import model.character.NPC;
 
 /**
@@ -27,19 +24,14 @@ import model.character.NPC;
  *
  * @author ks061
  */
-public class NPCImageViewWrapper {
-
-    private final NPC npc;
-    private ImageView npcImageView;
+public class NPCImageViewWrapper extends ImageViewWrapper {
 
     public static final int NPC_VIEW_WIDTH = 50;
     public static final int NPC_VIEW_HEIGHT = 50;
 
-    public static final String IMAGE_PATH_PARENT_DIR = "img/";
-
     /**
-     * NPCView is an explicit constructor that initializes an NPC character,
-     * image of the NPC, and location of the NPC in the view
+     * Explicit constructor that initializes an NPC character, image view of the
+     * NPC at a location, image width, and image height.
      *
      * @param npc NPC character
      * @param imageFilename filename of the image of the NPC
@@ -49,17 +41,7 @@ public class NPCImageViewWrapper {
      * @author ks061
      */
     public NPCImageViewWrapper(NPC npc, String imageFilename, Point2D location) {
-        this.npc = npc;
-
-        String imagePath = IMAGE_PATH_PARENT_DIR + imageFilename;
-        imagePath = new File(imagePath).toURI().toString();
-        Image npcImage = new Image(imagePath);
-
-        this.npcImageView = new ImageView(npcImage);
-        this.npcImageView.setFitWidth(NPC_VIEW_WIDTH);
-        this.npcImageView.setFitHeight(NPC_VIEW_HEIGHT);
-        this.npcImageView.setX(location.getX());
-        this.npcImageView.setY(location.getY());
+        super(npc, imageFilename, location, NPC_VIEW_WIDTH, NPC_VIEW_HEIGHT);
     }
 
     /**
@@ -70,18 +52,7 @@ public class NPCImageViewWrapper {
      * @author ks061
      */
     public NPC getNpc() {
-        return npc;
-    }
-
-    /**
-     * Gets the image view of the NPC
-     *
-     * @return image view of the NPC
-     *
-     * @author ks061
-     */
-    public ImageView getNpcImageView() {
-        return npcImageView;
+        return (NPC) super.getWrappedObject();
     }
 
 }
