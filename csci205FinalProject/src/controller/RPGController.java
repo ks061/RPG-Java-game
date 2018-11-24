@@ -246,10 +246,10 @@ public class RPGController {
         this.theView.getCenterPane().getChildren().clear();
         for (NPCImageViewWrapper npcViewWrapper : this.theModel.getCurrentRoom().getNPCViewWrappers()) {
             this.theView.getCenterPane().getChildren().add(
-                    npcViewWrapper.getNpcImageView());
-            npcViewWrapper.getNpcImageView().setOnMouseClicked(
+                    npcViewWrapper.getImageView());
+            npcViewWrapper.getImageView().setOnMouseClicked(
                     this.rpgMouseEventHandler);
-            mapImageViewToNPC.put(npcViewWrapper.getNpcImageView(),
+            mapImageViewToNPC.put(npcViewWrapper.getImageView(),
                                   npcViewWrapper.getNpc());
         }
     }
