@@ -22,6 +22,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import model.RPGModel;
@@ -71,8 +72,15 @@ public class RPGView {
     -Contains buttons that the player can click to perform different actions
      */
     private VBox rightPane;
-    private Button buttonEquipment;
-    private Button buttonItem;
+    private Button buttonInventory;
+    private Button backButtonInventory;
+    //private Button buttonEquipment;
+    //private Button buttonItem;
+
+    private VBox rightPaneInventory;
+    private HBox mainInventory;
+    private VBox itemList;
+    private VBox equipmentList;
     /*
     Buttons are stored in a BorderPane for organizational purposes.
     These buttons make the player go to different rooms in the north, east,
@@ -176,10 +184,24 @@ public class RPGView {
          */
         this.rightPane = new VBox();
         this.rightPane.setSpacing(PREF_PADDING);
-        this.buttonEquipment = new Button("Equipment");
-        this.buttonItem = new Button("Item");
-        this.rightPane.getChildren().add(this.buttonEquipment);
-        this.rightPane.getChildren().add(this.buttonItem);
+        this.buttonInventory = new Button("Inventory");
+        this.backButtonInventory = new Button("Back");
+        this.rightPane.getChildren().add(this.buttonInventory);
+        //this.buttonEquipment = new Button("Equipment");
+        //this.buttonItem = new Button("Item");
+        //this.rightPane.getChildren().add(this.buttonEquipment);
+        //this.rightPane.getChildren().add(this.buttonItem);
+
+        /*
+        RightPane when Inventory button is clicked
+         */
+        this.rightPaneInventory = new VBox();
+        this.mainInventory = new HBox();
+        this.itemList = new VBox();
+        this.equipmentList = new VBox();
+        this.rightPaneInventory.getChildren().add(this.itemList);
+        this.rightPaneInventory.getChildren().add(this.equipmentList);
+        this.rightPaneInventory.getChildren().add(this.backButtonInventory);
 
         /*
         Button settings
@@ -225,6 +247,73 @@ public class RPGView {
         this.root.setBottom(this.bottomPane);
         this.root.setCenter(this.centerPane);
         BorderPane.setAlignment(this.centerPane, Pos.CENTER_LEFT);
+    }
+
+    /**
+     * Gets the original right pane containing the directional buttons and the
+     * menu for player actions
+     *
+     * @return original right pane
+     *
+     * @author ishk001
+     */
+    public VBox getRightPane() {
+        return rightPane;
+    }
+
+    /**
+     * Gets the back button which will take the player from the inventory back
+     * to the original right pane
+     *
+     * @return back button
+     */
+    public Button getBackButtonInventory() {
+        return backButtonInventory;
+    }
+
+    /**
+     * Gets the new right pane which will display the consumables and the
+     * equipments that the player currently holds
+     *
+     * @return inventory of consumables and equipments
+     *
+     * @author ishl001
+     */
+    public VBox getRightPaneInventory() {
+        return rightPaneInventory;
+    }
+
+    /**
+     * Gets the left side of the inventory list which will display consumables
+     *
+     * @return vertical list of consumable items
+     *
+     * @author ishk001
+     */
+    public VBox getItemList() {
+        return itemList;
+    }
+
+    /**
+     * Gets the right side of the inventory list which will display equipments
+     *
+     * @return vertical list of equipments
+     *
+     * @author ishk001
+     */
+    public VBox getEquipmentList() {
+        return equipmentList;
+    }
+
+    /**
+     * Gets the right pane of the root node (border pane)
+     *
+     * @return right pane of the border pane root node
+     *
+     * @author ishk001
+     */
+    public Button getButtonInventory() {
+        return buttonInventory;
     }
 
     /**

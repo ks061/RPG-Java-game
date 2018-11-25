@@ -44,4 +44,15 @@ public abstract class Item {
         this.name = name;
         this.itemStatistics = itemStatistics;
     }
+
+    /**
+     * Gets the name of the item (Consumable or Equipment)
+     *
+     * @return name of the item
+     *
+     * @author ishk001
+     */
+    public String getName() {
+        return name;
+    }
 }

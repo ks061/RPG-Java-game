@@ -22,11 +22,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import model.RPGModel;
 import model.character.NPC;
+import model.item.ConsumableItem;
 import view.RPGView;
 import view.wrapper.NPCImageViewWrapper;
 
@@ -59,6 +61,14 @@ public class RPGController {
                         (Node) event.getSource())) {
                     handleTravelButtonClick(event);
                 }
+                else if (theView.getButtonInventory().equals(
+                        (Node) event.getSource())) {
+                    handleInventoryButtonClick();
+                }
+                else if (theView.getBackButtonInventory().equals(
+                        (Node) event.getSource())) {
+                    handleInventoryBackButtonClick();
+                }
             }
         }
 
@@ -87,6 +97,41 @@ public class RPGController {
                         theModel.getCurrentRoom().getEast());
             }
             refresh();
+        }
+
+        /**
+         * Handles the event when the player clicks on the inventory button
+         *
+         * @author ishk001
+         */
+        private void handleInventoryButtonClick() {
+            for (ConsumableItem item : theModel.getPlayer().getInventory()) {
+                theView.getItemList().getChildren().add(
+                        new Label(item.getName()));
+            }
+            if (theModel.getPlayer().getWeapon() != null) {
+                theView.getEquipmentList().getChildren().add(new Label(
+                        theModel.getPlayer().getWeapon().getName()));
+            }
+            if (theModel.getPlayer().getShield() != null) {
+                theView.getEquipmentList().getChildren().add(new Label(
+                        theModel.getPlayer().getShield().getName()));
+            }
+            if (theModel.getPlayer().getArmor() != null) {
+                theView.getEquipmentList().getChildren().add(new Label(
+                        theModel.getPlayer().getArmor().getName()));
+            }
+            theView.getRootNode().setRight(theView.getRightPaneInventory());
+        }
+
+        /**
+         * Handles the event when the player clicks on the back button that will
+         * take them from the inventory page back to the original right pane
+         *
+         * @author ishk001
+         */
+        private void handleInventoryBackButtonClick() {
+            theView.getRootNode().setRight(theView.getRightPane());
         }
     }
 

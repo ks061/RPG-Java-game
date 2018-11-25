@@ -17,9 +17,9 @@ package model.character;
 
 import java.util.ArrayList;
 import java.util.Random;
+import model.item.ConsumableItem;
 import model.item.Equipment;
 import model.item.EquipmentType;
-import model.item.Item;
 import model.map.Room;
 
 /**
@@ -44,7 +44,7 @@ public abstract class RPGCharacter {
     /**
      * ArrayList of inventory items
      */
-    private ArrayList<Item> inventory;
+    private ArrayList<ConsumableItem> inventory;
     /**
      * Type of equipment to be used as weapon
      */
@@ -240,7 +240,7 @@ public abstract class RPGCharacter {
      *
      * @return ArrayList of items representing the inventory
      */
-    public ArrayList<Item> getInventory() {
+    public ArrayList<ConsumableItem> getInventory() {
         return inventory;
     }
 
@@ -249,7 +249,7 @@ public abstract class RPGCharacter {
      *
      * @param inventory - ArrayList of items to set the inventory
      */
-    public void setInventory(ArrayList<Item> inventory) {
+    public void setInventory(ArrayList<ConsumableItem> inventory) {
         this.inventory = inventory;
     }
 
