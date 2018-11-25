@@ -20,7 +20,7 @@ package model.item;
  * in the health player statistic, attack player statistic, defense player
  * statistic, size of the inventory of the player using the item
  *
- * @author ks061
+ * @author ks061, lts010
  */
 public class ItemStatistics {
 
@@ -37,27 +37,135 @@ public class ItemStatistics {
      */
     private int deltaDefense;
     /**
-     * Change in the size of the inventory of the player as a result of
-     * obtaining the item
+     * Change in the size of the player inventory as a result of obtaining the
+     * item
      */
     private int deltaInventory;
 
     /**
      * Explicit constructor for ItemStatistics
      *
-     * @param deltaHealth change in the health player statistic as a result of
+     * @param deltaHealth change in the player health statistic as a result of
      * obtaining the item
      * @param deltaAttack change in the attack player statistic as a result of
      * obtaining the item
-     * @param deltaDefense change in the defense player statistic as a result of
+     * @param deltaDefense change in the player defense statistic as a result of
      * obtaining the item
-     * @param deltaInventory change in the size of the inventory of the player
-     * as a result of obtaining the item
+     * @param deltaInventory change in the size of the player inventory as a
+     * result of obtaining the item
      *
-     * @author ks061
+     * @author ks061, lts010
      */
     public ItemStatistics(int deltaHealth, int deltaAttack, int deltaDefense,
                           int deltaInventory) {
-
+        this.deltaAttack = deltaAttack;
+        this.deltaHealth = deltaHealth;
+        this.deltaDefense = deltaDefense;
+        this.deltaInventory = deltaInventory;
     }
+
+    /**
+     * Gets the change in the player health statistic as a result of obtaining
+     * the item
+     *
+     * @return change in the player health statistic as a result of obtaining
+     * the item
+     *
+     * @author lts010, ks061
+     */
+    public int getDeltaHealth() {
+        return deltaHealth;
+    }
+
+    /**
+     * Sets the change in the player health statistic as a result of obtaining
+     * the item
+     *
+     * @param deltaHealth change in the player health statistic as a result of
+     * obtaining the item
+     *
+     * @author lts010, ks061
+     */
+    public void setDeltaHealth(int deltaHealth) {
+        this.deltaHealth = deltaHealth;
+    }
+
+    /**
+     * Gets the change in the player attack statistic as a result of obtaining
+     * the item
+     *
+     * @return change in the player attack statistic as a result of obtaining
+     * the item
+     *
+     * @author lts010, ks061
+     */
+    public int getDeltaAttack() {
+        return deltaAttack;
+    }
+
+    /**
+     * Sets the change in the player attack statistic as a result of obtaining
+     * the item
+     *
+     * @param deltaAttack change in the player attack statistic as a result of
+     * obtaining the item
+     *
+     * @author lts010, ks061
+     */
+    public void setDeltaAttack(int deltaAttack) {
+        this.deltaAttack = deltaAttack;
+    }
+
+    /**
+     * Gets the change in the player defense statistic as a result of obtaining
+     * the item
+     *
+     * @return change in the player defense statistic as a result of obtaining
+     * the item
+     *
+     * @author lts010, ks061
+     */
+    public int getDeltaDefense() {
+        return deltaDefense;
+    }
+
+    /**
+     * Sets the change in the player defense statistic as a result of obtaining
+     * the item
+     *
+     * @param deltaDefense change in the player defense statistic as a result of
+     * obtaining the item
+     *
+     * @author lts010, ks061
+     */
+    public void setDeltaDefense(int deltaDefense) {
+        this.deltaDefense = deltaDefense;
+    }
+
+    /**
+     * Gets the change in the size of the player inventory as a result of
+     * obtaining the item
+     *
+     * @return change in the size of the player inventory as a result of
+     * obtaining the item
+     *
+     * @author lts010, ks061
+     */
+    public int getDeltaInventory() {
+        return deltaInventory;
+    }
+
+    /**
+     * Sets the change in the size of the player inventory as a result of
+     * obtaining the item
+     *
+     * @param deltaInventory change in the size of the player inventory as a
+     * result of obtaining the item
+     *
+     * @author lts010, ks061
+     */
+    public void setDeltaInventory(int deltaInventory) {
+        this.deltaInventory = deltaInventory;
+    }
+
 }

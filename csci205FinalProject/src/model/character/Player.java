@@ -52,20 +52,6 @@ public class Player extends RPGCharacter {
               Player.DEFAULT_INVENTORY_SIZE);
     }
 
-    // TODO: Discuss; may be unneeded.
-    /**
-     * Overrides moveTo in the RPGCharacter class
-     *
-     * @param room - room to move to
-     * @return String representing the room the player moved to
-     */
-//    public String moveTo(Room room) {
-//        this.getLocation().setPlayer(null);
-//        this.setLocation(room);
-//        this.getLocation().setPlayer(this);
-//        return String.format("%s moved to the %s",
-//                             this.getName(), this.getLocation().getName());
-//    }
     /**
      * Toggles the current dialogue of the NPC and returns it (has the NPC talk)
      *
