@@ -15,11 +15,18 @@
  */
 package view;
 
+import java.io.File;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
@@ -251,6 +258,29 @@ public class RPGView {
         this.root.setBottom(this.bottomPane);
         this.root.setCenter(this.centerPane);
         BorderPane.setAlignment(this.centerPane, Pos.CENTER_LEFT);
+    }
+
+    /**
+     * Creates a background for the centerPane by using the file path given
+     *
+     * @param backgroundImagePath - the file path that should lead to an image
+     * that will be used as the background of the centerPane
+     *
+     * @author lts010
+     */
+    public void loadCenterBackground(String backgroundImagePath) {
+        backgroundImagePath = new File(backgroundImagePath).toURI().toString();
+        Image image = new Image(backgroundImagePath);
+        BackgroundSize backgroundSize = new BackgroundSize(
+                this.centerPane.getPrefWidth(), this.centerPane.getPrefWidth(),
+                false, false, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(image,
+                                                              BackgroundRepeat.NO_REPEAT,
+                                                              BackgroundRepeat.NO_REPEAT,
+                                                              BackgroundPosition.CENTER,
+                                                              backgroundSize);
+        Background centerBackground = new Background(backgroundImage);
+        this.centerPane.setBackground(centerBackground);
     }
 
     /**

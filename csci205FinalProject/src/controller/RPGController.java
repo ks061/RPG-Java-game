@@ -204,6 +204,8 @@ public class RPGController {
         this.theModel.updateProperties();
         this.theView.refreshRoomName();
         this.theView.updateStoryTextOutput("");
+        this.theView.loadCenterBackground(
+                "img/" + this.theModel.getCurrentRoom().getName() + ".png");
     }
 
     /**
