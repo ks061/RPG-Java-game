@@ -143,12 +143,12 @@ public class RPGController {
     /**
      * Constructor that initializes references to the model and view of the
      * application, sets the view node-model component map, and sets event
-     * handlers for the view components
+     * handlers for the view components; creates bindings to player properties
      *
      * @param theModel model of the application
      * @param theView view of the application
      *
-     * @author ks061
+     * @author ks061, lts010
      */
     public RPGController(RPGModel theModel,
                          RPGView theView) {
@@ -161,6 +161,19 @@ public class RPGController {
         this.mapImageViewToNPC = new HashMap<>();
 
         setEventHandlerOfComponents();
+
+        this.theView.getPlayerHealth().textProperty().bind(
+                this.theModel.getPropPlayerCurrentHealth());
+        this.theView.getPlayerAttack().textProperty().bind(
+                this.theModel.getPropPlayerAttack());
+        this.theView.getPlayerDefense().textProperty().bind(
+                this.theModel.getPropPlayerDefense());
+        this.theView.getPlayerWeapon().textProperty().bind(
+                this.theModel.getPropPlayerWeapon());
+        this.theView.getPlayerArmor().textProperty().bind(
+                this.theModel.getPropPlayerArmor());
+        this.theView.getPlayerShield().textProperty().bind(
+                this.theModel.getPropPlayerShield());
 
         refresh();
     }
@@ -179,13 +192,16 @@ public class RPGController {
     }
 
     /**
-     * Updates the travel buttons and NPCs in the room based on the current room
+     * Updates the travel buttons, NPCs in the room based on the current room,
+     * properties of the player, including player statistics and equipment, room
+     * name, and story dialogue
      *
-     * @author ks061
+     * @author ks061, lts010
      */
     public void refresh() {
         updateTravelButtons();
         updateNPCsInRoom();
+        this.theModel.updateProperties();
         this.theView.refreshRoomName();
         this.theView.updateStoryTextOutput("");
     }
@@ -253,5 +269,4 @@ public class RPGController {
                                   npcViewWrapper.getNpc());
         }
     }
-
 }

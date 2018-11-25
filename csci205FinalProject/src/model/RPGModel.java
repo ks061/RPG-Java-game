@@ -16,6 +16,8 @@
 package model;
 
 import java.util.ArrayList;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import model.character.Player;
 import model.map.Room;
 import model.story.RoomContent;
@@ -62,14 +64,33 @@ public class RPGModel {
     private static final int NUM_ROWS = 3;
 
     /**
+     * The properties that represent the current statistics of the player
+     */
+    private StringProperty propPlayerCurrentHealth;
+    private StringProperty propPlayerAttack;
+    private StringProperty propPlayerDefense;
+
+    /**
+     * The properties that represent the player's current equipment
+     */
+    private StringProperty propPlayerWeapon;
+    private StringProperty propPlayerArmor;
+    private StringProperty propPlayerShield;
+
+    /**
      * Constructor that initializes the model of the application
      *
      * @author ks061
      */
     public RPGModel() {
-        this.currentRoom = initGridOfRooms();
-
+        this.propPlayerCurrentHealth = new SimpleStringProperty("");
+        this.propPlayerAttack = new SimpleStringProperty("");
+        this.propPlayerDefense = new SimpleStringProperty("");
+        this.propPlayerWeapon = new SimpleStringProperty("");
+        this.propPlayerArmor = new SimpleStringProperty("");
+        this.propPlayerShield = new SimpleStringProperty("");
         this.player = new Player("Student");
+        this.currentRoom = initGridOfRooms();
     }
 
     /**
@@ -146,6 +167,97 @@ public class RPGModel {
     }
 
     /**
+     * Updates the current health property of the player
+     *
+     * @author ks061, lts010
+     */
+    private void updateCurrentHealthProperty() {
+        String currentHealthString = String.format("%d",
+                                                   this.player.getCharacterStats().getHealth());
+        this.propPlayerCurrentHealth.setValue(currentHealthString);
+    }
+
+    /**
+     * Updates the attack property of the player
+     *
+     * @author ks061, lts010
+     */
+    private void updateAttackProperty() {
+        String attackString = String.format("%d",
+                                            this.player.getCharacterStats().getAttack());
+        this.propPlayerAttack.setValue(attackString);
+    }
+
+    /**
+     * Updates the defense property of the player
+     *
+     * @author ks061, lts010
+     */
+    private void updateDefenseProperty() {
+        String defenseString = String.format("%d",
+                                             this.player.getCharacterStats().getDefense());
+        this.propPlayerDefense.setValue(defenseString);
+    }
+
+    /**
+     * Updates the weapon name property of the player
+     *
+     * @author ks061, lts010
+     */
+    private void updateWeaponProperty() {
+        if (this.player.getWeapon() == null) {
+            this.propPlayerWeapon.setValue("None");
+        }
+        else {
+            this.propPlayerWeapon.setValue(this.player.getWeapon().getName());
+        }
+    }
+
+    /**
+     * Updates the armor name property of the player
+     *
+     * @author ks061, lts010
+     */
+    private void updateArmorProperty() {
+        if (this.player.getArmor() == null) {
+            this.propPlayerArmor.setValue("None");
+        }
+        else {
+            this.propPlayerArmor.setValue(this.player.getArmor().getName());
+        }
+    }
+
+    /**
+     * Updates the shield name property of the player
+     *
+     * @author ks061, lts010
+     */
+    private void updateShieldProperty() {
+        if (this.player.getShield() == null) {
+            this.propPlayerShield.setValue("None");
+        }
+        else {
+            this.propPlayerShield.setValue(this.player.getShield().getName());
+        }
+    }
+
+    /**
+     * Updates the properties representing the player's statistics and equipment
+     * to keep them current with the player
+     *
+     * @author lts010, ks061
+     */
+    public void updateProperties() {
+        updateCurrentHealthProperty();
+        updateAttackProperty();
+        updateDefenseProperty();
+
+        updateWeaponProperty();
+        updateArmorProperty();
+        updateShieldProperty();
+    }
+
+    /**
      * Initializes each room in the map with the content coded into the story
      * within the model
      *
@@ -195,6 +307,72 @@ public class RPGModel {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    /**
+     * Gets the string property representing the player's current health
+     *
+     * @return the string property representing the player's current health
+     *
+     * @author lts010
+     */
+    public StringProperty getPropPlayerCurrentHealth() {
+        return propPlayerCurrentHealth;
+    }
+
+    /**
+     * Gets the string property representing the player's current attack
+     *
+     * @return the string property representing the player's current attack
+     *
+     * @author lts010
+     */
+    public StringProperty getPropPlayerAttack() {
+        return propPlayerAttack;
+    }
+
+    /**
+     * Gets the string property representing the player's current defense
+     *
+     * @return the string property representing the player's current defense
+     *
+     * @author lts010
+     */
+    public StringProperty getPropPlayerDefense() {
+        return propPlayerDefense;
+    }
+
+    /**
+     * Gets the string property representing the player's current weapon
+     *
+     * @return the string property representing the player's current weapon
+     *
+     * @author lts010
+     */
+    public StringProperty getPropPlayerWeapon() {
+        return propPlayerWeapon;
+    }
+
+    /**
+     * Gets the string property representing the player's current armor
+     *
+     * @return the string property representing the player's current armor
+     *
+     * @author lts010
+     */
+    public StringProperty getPropPlayerArmor() {
+        return propPlayerArmor;
+    }
+
+    /**
+     * Gets the string property representing the player's current armor
+     *
+     * @return the string property representing the player's current armor
+     *
+     * @author lts010
+     */
+    public StringProperty getPropPlayerShield() {
+        return propPlayerShield;
     }
 
 }
