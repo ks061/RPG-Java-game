@@ -15,6 +15,8 @@
  */
 package model.character;
 
+import model.item.Item;
+
 /**
  * Player class creates constructor and methods associated with the Players
  * throughout the RPG. It's a child of RPCCharacter.
@@ -127,8 +129,6 @@ public class Player extends RPGCharacter {
 //                    this.getName(), hiddenItem.getName());
 //        }
 //    }
-    // TODO: Discuss implementation of search in NPC or Player class and
-    // logic behind the method.
     /**
      * Searches the body of a dead NPC to gather its items
      *
@@ -136,31 +136,31 @@ public class Player extends RPGCharacter {
      * @return String representing what items were found and added to player
      * inventory
      */
-//    public String search(NPC npc) {
-//        if (npc.isIsAlive()) {
-//            return "Cannot search the bodies of characters who are alive";
-//        }
-//        else {
-//            if (npc.getInventory().isEmpty()) {
-//                return String.format("%s searched %s but found nothing",
-//                                     this.getName(), npc.getName());
-//            }
-//            Item item = npc.getInventory().get(0);
-//            if (this.isInventoryFull()) {
-//                return String.format(
-//                        "%s found %s on %s but their inventory is full",
-//                        this.getName(), item.getName(), npc.getName());
-//            }
-//            else {
-//                this.getInventory().add(item);
-//                npc.getInventory().remove(item);
-//                item.setOwner(this);
-//                return String.format("%s took %s off the body of %s",
-//                                     this.getName(), item.getName(),
-//                                     npc.getName());
-//            }
-//        }
-//    }
+    public String search(NPC npc) {
+        if (npc.isIsAlive()) {
+            return "Cannot search the bodies of characters who are alive";
+        }
+        else {
+            if (npc.getInventory().isEmpty()) {
+                return String.format("%s searched %s but found nothing",
+                                     this.getName(), npc.getName());
+            }
+            Item item = npc.getInventory().get(0);
+            if (this.isInventoryFull()) {
+                return String.format(
+                        "%s found %s on %s but their inventory is full",
+                        this.getName(), item.getName(), npc.getName());
+            }
+            else {
+                this.getInventory().add(item);
+                npc.getInventory().remove(item);
+                return String.format("%s took %s off the body of %s",
+                                     this.getName(), item.getName(),
+                                     npc.getName());
+            }
+        }
+    }
+
     /**
      * Starts a battle with a hostile NPC
      *
