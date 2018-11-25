@@ -176,7 +176,6 @@ public abstract class RPGCharacter {
         else {
             return 1.0;
         }
-
     }
 
     /**
@@ -196,6 +195,9 @@ public abstract class RPGCharacter {
                 damage * criticalHitModifier * accuracyModifier);
         if (roundedDamage <= 0) {
             return 0;
+        }
+        if (enemy.getCharacterStats().getMaxHealth() == enemy.getCharacterStats().getHealth() && roundedDamage >= enemy.getCharacterStats().getMaxHealth()) {
+            roundedDamage = enemy.getCharacterStats().getMaxHealth() - 1;
         }
         return roundedDamage;
     }

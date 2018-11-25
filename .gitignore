@@ -1,0 +1,5 @@
+*.DS_Store
+/csci205finalproject/nbproject/private/
+/csci205fp/nbproject/private/
+/csci205FinalProject/build/
+/csci205FinalProject/dist/
