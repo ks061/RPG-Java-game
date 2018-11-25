@@ -202,6 +202,8 @@ public class RPGView {
         this.rightPaneInventory.getChildren().add(this.itemList);
         this.rightPaneInventory.getChildren().add(this.equipmentList);
         this.rightPaneInventory.getChildren().add(this.backButtonInventory);
+        this.rightPaneInventory.setAlignment(Pos.CENTER);
+        this.rightPaneInventory.setMinWidth(RIGHT_PANE_MIN_WIDTH);
 
         /*
         Button settings
