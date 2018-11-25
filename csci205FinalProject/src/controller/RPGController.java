@@ -111,9 +111,15 @@ public class RPGController {
                         (ImageView) event.getSource());
             }
             try {
-                String dialog = theModel.getPlayer().talk(npcInCurrentRoom);
-                theView.updateStoryTextOutput(
-                        npcInCurrentRoom.getName() + ": " + dialog);
+                if (npcInCurrentRoom.isIsAlive()) {
+                    String dialog = theModel.getPlayer().talk(npcInCurrentRoom);
+                    theView.updateStoryTextOutput(
+                            npcInCurrentRoom.getName() + ": " + dialog);
+                }
+                else {
+                    theView.updateStoryTextOutput(theModel.getPlayer().search(
+                            npcInCurrentRoom));
+                }
             } catch (NullPointerException ex) {
             }
         }
@@ -188,7 +194,6 @@ public class RPGController {
         this.theView.getToRoomBelow().setOnAction(this.rpgActionEventHandler);
         this.theView.getToRoomToLeft().setOnAction(this.rpgActionEventHandler);
         this.theView.getToRoomToRight().setOnAction(this.rpgActionEventHandler);
-
     }
 
     /**
