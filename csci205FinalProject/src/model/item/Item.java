@@ -44,4 +44,27 @@ public abstract class Item {
         this.name = name;
         this.itemStatistics = itemStatistics;
     }
+
+    /**
+     * Gets the name of the item
+     *
+     * @return the name of the item
+     *
+     * @author lts010
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the statistics of the item
+     *
+     * @return the statistics of the item
+     *
+     * @author lts010
+     */
+    public ItemStatistics getItemStatistics() {
+        return itemStatistics;
+    }
+
 }

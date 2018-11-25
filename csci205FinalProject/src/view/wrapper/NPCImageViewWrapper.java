@@ -83,5 +83,10 @@ public class NPCImageViewWrapper {
     public ImageView getNpcImageView() {
         return npcImageView;
     }
+    
+    public void setLocation(double xValue, double yValue) {
+        this.npcImageView.setX(xValue);
+        this.npcImageView.setY(yValue);
+    }
 
 }
