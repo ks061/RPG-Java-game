@@ -55,7 +55,10 @@ public class Room {
      * Room to the left of this room
      */
     private Room west;
-
+    /**
+     * Background image path of this room
+     */
+    private String backgroundImagePath;
     /**
      * Constructor that assigns a name to the room, initializes empty lists for
      * NPCs and hidden items, and sets the player and adjacent room pointers to
@@ -265,4 +268,23 @@ public class Room {
     public void setWest(Room west) {
         this.west = west;
     }
+   /**
+     * Gets the path for the Room Background Image
+     *
+     * @author lts010
+     */
+    public String getBackgroundImagePath() {
+        return backgroundImagePath;
+    }
+  /**
+     * Sets the path for the Room Background Image
+     *
+     * @param backgroudImagePath is the path name for the background image file.
+     *
+     * @author lts010
+     */
+    public void setBackgroundImagePath(String backgroundImagePath) {
+        this.backgroundImagePath = backgroundImagePath;
+    }
+    
 }

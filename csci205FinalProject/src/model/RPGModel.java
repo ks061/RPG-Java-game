@@ -130,18 +130,22 @@ public class RPGModel {
     }
 
     /**
-     * Links a grid of rooms to one another
+     * Links a grid of rooms to one another and sets the background image
+     * to one with the correct doors for the connections.
      *
-     * @author ks061
+     * @author ks061 lts010
      */
     private void connectGridOfRooms() {
         Room roomAbove;
         Room roomBelow;
         Room roomToLeft;
         Room roomToRight;
-
+        int roomNumber;
+        
         for (int rowIndex = 0; rowIndex < NUM_ROWS; rowIndex++) {
             for (int colIndex = 0; colIndex < NUM_ROOMS_PER_ROW; colIndex++) {
+                roomNumber = rowIndex * NUM_ROOMS_PER_ROW + colIndex;
+                this.map.get(rowIndex).get(colIndex).setBackgroundImagePath("img/room" + roomNumber + ".png");
                 try {
                     roomAbove = this.map.get(rowIndex - 1).get(colIndex);
                     this.map.get(rowIndex).get(colIndex).setNorth(roomAbove);

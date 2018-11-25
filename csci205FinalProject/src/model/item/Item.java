@@ -48,45 +48,23 @@ public class Item {
     /**
      * Gets the name of the item
      *
-     * @return name of the item
+     * @return the name of the item
      *
-     * @author lts010, ks061
+     * @author lts010
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Sets the name of the item
-     *
-     * @param name name of the item
-     *
-     * @author lts010, ks061
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Gets the statistics of the item
      *
-     * @return statistics of the item
+     * @return the statistics of the item
      *
-     * @author lts010, ks061
+     * @author lts010
      */
     public ItemStatistics getItemStatistics() {
         return itemStatistics;
-    }
-
-    /**
-     * Sets the statistics of the item
-     *
-     * @param itemStatistics statistics of the item
-     *
-     * @author lts010, ks061
-     */
-    public void setItemStatistics(ItemStatistics itemStatistics) {
-        this.itemStatistics = itemStatistics;
     }
 
 }

@@ -73,4 +73,17 @@ public abstract class ImageViewWrapper {
     public ImageView getImageView() {
         return this.imageView;
     }
+
+    /**
+     * Sets the location of the image view
+     *
+     * @param xValue x-coordinate of the location of the image view
+     * @param yValue y-coordinate of the location of the image view
+     *
+     * @author ks061, lts010
+     */
+    public void setLocation(double xValue, double yValue) {
+        this.imageView.setX(xValue);
+        this.imageView.setY(yValue);
+    }
 }
