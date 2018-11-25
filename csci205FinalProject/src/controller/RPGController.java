@@ -220,7 +220,9 @@ public class RPGController {
         this.theView.getToRoomBelow().setOnAction(this.rpgActionEventHandler);
         this.theView.getToRoomToLeft().setOnAction(this.rpgActionEventHandler);
         this.theView.getToRoomToRight().setOnAction(this.rpgActionEventHandler);
-
+        this.theView.getButtonInventory().setOnAction(this.rpgActionEventHandler);
+        this.theView.getBackButtonInventory().setOnAction(
+                this.rpgActionEventHandler);
     }
 
     /**
