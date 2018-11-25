@@ -54,10 +54,5 @@ public class NPCImageViewWrapper extends ImageViewWrapper {
     public NPC getNpc() {
         return (NPC) super.getWrappedObject();
     }
-    
-    public void setLocation(double xValue, double yValue) {
-        this.npcImageView.setX(xValue);
-        this.npcImageView.setY(yValue);
-    }
 
 }
