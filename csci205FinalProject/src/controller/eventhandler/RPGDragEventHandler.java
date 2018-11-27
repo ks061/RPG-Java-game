@@ -36,8 +36,11 @@ public class RPGDragEventHandler implements EventHandler<DragEvent> {
     @Override
     public void handle(DragEvent event) {
         System.out.println("drag event = " + event.toString());
-        if (event.equals(DragEvent.DRAG_OVER)) {
-            event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        if (event.getEventType().equals(DragEvent.DRAG_OVER)) {
+            System.out.println("DragOver     ----   ");
+            if (event.getDragboard().hasString()) {
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
         }
     }
 }
