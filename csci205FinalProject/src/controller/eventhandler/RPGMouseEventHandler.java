@@ -157,10 +157,6 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
      * @author ks061, lts010
      */
     private void handleAttack(MouseEvent event) {
-//            if (attackActive){
-//                return;
-//            }
-
         String playerAttacksNPC = theController.getTheModel().getPlayer().attack(
                 theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
                         0).getNpc());
@@ -184,41 +180,19 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
     }
 
     /**
-     * Handles dragging the sword
+     * Handles dragging of an item
      *
-     * @param event interaction with dragging the sword
-     *
-     * @author ks061, lts010
-     */
-    private void handleSwordDrag(MouseEvent event) {
-        System.out.println("Sword dragged");
-        Dragboard db = theController.getTheView().getImageViews().get(
-                RPGView.ImageType.SWORD).startDragAndDrop(
-                        TransferMode.ANY);
-        db.setDragView(
-                theController.getTheView().getImageViews().get(
-                        RPGView.ImageType.SWORD).getImage());
-        ClipboardContent content = new ClipboardContent();
-        content.putString("SWORD");
-        db.setContent(content);
-    }
-
-    /**
-     * Handles dragging the shield
-     *
-     * @param event interaction with the shield
+     * @param event interaction with the item
      *
      * @author ks061, lts010
      */
-    private void handleShieldDrag(MouseEvent event) {
-        System.out.println("Shield dragged");
-        Dragboard db = theController.getTheView().getImageViews().get(
-                RPGView.ImageType.SHIELD).startDragAndDrop(
-                        TransferMode.ANY);
-        db.setDragView(theController.getTheView().getImageViews().get(
-                RPGView.ImageType.SHIELD).getImage());
+    private void handleDrag(MouseEvent event) {
+        System.out.println("start drag");
+        ItemImageViewWrapper source = (ItemImageViewWrapper) event.getSource();
+        Dragboard db = source.startDragAndDrop(TransferMode.ANY);
+        db.setDragView(source.getImage());
         ClipboardContent content = new ClipboardContent();
-        content.putString("SHIELD");
+        content.putString(source.getImageKey().name());
         db.setContent(content);
     }
 
@@ -283,13 +257,8 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
                 RPGView.ImageType.ATTACK)) {
             handleAttack(event);
         }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                RPGView.ImageType.SWORD)) {
-            handleSwordDrag(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                RPGView.ImageType.SHIELD)) {
-            handleShieldDrag(event);
+        else if (event.getEventType().equals(MouseEvent.DRAG_DETECTED)) {
+            handleDrag(event);
         }
         else {
             handleNPC(event);
