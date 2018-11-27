@@ -140,6 +140,7 @@ public class RPGController {
         this.mapImageViewToNPC = new HashMap<>();
 
         setEventHandlerOfComponents();
+        
         this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragOver(
                 rpgDragEventHandler);
         this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragDropped(
@@ -148,23 +149,25 @@ public class RPGController {
                 rpgDragEventHandler);
         this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragExited(
                 rpgDragEventHandler);
-        this.theView.getImageViews().get(ImageType.SWORD).setOnDragDetected(
+        this.theView.getImageViews().get(ImageType.WEAPON1).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageType.SHIELD).setOnDragDetected(
+        this.theView.getImageViews().get(ImageType.WEAPON2).setOnDragDetected(
                 rpgMouseEventHandler);
-
-//        this.theView.getPlayerHealth().textProperty().bind(
-//                this.theModel.getPropPlayerCurrentHealth());
-//        this.theView.getPlayerAttack().textProperty().bind(
-//                this.theModel.getPropPlayerAttack());
-//        this.theView.getPlayerDefense().textProperty().bind(
-//                this.theModel.getPropPlayerDefense());
-//        this.theView.getPlayerWeapon().textProperty().bind(
-//                this.theModel.getPropPlayerWeapon());
-//        this.theView.getPlayerArmor().textProperty().bind(
-//                this.theModel.getPropPlayerArmor());
-//        this.theView.getPlayerShield().textProperty().bind(
-//                this.theModel.getPropPlayerShield());
+        this.theView.getImageViews().get(ImageType.WEAPON3).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.SHIELD1).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.SHIELD2).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.SHIELD3).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.ARMOR1).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.ARMOR2).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.ARMOR3).setOnDragDetected(
+                rpgMouseEventHandler);
+                
         this.theView.getBottomHBox().getChildren().add(
                 this.theView.getImageViews().get(ImageType.INVENTORY));
         this.theView.getBottomHBox().getChildren().add(
@@ -174,7 +177,6 @@ public class RPGController {
         this.theView.getBottomHBox().getChildren().add(
                 this.theView.getImageViews().get(ImageType.ATTACK));
         refresh();
-
     }
 
     /**
