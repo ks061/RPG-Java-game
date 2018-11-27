@@ -322,28 +322,19 @@ public class RPGView {
         storyTextFP.getChildren().add(this.storyText);
         storyTextFP.setAlignment(Pos.CENTER);
         this.bottomHBox.getChildren().add(this.storyTextFP);
-
-        /*
-         * create the status bars and text
-         */
-        playerHealthBar = new StatusBar("img/redBall25.png", "img/redBall15.png",
-                                        true);
-        playerStrengthBar = new StatusBar("img/attack25.png", "img/attack15.png",
-                                          true);
-        playerDefenseBar = new StatusBar("img/shield25.png", "img/shield15.png",
-                                         true);
-        nPCHealthBar = new StatusBar("img/redBall25.png", "img/redBall15.png",
-                                     false);
-        nPCStrengthBar = new StatusBar("img/attack25.png", "img/attack15.png",
-                                       false);
-        nPCDefenseBar = new StatusBar("img/shield25.png", "img/shield15.png",
-                                      false);
+         
+        // Creates status bars and labels
+        playerHealthBar = new StatusBar("img/redBall25.png", "img/redBall15.png", true);
+        playerStrengthBar = new StatusBar("img/attack25.png", "img/attack15.png", true);
+        playerDefenseBar = new StatusBar("img/shield25.png", "img/shield15.png", true);
+        nPCHealthBar = new StatusBar("img/redBall25.png", "img/redBall15.png", false);
+        nPCStrengthBar = new StatusBar("img/attack25.png", "img/attack15.png", false);
+        nPCDefenseBar = new StatusBar("img/shield25.png", "img/shield15.png", false);
         statusRoomName = new Text("Room Name");
         statusRoomName.setFont(Font.font(ROOM_NAME_FONT_SIZE));
 
-        /*
-         * Create and Populate statusGridPane
-         */
+        // Creates and populates the grid panes containing status bars for both
+        // the player and NPC
         GridPane.setHgrow(statusRoomName, Priority.ALWAYS);
         GridPane.setHalignment(statusRoomName, HPos.CENTER);
         this.statusGridPane = new GridPane();
@@ -355,10 +346,8 @@ public class RPGView {
         statusGridPane.add(nPCHealthBar, 2, 0);
         statusGridPane.add(nPCStrengthBar, 2, 1);
         statusGridPane.add(nPCDefenseBar, 2, 2);
-
-        /*
-         * CenterPane/BackCenterPane created
-         */
+        
+        // Center panes and back center panes created
         this.centerPane = new Pane();
         this.centerPane.setMinHeight(PREF_CENTER_PANE_HEIGHT);
         this.centerPane.setMinWidth(PREF_CENTER_PANE_WIDTH);
@@ -366,14 +355,12 @@ public class RPGView {
         this.centerBackPane.setMinHeight(PREF_CENTER_PANE_HEIGHT);
         this.centerBackPane.setMinWidth(PREF_CENTER_PANE_WIDTH);
         this.loadImages();
-
+        
         centerBackPane.getChildren().add(this.statusGridPane);
         this.centerBackPane.getChildren().add(centerPane);
 
 
-        /*
-         * Everything is now added to the root node
-         */
+        // All elements added to the root node
         this.root.setCenter(this.centerBackPane);
         //this.root.setTop(this.topPane);
         //this.root.setLeft(this.leftPane);
