@@ -622,50 +622,28 @@ public class RPGView {
      * @author lts010
      */
     public void loadImages() {
-        this.imageViews = new EnumMap<ImageType, ItemImageViewWrapper>(
-                ImageType.class);
-        this.imageViews.put(ImageType.UPARROW, loadImage("img/arrow-up.png",
-                                                         ItemType.CONTROL,
-                                                         ImageType.UPARROW));
-        this.imageViews.put(ImageType.DOWNARROW, loadImage("img/arrow-down.png",
-                                                           ItemType.CONTROL,
-                                                           ImageType.DOWNARROW));
-        this.imageViews.put(ImageType.LEFTARROW, loadImage("img/arrow-left.png",
-                                                           ItemType.CONTROL,
-                                                           ImageType.LEFTARROW));
-        this.imageViews.put(ImageType.RIGHTARROW, loadImage(
-                            "img/arrow-right.png", ItemType.CONTROL,
-                            ImageType.RIGHTARROW));
-        this.imageViews.put(ImageType.INVENTORY, loadImage("img/inventory.png",
-                                                           ItemType.CONTROL,
-                                                           ImageType.INVENTORY));
-        this.imageViews.put(ImageType.ATTACK, loadImage("img/attack.png",
-                                                        ItemType.CONTROL,
-                                                        ImageType.ATTACK));
-        this.imageViews.put(ImageType.SEARCH, loadImage("img/search.png",
-                                                        ItemType.CONTROL,
-                                                        ImageType.SEARCH));
-        this.imageViews.put(ImageType.TRADE, loadImage("img/trade.png",
-                                                       ItemType.CONTROL,
-                                                       ImageType.TRADE));
-        this.imageViews.put(ImageType.POW, loadImage("img/POW.png",
-                                                     ItemType.CONTROL,
-                                                     ImageType.POW));
-        this.imageViews.put(ImageType.BAM, loadImage("img/BAM.png",
-                                                     ItemType.CONTROL,
-                                                     ImageType.BAM));
-        this.imageViews.put(ImageType.WHIFF, loadImage("img/WHIFF.png",
-                                                       ItemType.CONTROL,
-                                                       ImageType.WHIFF));
-        this.imageViews.put(ImageType.CRUNCH, loadImage("img/CRUNCH.png",
-                                                        ItemType.CONTROL,
-                                                        ImageType.CRUNCH));
-        this.imageViews.put(ImageType.SWORD, loadImage("img/SWORD.png",
-                                                       ItemType.WEAPON,
-                                                       ImageType.SWORD));
-        this.imageViews.put(ImageType.SHIELD, loadImage("img/SHIELD.png",
-                                                        ItemType.SHIELD,
-                                                        ImageType.SHIELD));
+        this.imageViews = new EnumMap<ImageType, ItemImageViewWrapper>(ImageType.class);
+        this.imageViews.put(ImageType.UPARROW, loadImage("img/arrow-up.png", ItemType.CONTROL, ImageType.UPARROW));
+        this.imageViews.put(ImageType.DOWNARROW, loadImage("img/arrow-down.png", ItemType.CONTROL, ImageType.DOWNARROW));
+        this.imageViews.put(ImageType.LEFTARROW, loadImage("img/arrow-left.png", ItemType.CONTROL, ImageType.LEFTARROW));
+        this.imageViews.put(ImageType.RIGHTARROW, loadImage("img/arrow-right.png", ItemType.CONTROL, ImageType.RIGHTARROW));
+        this.imageViews.put(ImageType.INVENTORY, loadImage("img/inventory.png", ItemType.CONTROL, ImageType.INVENTORY));
+        this.imageViews.put(ImageType.ATTACK, loadImage("img/attack.png", ItemType.CONTROL, ImageType.ATTACK));
+        this.imageViews.put(ImageType.SEARCH, loadImage("img/search.png", ItemType.CONTROL, ImageType.SEARCH));
+        this.imageViews.put(ImageType.TRADE, loadImage("img/trade.png", ItemType.CONTROL, ImageType.TRADE));
+        this.imageViews.put(ImageType.POW, loadImage("img/POW.png", ItemType.CONTROL, ImageType.POW));
+        this.imageViews.put(ImageType.BAM, loadImage("img/BAM.png", ItemType.CONTROL, ImageType.BAM));
+        this.imageViews.put(ImageType.WHIFF, loadImage("img/WHIFF.png", ItemType.CONTROL, ImageType.WHIFF));
+        this.imageViews.put(ImageType.CRUNCH, loadImage("img/CRUNCH.png", ItemType.CONTROL, ImageType.CRUNCH));
+        this.imageViews.put(ImageType.WEAPON1, loadImage("img/SWORD.png", ItemType.WEAPON, ImageType.WEAPON1));
+        this.imageViews.put(ImageType.WEAPON2, loadImage("img/SWORD.png", ItemType.WEAPON, ImageType.WEAPON2));
+        this.imageViews.put(ImageType.WEAPON3, loadImage("img/SWORD.png", ItemType.WEAPON, ImageType.WEAPON3));
+        this.imageViews.put(ImageType.ARMOR1, loadImage("img/SWORD.png", ItemType.ARMOR, ImageType.ARMOR1));
+        this.imageViews.put(ImageType.ARMOR2, loadImage("img/SWORD.png", ItemType.ARMOR, ImageType.ARMOR2));
+        this.imageViews.put(ImageType.ARMOR3, loadImage("img/SWORD.png", ItemType.ARMOR, ImageType.ARMOR3));
+        this.imageViews.put(ImageType.SHIELD1, loadImage("img/SHIELD.png", ItemType.SHIELD, ImageType.SHIELD1));
+        this.imageViews.put(ImageType.SHIELD2, loadImage("img/SHIELD.png", ItemType.SHIELD, ImageType.SHIELD2));
+        this.imageViews.put(ImageType.SHIELD3, loadImage("img/SHIELD.png", ItemType.SHIELD, ImageType.SHIELD3));
     }
 
     /**
