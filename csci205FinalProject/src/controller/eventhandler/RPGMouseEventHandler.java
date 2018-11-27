@@ -161,7 +161,10 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
      * @author ks061, lts010
      */
     private void handleAttack(MouseEvent event) {
-        if (theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
+        if (theController.isAttackActive()) {
+            //do nothing
+        }
+        else if (theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
                 0).getNpc().isFriendly()) {
             theController.getTheView().updateStoryText(String.format(
                     "%s is a friend!",
@@ -176,6 +179,7 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
                             0).getNpc().getName()));
         }
         else {
+            theController.setAttackActive(true);
             String playerAttacksNPC = theController.getTheModel().getPlayer().attack(
                     theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
                             0).getNpc());

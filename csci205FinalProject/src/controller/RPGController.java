@@ -564,4 +564,25 @@ public class RPGController {
         return mapImageViewToNPC;
     }
 
+    /**
+     * Sees if an attack is happening
+     *
+     * @return boolean
+     *
+     * #author lts010
+     */
+    public boolean isAttackActive() {
+        return attackActive;
+    }
+
+    /**
+     * Sets the attackActive boolean
+     *
+     * @param attackActive a boolean
+     *
+     * @author lts010
+     */
+    public void setAttackActive(boolean attackActive) {
+        this.attackActive = attackActive;
+    }
 }
