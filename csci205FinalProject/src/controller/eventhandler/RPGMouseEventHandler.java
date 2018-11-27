@@ -24,6 +24,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import model.character.NPC;
+import model.character.Player;
 import view.RPGView;
 import view.wrapper.ItemImageViewWrapper;
 
@@ -198,6 +199,32 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
     }
 
     /**
+     * Handles a click on the blue and orange arrows ImageView
+     *
+     * @author lts010
+     */
+    private void handleSearch() {
+        Player thePlayer = theController.getTheModel().getPlayer();
+        NPC npcInCurrentRoom = theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
+                0).getNpc();
+        theController.getTheView().updateStoryText(thePlayer.search(
+                npcInCurrentRoom));
+    }
+
+    /**
+     * Handles a click on the magnifying glass ImageView
+     *
+     * @author lts010
+     */
+    private void handleTrade() {
+        Player thePlayer = theController.getTheModel().getPlayer();
+        NPC npcInCurrentRoom = theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
+                0).getNpc();
+        theController.getTheView().updateStoryText(thePlayer.trade(
+                npcInCurrentRoom));
+    }
+
+    /**
      * Handles a click on the NPC representing an ImageView
      *
      * @param event interaction with an NPC representing an ImageView
@@ -260,6 +287,14 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
         }
         else if (event.getEventType().equals(MouseEvent.DRAG_DETECTED)) {
             handleDrag(event);
+        }
+        else if (event.getSource() == theController.getTheView().getImageViews().get(
+                RPGView.ImageType.SEARCH)) {
+            handleSearch();
+        }
+        else if (event.getSource() == theController.getTheView().getImageViews().get(
+                RPGView.ImageType.TRADE)) {
+            handleTrade();
         }
         else {
             handleNPC(event);
