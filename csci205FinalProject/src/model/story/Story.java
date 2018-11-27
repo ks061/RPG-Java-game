@@ -157,7 +157,7 @@ public class Story {
         Equipment shield3 = new Equipment("Java",
                                           new ItemStatistics(3, 0, 0, 1),
                                           SHIELD);
-        Equipment armor3 = new Equipment("the Winklevoss Twins",
+        Equipment armor3 = new Equipment("The Winklevoss Twins",
                                          new ItemStatistics(0, 0, 3, 1),
                                          ARMOR);
 
