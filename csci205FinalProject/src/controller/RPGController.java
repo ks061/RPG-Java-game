@@ -16,15 +16,14 @@
  */
 package controller;
 
+import controller.eventhandler.RPGDragEventHandler;
+import controller.eventhandler.RPGMouseEventHandler;
 import java.util.HashMap;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import model.RPGModel;
 import model.character.NPC;
+import model.item.Item;
 import view.RPGView;
 import view.RPGView.ImageType;
 import view.wrapper.NPCImageViewWrapper;
@@ -37,279 +36,63 @@ import view.wrapper.NPCImageViewWrapper;
  */
 public class RPGController {
 
+    /*
+     * attackActive represents whether or not there is an attack taking place; true if this is the case otherwise false
+     */
+    private boolean attackActive;
+
     /**
      * Action event handler for the class
      *
      * @author ks061
      */
-    private class RPGActionEventHandler implements EventHandler<ActionEvent> {
-
-        /**
-         * Handles an action event that occurs in the application
-         *
-         * @param event action event that occurs in the application
-         *
-         * @author ks061
-         */
-        @Override
-        public void handle(ActionEvent event) {
-            if (event.getSource() instanceof Node) {
-                if (theView.getToRoomButtonsDisplay().getChildren().contains(
-                        (Node) event.getSource())) {
-                    handleTravelButtonClick(event);
-                }
-
-            }
-
-        }
-
-        /**
-         * Handles events when the player clicks on a travel button
-         *
-         * @param event event of a player clicking on a travel button
-         *
-         * @author ks061
-         */
-        private void handleTravelButtonClick(ActionEvent event) {
-            if (event.getSource() == theView.getToRoomAbove()) {
-                theModel.setCurrentRoom(
-                        theModel.getCurrentRoom().getNorth());
-            }
-            if (event.getSource() == theView.getToRoomBelow()) {
-                theModel.setCurrentRoom(
-                        theModel.getCurrentRoom().getSouth());
-            }
-            if (event.getSource() == theView.getToRoomToLeft()) {
-                theModel.setCurrentRoom(
-                        theModel.getCurrentRoom().getWest());
-            }
-            if (event.getSource() == theView.getToRoomToRight()) {
-                theModel.setCurrentRoom(
-                        theModel.getCurrentRoom().getEast());
-            }
-            refresh();
-
-        }
-    }
-
+//    private class RPGActionEventHandler implements EventHandler<ActionEvent> {
     /**
-     * Mouse event handler for the controller
+     * Handles an action event that occurs in the application
      *
-     * @author ks061, lts010
+     * @param event action event that occurs in the application
+     *
+     * @author ks061
      */
-    private class RPGMouseEventHandler implements EventHandler<MouseEvent> {
-
-        /**
-         * Handles interactions with the up arrow
-         *
-         * @param event interaction with the up arrow
-         *
-         * @author ks061, lts010
-         */
-        private void handleUpArrow(MouseEvent event) {
-            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                theModel.setCurrentRoom(theModel.getCurrentRoom().getNorth());
-                refresh();
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                theView.getImageViews().get(RPGView.ImageType.UPARROW).setOpacity(
-                        100);
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-                theView.getImageViews().get(RPGView.ImageType.UPARROW).setOpacity(
-                        0);
-            }
-        }
-
-        /**
-         * Handles interactions with the down arrow
-         *
-         * @param event interaction with the down arrow
-         *
-         * @author ks061, lts010
-         */
-        private void handleDownArrow(MouseEvent event) {
-            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                theModel.setCurrentRoom(theModel.getCurrentRoom().getSouth());
-                refresh();
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                theView.getImageViews().get(RPGView.ImageType.DOWNARROW).setOpacity(
-                        100);
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-                theView.getImageViews().get(RPGView.ImageType.DOWNARROW).setOpacity(
-                        0);
-            }
-        }
-
-        /**
-         * Handles interactions with the left arrow
-         *
-         * @param event interaction with the left arrow
-         *
-         * @author ks061, lts010
-         */
-        private void handleLeftArrow(MouseEvent event) {
-            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                theModel.setCurrentRoom(theModel.getCurrentRoom().getWest());
-                refresh();
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                theView.getImageViews().get(RPGView.ImageType.LEFTARROW).setOpacity(
-                        100);
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-                theView.getImageViews().get(RPGView.ImageType.LEFTARROW).setOpacity(
-                        0);
-            }
-        }
-
-        /**
-         * Handles interactions with the right arrow
-         *
-         * @param event interaction with the right arrow
-         *
-         * @author ks061, lts010
-         */
-        private void handleRightArrow(MouseEvent event) {
-            if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-                theModel.setCurrentRoom(theModel.getCurrentRoom().getEast());
-                refresh();
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-                theView.getImageViews().get(RPGView.ImageType.RIGHTARROW).setOpacity(
-                        100);
-            }
-            else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-                theView.getImageViews().get(RPGView.ImageType.RIGHTARROW).setOpacity(
-                        0);
-            }
-        }
-
-        /**
-         * Handles interactions with the attack button
-         *
-         * @param event interaction with the attack button
-         *
-         * @author ks061, lts010
-         */
-        private void handleAttack(MouseEvent event) {
-            String playerAttacksNPC = theModel.getPlayer().attack(
-                    theModel.getCurrentRoom().getNPCViewWrappers().get(0).getNpc());
-            ImageView imageView = theView.handleActionBubble(ImageType.POW,
-                                                             playerAttacksNPC);
-            new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (Exception e) {
-                    }
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            continueAttack(imageView);
-                        }
-                    });
-                }
-            }).start();
-        }
-
-        /**
-         * Handles mouse events generated from interactions with the GUI
-         *
-         * @param event mouse event
-         *
-         * @author ks061, lts010
-         */
-        @Override
-        public void handle(MouseEvent event) {
-
-            System.out.println("mouse event = " + event.toString());
-            if (event.getSource() == theView.getImageViews().get(
-                    RPGView.ImageType.UPARROW)) {
-                handleUpArrow(event);
-            }
-            if (event.getSource() == theView.getImageViews().get(
-                    RPGView.ImageType.DOWNARROW)) {
-                handleDownArrow(event);
-            }
-            if (event.getSource() == theView.getImageViews().get(
-                    RPGView.ImageType.LEFTARROW)) {
-                handleLeftArrow(event);
-            }
-            if (event.getSource() == theView.getImageViews().get(
-                    RPGView.ImageType.RIGHTARROW)) {
-                handleRightArrow(event);
-            }
-            if (event.getSource() == theView.getImageViews().get(
-                    RPGView.ImageType.ATTACK)) {
-                handleAttack(event);
-            }
-            NPC npcInCurrentRoom = null;
-
-            if (event.getSource() instanceof ImageView) {
-                npcInCurrentRoom = mapImageViewToNPC.get(
-                        (ImageView) event.getSource());
-            }
-
-            try {
-                if (npcInCurrentRoom.isIsAlive()) {
-                    String dialog = theModel.getPlayer().talk(npcInCurrentRoom);
-                    theView.updateStoryTextOutput(
-                            npcInCurrentRoom.getName() + ": " + dialog);
-                }
-                else {
-                    theView.updateStoryTextOutput(theModel.getPlayer().search(
-                            npcInCurrentRoom));
-                }
-            } catch (NullPointerException ex) {
-            }
-        }
-    }
-
+//        @Override
+//        public void handle(ActionEvent event) {
+//            if (event.getSource() instanceof Node) {
+//                if (theView.getToRoomButtonsDisplay().getChildren().contains(
+//                        (Node) event.getSource())) {
+//                    handleTravelButtonClick(event);
+//                }
+//
+//            }
+//
+//        }
     /**
-     * Removes the ImageView given, then the NPC in the current room attacks the
-     * player, and the appropriate ImageView and string are displayed in
-     * theView, then the program pauses for 2 seconds, and then calls
-     * finishAttack
+     * Handles events when the player clicks on a travel button
      *
-     * @param imageView the ImageView to be removed
+     * @param event event of a player clicking on a travel button
      *
-     * @author lts010
+     * @author ks061
      */
-    public void continueAttack(ImageView imageView) {
-        theView.getCenterPane().getChildren().remove(imageView);
-        String NPCAttacksPlayer = theModel.getCurrentRoom().getNPCViewWrappers().get(
-                0).getNpc().attack(theModel.getPlayer());
-        ImageView newImageView = theView.handleActionBubble(ImageType.BAM,
-                                                            NPCAttacksPlayer);
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (Exception e) {
-                }
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        finishAttack(newImageView);
-                    }
-                });
-            }
-        }).start();
-    }
-
-    /**
-     * Removes the given ImageView from the centerPane of theView
-     *
-     * @param imageView the ImageView to be removed
-     *
-     * @author lts010
-     */
-    public void finishAttack(ImageView imageView) {
-        theView.getCenterPane().getChildren().remove(imageView);
-    }
+//        private void handleTravelButtonClick(ActionEvent event) {
+//            if (event.getSource() == theView.getToRoomAbove()) {
+//                theModel.setCurrentRoom(
+//                        theModel.getCurrentRoom().getNorth());
+//            }
+//            if (event.getSource() == theView.getToRoomBelow()) {
+//                theModel.setCurrentRoom(
+//                        theModel.getCurrentRoom().getSouth());
+//            }
+//            if (event.getSource() == theView.getToRoomToLeft()) {
+//                theModel.setCurrentRoom(
+//                        theModel.getCurrentRoom().getWest());
+//            }
+//            if (event.getSource() == theView.getToRoomToRight()) {
+//                theModel.setCurrentRoom(
+//                        theModel.getCurrentRoom().getEast());
+//            }
+//            refresh();
+//
+//        }
+//    }
     /**
      * Model of the application
      */
@@ -321,11 +104,15 @@ public class RPGController {
     /**
      * Action event handler
      */
-    private RPGActionEventHandler rpgActionEventHandler;
+//        private RPGActionEventHandler rpgActionEventHandler;
     /**
      * Mouse event handler
      */
     private RPGMouseEventHandler rpgMouseEventHandler;
+    /**
+     * Drag event handler
+     */
+    private RPGDragEventHandler rpgDragEventHandler;
     /**
      * Maps an image view to an NPC
      */
@@ -345,37 +132,51 @@ public class RPGController {
                          RPGView theView) {
         this.theModel = theModel;
         this.theView = theView;
-
-        this.rpgActionEventHandler = new RPGActionEventHandler();
-        this.rpgMouseEventHandler = new RPGMouseEventHandler();
+        this.attackActive = false;
+//            this.rpgActionEventHandler = new RPGActionEventHandler();
+        this.rpgMouseEventHandler = new RPGMouseEventHandler(this);
+        this.rpgDragEventHandler = new RPGDragEventHandler();
 
         this.mapImageViewToNPC = new HashMap<>();
 
         setEventHandlerOfComponents();
-
-        this.theView.getPlayerHealth().textProperty().bind(
-                this.theModel.getPropPlayerCurrentHealth());
-        this.theView.getPlayerAttack().textProperty().bind(
-                this.theModel.getPropPlayerAttack());
-        this.theView.getPlayerDefense().textProperty().bind(
-                this.theModel.getPropPlayerDefense());
-        this.theView.getPlayerWeapon().textProperty().bind(
-                this.theModel.getPropPlayerWeapon());
-        this.theView.getPlayerArmor().textProperty().bind(
-                this.theModel.getPropPlayerArmor());
-        this.theView.getPlayerShield().textProperty().bind(
-                this.theModel.getPropPlayerShield());
-
-        this.theView.getRightPane().getChildren().add(
+        
+        this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragOver(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragDropped(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragEntered(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragExited(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageType.WEAPON1).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.WEAPON2).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.WEAPON3).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.SHIELD1).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.SHIELD2).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.SHIELD3).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.ARMOR1).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.ARMOR2).setOnDragDetected(
+                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageType.ARMOR3).setOnDragDetected(
+                rpgMouseEventHandler);
+                
+        this.theView.getBottomHBox().getChildren().add(
                 this.theView.getImageViews().get(ImageType.INVENTORY));
-        this.theView.getRightPane().getChildren().add(
+        this.theView.getBottomHBox().getChildren().add(
                 this.theView.getImageViews().get(ImageType.SEARCH));
-        this.theView.getRightPane().getChildren().add(
+        this.theView.getBottomHBox().getChildren().add(
                 this.theView.getImageViews().get(ImageType.TRADE));
-        this.theView.getRightPane().getChildren().add(
+        this.theView.getBottomHBox().getChildren().add(
                 this.theView.getImageViews().get(ImageType.ATTACK));
         refresh();
-
     }
 
     /**
@@ -474,6 +275,20 @@ public class RPGController {
     }
 
     /**
+     * Refreshes the image view of items in the room
+     *
+     * @author ks061, lts010
+     */
+    private void refreshImageViewOfItem() {
+        ImageView imageViewOfImage;
+        for (Item item : theModel.getCurrentRoom().getHiddenItems()) {
+            imageViewOfImage = theView.getImageViews().get(
+                    item.getImageViewKey());
+            theView.getCenterPane().getChildren().add(imageViewOfImage);
+        }
+    }
+
+    /**
      * Updates the travel buttons, NPCs in the room based on the current room,
      * properties of the player, including player statistics and equipment, room
      * name, and story dialogue
@@ -483,13 +298,14 @@ public class RPGController {
     public void refresh() {
         this.theView.getCenterPane().getChildren().clear();
         // updateTravelButtons();
-        updateTravelArrows();
-        updateNPCsInRoom();
-        this.theModel.updateProperties();
+        refreshTravelArrows();
+        refreshNPCsInRoom();
+//        this.theModel.updateProperties();
         this.theView.refreshRoomName();
-        this.theView.updateStoryTextOutput("");
+        this.theView.updateStoryText("");
         this.theView.loadCenterBackground(
                 theModel.getCurrentRoom().getBackgroundImagePath());
+        refreshImageViewOfItem();
     }
 
 //    /**
@@ -543,66 +359,178 @@ public class RPGController {
      *
      * @author ks061
      */
-    public void updateNPCsInRoom() {
+    public void refreshNPCsInRoom() {
         for (NPCImageViewWrapper npcViewWrapper : this.theModel.getCurrentRoom().getNPCViewWrappers()) {
-            this.theView.getCenterPane().getChildren().add(
-                    npcViewWrapper.getImageView());
-            npcViewWrapper.getImageView().setOnMouseClicked(
-                    this.rpgMouseEventHandler);
-            mapImageViewToNPC.put(npcViewWrapper.getImageView(),
-                                  npcViewWrapper.getNpc());
-            npcViewWrapper.setLocation(
-                    this.theView.getCenterPane().getWidth() / 2,
-                    this.theView.getCenterPane().getHeight() / 2);
+            this.theView.getCenterPane().getChildren().add(npcViewWrapper);
+            npcViewWrapper.setOnMouseClicked(this.rpgMouseEventHandler);
+            mapImageViewToNPC.put(npcViewWrapper, npcViewWrapper.getNpc());
+            npcViewWrapper.setX(this.theView.getCenterPane().getWidth() / 2);
+            npcViewWrapper.setY(this.theView.getCenterPane().getHeight() / 2);
         }
+    }
+
+    /**
+     * Loads the up arrow to the view
+     *
+     * @author ks061
+     */
+    private void loadUpArrow() {
+        ImageView tempImageView;
+        tempImageView = theView.getImageViews().get(
+                RPGView.ImageType.UPARROW);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
+        tempImageView.setY(150);
+        tempImageView.setOpacity(0);
+        this.theView.getCenterPane().getChildren().add(tempImageView);
+    }
+
+    /**
+     * Loads the down arrow to the view
+     *
+     * @author ks061
+     */
+    private void loadDownArrow() {
+        ImageView tempImageView;
+        tempImageView = theView.getImageViews().get(
+                RPGView.ImageType.DOWNARROW);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() - 170);
+        tempImageView.setOpacity(0);
+        this.theView.getCenterPane().getChildren().add(
+                theView.getImageViews().get(RPGView.ImageType.DOWNARROW));
+    }
+
+    /**
+     * Loads the left arrow to the view
+     *
+     * @author ks061
+     */
+    private void loadLeftArrow() {
+        ImageView tempImageView;
+        tempImageView = theView.getImageViews().get(
+                RPGView.ImageType.LEFTARROW);
+        tempImageView.setX(100);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
+        tempImageView.setOpacity(0);
+        this.theView.getCenterPane().getChildren().add(
+                theView.getImageViews().get(RPGView.ImageType.LEFTARROW));
+    }
+
+    /**
+     * Loads the right arrow to the view
+     *
+     * @author ks061
+     */
+    private void loadRightArrow() {
+        ImageView tempImageView;
+        tempImageView = theView.getImageViews().get(
+                RPGView.ImageType.RIGHTARROW);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() - 160);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
+        tempImageView.setOpacity(0);
+        this.theView.getCenterPane().getChildren().add(
+                theView.getImageViews().get(RPGView.ImageType.RIGHTARROW));
     }
 
     /**
      * Updates the view with the travel arrows representing which rooms you can
      * go to
      *
-     * @author lts010
+     * @author lts010, ks061
      */
-    public void updateTravelArrows() {
-        ImageView tempImageView;
-
+    public void refreshTravelArrows() {
         if (this.theModel.getCurrentRoom().getNorth() != null) {
-            tempImageView = theView.getImageViews().get(
-                    RPGView.ImageType.UPARROW);
-            tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
-            tempImageView.setY(150);
-            tempImageView.setOpacity(0);
-            this.theView.getCenterPane().getChildren().add(tempImageView);
+            loadUpArrow();
         }
 
         if (this.theModel.getCurrentRoom().getSouth() != null) {
-            tempImageView = theView.getImageViews().get(
-                    RPGView.ImageType.DOWNARROW);
-            tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
-            tempImageView.setY(this.theView.getCenterPane().getHeight() - 170);
-            tempImageView.setOpacity(0);
-            this.theView.getCenterPane().getChildren().add(
-                    theView.getImageViews().get(RPGView.ImageType.DOWNARROW));
+            loadDownArrow();
         }
 
         if (this.theModel.getCurrentRoom().getWest() != null) {
-            tempImageView = theView.getImageViews().get(
-                    RPGView.ImageType.LEFTARROW);
-            tempImageView.setX(100);
-            tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
-            tempImageView.setOpacity(0);
-            this.theView.getCenterPane().getChildren().add(
-                    theView.getImageViews().get(RPGView.ImageType.LEFTARROW));
+            loadLeftArrow();
         }
 
         if (this.theModel.getCurrentRoom().getEast() != null) {
-            tempImageView = theView.getImageViews().get(
-                    RPGView.ImageType.RIGHTARROW);
-            tempImageView.setX(this.theView.getCenterPane().getWidth() - 160);
-            tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
-            tempImageView.setOpacity(0);
-            this.theView.getCenterPane().getChildren().add(
-                    theView.getImageViews().get(RPGView.ImageType.RIGHTARROW));
+            loadRightArrow();
         }
     }
+
+    /**
+     * Removes the ImageView given, then the NPC in the current room attacks the
+     * player, and the appropriate ImageView and string are displayed in
+     * theView, then the program pauses for 2 seconds, and then calls
+     * finishAttack
+     *
+     * @param imageView the ImageView to be removed
+     *
+     * @author lts010
+     */
+    public void continueAttack(ImageView imageView) {
+        theView.getCenterPane().getChildren().remove(imageView);
+        String NPCAttacksPlayer = theModel.getCurrentRoom().getNPCViewWrappers().get(
+                0).getNpc().attack(theModel.getPlayer());
+        ImageView newImageView = theView.handleActionBubble(ImageType.BAM,
+                                                            NPCAttacksPlayer);
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                }
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        finishAttack(newImageView);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    /**
+     * Removes the given ImageView from the centerPane of theView
+     *
+     * @param imageView the ImageView to be removed
+     *
+     * @author lts010
+     */
+    public void finishAttack(ImageView imageView) {
+        theView.getCenterPane().getChildren().remove(imageView);
+        attackActive = false;
+    }
+
+    /**
+     * Gets the model
+     *
+     * @return model
+     *
+     * @author ks061
+     */
+    public RPGModel getTheModel() {
+        return theModel;
+    }
+
+    /**
+     * Gets the view
+     *
+     * @return view
+     *
+     * @author ks061
+     */
+    public RPGView getTheView() {
+        return theView;
+    }
+
+    /**
+     * Gets the map of ImageView objects to NPC objects
+     *
+     * @return map of ImageView objects to NPC objects
+     *
+     * @author ks061
+     */
+    public HashMap<ImageView, NPC> getMapImageViewToNPC() {
+        return mapImageViewToNPC;
+    }
+
 }

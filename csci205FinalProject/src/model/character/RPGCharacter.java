@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import model.item.ConsumableItem;
 import model.item.Equipment;
-import model.item.EquipmentType;
 import model.item.Item;
 import model.map.Room;
 
@@ -125,18 +124,20 @@ public abstract class RPGCharacter {
     /**
      * Determines the type of equipment and equips it
      *
-     * @param equipment - equipment to be equipped
+     * @param equipment equipment to be equipped
+     *
      * @return boolean representing equipment equipped
+     *
+     * @author ks061, lts010
      */
     public boolean isEquipped(Equipment equipment) {
-        if (equipment.getType() == EquipmentType.WEAPON) {
-            return equipment == this.weapon;
-        }
-        else if (equipment.getType() == EquipmentType.SHIELD) {
-            return equipment == this.shield;
-        }
-        else {
-            return equipment == this.armor;
+        switch (equipment.getType()) {
+            case WEAPON:
+                return equipment == this.weapon;
+            case SHIELD:
+                return equipment == this.shield;
+            default:
+                return equipment == this.armor;
         }
     }
 
@@ -206,7 +207,8 @@ public abstract class RPGCharacter {
      * Returns message detailing the nature of damage done to character being
      * battled
      *
-     * @param int damage dealt to the enemy from the attack
+     * @param enemy enemy being attacked
+     * @param damage damage dealt to the enemy from the attack
      * @param criticalHitModifier critical hit modifier of the attack
      * @param accuracyModifier accuracy modifier of the attack
      *
@@ -260,6 +262,8 @@ public abstract class RPGCharacter {
      * Determines if inventory is full
      *
      * @return boolean representing if inventory is at max size
+     *
+     * @author ks061, lts010
      */
     public boolean isInventoryFull() {
         return this.inventory.size() >= this.inventorySize;
@@ -280,6 +284,8 @@ public abstract class RPGCharacter {
      * Gets the name of the character
      *
      * @return String representing the character's name
+     *
+     * @author ks061, lts010
      */
     public String getName() {
         return name;
@@ -288,7 +294,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the name of the character
      *
-     * @param name - name to be set to
+     * @param name name to be set to
+     *
+     * @author ks061, lts010
      */
     public void setName(String name) {
         this.name = name;
@@ -298,6 +306,8 @@ public abstract class RPGCharacter {
      * Gets the current size of the inventory
      *
      * @return integer for inventory size
+     *
+     * @author ks061, lts010
      */
     public int getInventorySize() {
         return inventorySize;
@@ -306,7 +316,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the current inventory size
      *
-     * @param inventorySize - integer representing size to be set to
+     * @param inventorySize integer representing size to be set to
+     *
+     * @author ks061, lts010
      */
     public void setInventorySize(int inventorySize) {
         this.inventorySize = inventorySize;
@@ -316,6 +328,8 @@ public abstract class RPGCharacter {
      * Gets the inventory
      *
      * @return ArrayList of items representing the inventory
+     *
+     * @author ks061, lts010
      */
     public ArrayList<Item> getInventory() {
         return inventory;
@@ -324,7 +338,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the inventory
      *
-     * @param inventory - ArrayList of items to set the inventory
+     * @param inventory ArrayList of items to set the inventory
+     *
+     * @author ks061, lts010
      */
     public void setInventory(ArrayList<Item> inventory) {
         this.inventory = inventory;
@@ -333,7 +349,9 @@ public abstract class RPGCharacter {
     /**
      * Gets the weapon equipment variable
      *
-     * @return Equipment object representing weapon
+     * @return equipment object representing weapon
+     *
+     * @author ks061, lts010
      */
     public Equipment getWeapon() {
         return weapon;
@@ -342,7 +360,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the weapon variable
      *
-     * @param weapon - equipment object for weapon to be set to
+     * @param weapon equipment object for weapon to be set to
+     *
+     * @author ks061, lts010
      */
     public void setWeapon(Equipment weapon) {
         this.weapon = weapon;
@@ -351,7 +371,9 @@ public abstract class RPGCharacter {
     /**
      * Gets the shield variable
      *
-     * @return Equipment object representing shield
+     * @return equipment object representing shield
+     *
+     * @author ks061, lts010
      */
     public Equipment getShield() {
         return shield;
@@ -360,7 +382,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the shield variable
      *
-     * @param shield - equipment object for shield to be set to
+     * @param shield equipment object for shield to be set to
+     *
+     * @author ks061, lts010
      */
     public void setShield(Equipment shield) {
         this.shield = shield;
@@ -369,7 +393,9 @@ public abstract class RPGCharacter {
     /**
      * Gets the armor variable
      *
-     * @return Equipment object representing armor
+     * @return equipment object representing armor
+     *
+     * @author ks061, lts010
      */
     public Equipment getArmor() {
         return armor;
@@ -378,7 +404,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the armor variable
      *
-     * @param armor - equipment object for armor to be set to
+     * @param armor equipment object for armor to be set to
+     *
+     * @author ks061, lts010
      */
     public void setArmor(Equipment armor) {
         this.armor = armor;
@@ -388,6 +416,8 @@ public abstract class RPGCharacter {
      * Gets the current location of character
      *
      * @return Room object representing location
+     *
+     * @author ks061, lts010
      */
     public Room getLocation() {
         return location;
@@ -396,7 +426,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the current location of character
      *
-     * @param location - Room object for location to be set to
+     * @param location Room object for location to be set to
+     *
+     * @author ks061, lts010
      */
     public void setLocation(Room location) {
         this.location = location;
@@ -406,15 +438,19 @@ public abstract class RPGCharacter {
      * Checks if character is alive
      *
      * @return boolean representing if character is alive
+     *
+     * @author ks061, lts010
      */
     public boolean isIsAlive() {
         return isAlive;
     }
 
     /**
-     * Sets the character's aliveness
+     * Sets whether the character is alive or not
      *
-     * @param isAlive - boolean representing if character is alive
+     * @param isAlive boolean representing if character is alive
+     *
+     * @author ks061, lts010
      */
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
@@ -443,6 +479,7 @@ public abstract class RPGCharacter {
     /**
      * Equips the equipment based on its type
      *
+     * @param equipment equipment to be equipped
      * @return String representing what was equipped
      *
      * @author ishk001, lts010, ks061
@@ -514,14 +551,20 @@ public abstract class RPGCharacter {
                     "Cannot unequip the %s because your inventory is full",
                     equipment.getName());
         }
-        if (equipment.getType() == EquipmentType.WEAPON) {
-            this.setWeapon(null);
-        }
-        else if (equipment.getType() == EquipmentType.ARMOR) {
-            this.setArmor(null);
-        }
-        else if (equipment.getType() == EquipmentType.SHIELD) {
-            this.setShield(null);
+        if (null != equipment.getType()) {
+            switch (equipment.getType()) {
+                case WEAPON:
+                    this.setWeapon(null);
+                    break;
+                case ARMOR:
+                    this.setArmor(null);
+                    break;
+                case SHIELD:
+                    this.setShield(null);
+                    break;
+                default:
+                    break;
+            }
         }
         this.inventory.add(equipment);
         adjustCharacterStatisticsFromUnequip(equipment);
@@ -599,6 +642,7 @@ public abstract class RPGCharacter {
     /**
      * Consumes the items and correspondingly change the health of item owner
      *
+     * @param consumableItem consumable item being consumed by this character
      * @return String representing what was consumed
      *
      * @author ishk001, lts010, ks061

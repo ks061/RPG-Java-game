@@ -21,9 +21,10 @@ import javafx.geometry.Point2D;
 import model.character.NPC;
 import model.character.RPGCharacterStats;
 import model.item.Equipment;
-import static model.item.EquipmentType.*;
+import static model.item.ItemType.*;
 import model.item.Item;
 import model.item.ItemStatistics;
+import view.RPGView;
 import view.wrapper.NPCImageViewWrapper;
 
 /**
@@ -113,33 +114,32 @@ public class Story {
                            add("something");
                        }
                    }, true);
-
+//TODO create an RPGVIEW.ImageType, image, and ImageView Object for each.
         Equipment weapon1 = new Equipment("weapon1", new ItemStatistics(0, 1, 0,
                                                                         1),
-                                          WEAPON);
+                                          WEAPON, RPGView.ImageType.WEAPON1);
         Equipment shield1 = new Equipment("shield1", new ItemStatistics(1, 0, 0,
                                                                         1),
-                                          SHIELD);
+                                          SHIELD, RPGView.ImageType.SHIELD1);
         Equipment armor1 = new Equipment("armor1",
-                                         new ItemStatistics(0, 0, 1, 1), ARMOR);
+                                         new ItemStatistics(0, 0, 1, 1), ARMOR, RPGView.ImageType.ARMOR1);
 
         Equipment weapon2 = new Equipment("weapon2", new ItemStatistics(0, 2, 0,
                                                                         1),
-                                          WEAPON);
-        Equipment shield2 = new Equipment("shield2", new ItemStatistics(2, 0, 0,
-                                                                        1),
-                                          SHIELD);
+                                          WEAPON, RPGView.ImageType.WEAPON2);
+        Equipment shield2 = new Equipment("shield2", new ItemStatistics(2, 0, 0, 1),
+                                          SHIELD, RPGView.ImageType.SHIELD2);
         Equipment armor2 = new Equipment("armor2",
-                                         new ItemStatistics(0, 0, 2, 1), ARMOR);
+                                         new ItemStatistics(0, 0, 2, 1), ARMOR, RPGView.ImageType.ARMOR2);
 
         Equipment weapon3 = new Equipment("weapon3", new ItemStatistics(0, 3, 0,
                                                                         1),
-                                          WEAPON);
+                                          WEAPON, RPGView.ImageType.WEAPON3);
         Equipment shield3 = new Equipment("shield3", new ItemStatistics(3, 0, 0,
                                                                         1),
-                                          SHIELD);
+                                          SHIELD, RPGView.ImageType.SHIELD3);
         Equipment armor3 = new Equipment("armor3",
-                                         new ItemStatistics(0, 0, 3, 1), ARMOR);
+                                         new ItemStatistics(0, 0, 3, 1), ARMOR, RPGView.ImageType.ARMOR3);
 
         Point2D npcLocation = new Point2D(0, 200);
         RoomContent rc1 = new RoomContent("room1",

@@ -15,75 +15,95 @@
  */
 package view.wrapper;
 
-import java.io.File;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import view.RPGView;
 
 /**
  * Wrapper class for an object, image of the object, and location where the
  * object should go in the center pane of the game
  *
- * @author ks061
+ * @author ks061, lts010
  */
-public abstract class ImageViewWrapper {
-
-    private Object wrappedObject;
-    private ImageView imageView;
-
-    public static final String IMAGE_PATH_PARENT_DIR = "img/";
+public abstract class ImageViewWrapper extends ImageView {
 
     /**
-     * Explicit constructor that initializes the NPC character, image view of
-     * the NPC at a location,
-     *
-     * @param wrappedObject
-     * @param imageFilename
-     * @param location
-     * @param viewWidth
-     * @param viewHeight
+     * Model object encapsulated by this wrapper
      */
-    public ImageViewWrapper(Object wrappedObject, String imageFilename,
-                            Point2D location,
-                            int viewWidth, int viewHeight) {
+    private Object wrappedObject;
+    /**
+     * Type of image
+     */
+    private RPGView.ImageType imageType;
+
+    /**
+     * Explicit constructor initializes the ImageView
+     *
+     * @param wrappedObject model object wrapper encapsulates
+     * @param image image representing the model object encapsulated by this
+     * wrapper
+     * @param location location of the image view on the screen
+     * @param imageType type of the image
+     *
+     * @author ks061, lts010
+     *
+     */
+    public ImageViewWrapper(Object wrappedObject, Image image, Point2D location,
+                            RPGView.ImageType imageType) {
+        super(image);
         this.wrappedObject = wrappedObject;
-
-        String imagePath = IMAGE_PATH_PARENT_DIR + imageFilename;
-        imagePath = new File(imagePath).toURI().toString();
-        Image image = new Image(imagePath);
-
-        this.imageView = new ImageView(image);
-        this.imageView.setFitWidth(viewWidth);
-        this.imageView.setFitHeight(viewHeight);
-        this.imageView.setX(location.getX());
-        this.imageView.setY(location.getY());
+        this.setX(location.getX());
+        this.setY(location.getY());
+        this.imageType = imageType;
     }
 
+    /**
+     * Explicit constructor initializes the ImageView with the width and height
+     * of the view
+     *
+     * @param wrappedObject model object wrapper encapsulates
+     * @param image image representing the model object encapsulated by this
+     * wrapper
+     * @param location location of the image view on the screen
+     * @param imageType type of the image
+     * @param viewWidth width of the view
+     * @param viewHeight width of the height
+     *
+     * @author ks061, lts010
+     */
+    public ImageViewWrapper(Object wrappedObject, Image image, Point2D location,
+                            RPGView.ImageType imageType,
+                            int viewWidth, int viewHeight) {
+        this(wrappedObject, image, location, imageType);
+//        super(image);
+//        this.wrappedObject = wrappedObject;
+//        this.setX(location.getX());
+//        this.setY(location.getY());
+        this.setFitWidth(viewWidth);
+        this.setFitHeight(viewHeight);
+    }
+
+    /**
+     * Returns the wrapped object
+     *
+     * @return wrapped object
+     *
+     * @author ks061, lts010
+     */
     protected Object getWrappedObject() {
         return this.wrappedObject;
     }
 
     /**
-     * Gets the image view
+     * Gets the type of the image
      *
-     * @return image view
-     *
-     * @author ks061
-     */
-    public ImageView getImageView() {
-        return this.imageView;
-    }
-
-    /**
-     * Sets the location of the image view
-     *
-     * @param xValue x-coordinate of the location of the image view
-     * @param yValue y-coordinate of the location of the image view
+     * @return type of the image
      *
      * @author ks061, lts010
      */
-    public void setLocation(double xValue, double yValue) {
-        this.imageView.setX(xValue);
-        this.imageView.setY(yValue);
+    public RPGView.ImageType getImageType() {
+        return imageType;
     }
+
 }

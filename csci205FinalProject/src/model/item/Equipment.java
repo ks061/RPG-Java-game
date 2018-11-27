@@ -15,6 +15,8 @@
  */
 package model.item;
 
+import view.RPGView;
+
 /**
  * A durable, reusable item
  *
@@ -25,7 +27,7 @@ public class Equipment extends Item {
     /**
      * Type of equipment
      */
-    private EquipmentType type;
+    private ItemType type;
 
     /**
      * Constructor that initializes attributes of equipment
@@ -33,13 +35,17 @@ public class Equipment extends Item {
      * @param name name of equipment
      * @param itemStatistics statistics of the item
      * @param type type of equipment
+     * @param imageViewKey Key for RPGView EnumMap to get the imageView of
+     * equipment
      *
-     * @author ishk001, ks061
+     * @author ishk001, ks061, lts010
+     *
      */
     public Equipment(String name, ItemStatistics itemStatistics,
-                     EquipmentType type) {
-        super(name, itemStatistics);
+                     ItemType type, RPGView.ImageType imageViewKey) {
+        super(name, itemStatistics, imageViewKey);
         this.type = type;
+
     }
 
     /**
@@ -49,7 +55,7 @@ public class Equipment extends Item {
      *
      * @author ishk001
      */
-    public EquipmentType getType() {
+    public ItemType getType() {
         return type;
     }
 
@@ -60,7 +66,7 @@ public class Equipment extends Item {
      *
      * @author ishk001
      */
-    public void setType(EquipmentType type) {
+    public void setType(ItemType type) {
         this.type = type;
     }
 

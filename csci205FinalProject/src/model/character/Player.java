@@ -21,7 +21,7 @@ import model.item.Item;
  * Player class creates constructor and methods associated with the Players
  * throughout the RPG. It's a child of RPCCharacter.
  *
- * @author lts010
+ * @author lts010, ks061
  */
 public class Player extends RPGCharacter {
 
@@ -46,6 +46,8 @@ public class Player extends RPGCharacter {
      * Player constructor that instantiates the attributes of the player
      *
      * @param name - the name of the player
+     *
+     * @author ks061, lts010
      */
     public Player(String name) {
         super(name, new RPGCharacterStats(Player.DEFAULT_MAX_HEALTH,
@@ -59,6 +61,8 @@ public class Player extends RPGCharacter {
      *
      * @param npc - NPC to be talking
      * @return String representing current dialogue of the NPC
+     *
+     * @author ks061, lts010
      */
     public String talk(NPC npc) {
         String dialogue = npc.getCurrentDialogue();
@@ -135,6 +139,8 @@ public class Player extends RPGCharacter {
      * @param npc - NPC to loot
      * @return String representing what items were found and added to player
      * inventory
+     *
+     * @author lts010
      */
     public String search(NPC npc) {
         if (npc.isIsAlive()) {
@@ -166,6 +172,8 @@ public class Player extends RPGCharacter {
      *
      * @param npc - NPC to battle
      * @return String describing who was killed in battle
+     *
+     * @author lts010
      */
     public String startBattle(NPC npc) {
         if (npc.isFriendly()) {
