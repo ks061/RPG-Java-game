@@ -370,51 +370,89 @@ public class RPGController {
     }
 
     /**
+     * Loads the up arrow to the view
+     *
+     * @author ks061
+     */
+    private void loadUpArrow() {
+        ImageView tempImageView;
+        tempImageView = theView.getImageViews().get(
+                RPGView.ImageType.UPARROW);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
+        tempImageView.setY(150);
+        tempImageView.setOpacity(0);
+        this.theView.getCenterPane().getChildren().add(tempImageView);
+    }
+
+    /**
+     * Loads the down arrow to the view
+     *
+     * @author ks061
+     */
+    private void loadDownArrow() {
+        ImageView tempImageView;
+        tempImageView = theView.getImageViews().get(
+                RPGView.ImageType.DOWNARROW);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() - 170);
+        tempImageView.setOpacity(0);
+        this.theView.getCenterPane().getChildren().add(
+                theView.getImageViews().get(RPGView.ImageType.DOWNARROW));
+    }
+
+    /**
+     * Loads the left arrow to the view
+     *
+     * @author ks061
+     */
+    private void loadLeftArrow() {
+        ImageView tempImageView;
+        tempImageView = theView.getImageViews().get(
+                RPGView.ImageType.LEFTARROW);
+        tempImageView.setX(100);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
+        tempImageView.setOpacity(0);
+        this.theView.getCenterPane().getChildren().add(
+                theView.getImageViews().get(RPGView.ImageType.LEFTARROW));
+    }
+
+    /**
+     * Loads the right arrow to the view
+     *
+     * @author ks061
+     */
+    private void loadRightArrow() {
+        ImageView tempImageView;
+        tempImageView = theView.getImageViews().get(
+                RPGView.ImageType.RIGHTARROW);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() - 160);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
+        tempImageView.setOpacity(0);
+        this.theView.getCenterPane().getChildren().add(
+                theView.getImageViews().get(RPGView.ImageType.RIGHTARROW));
+    }
+
+    /**
      * Updates the view with the travel arrows representing which rooms you can
      * go to
      *
-     * @author lts010
+     * @author lts010, ks061
      */
     public void refreshTravelArrows() {
-        ImageView tempImageView;
-
         if (this.theModel.getCurrentRoom().getNorth() != null) {
-            tempImageView = theView.getImageViews().get(
-                    RPGView.ImageType.UPARROW);
-            tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
-            tempImageView.setY(150);
-            tempImageView.setOpacity(0);
-            this.theView.getCenterPane().getChildren().add(tempImageView);
+            loadUpArrow();
         }
 
         if (this.theModel.getCurrentRoom().getSouth() != null) {
-            tempImageView = theView.getImageViews().get(
-                    RPGView.ImageType.DOWNARROW);
-            tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
-            tempImageView.setY(this.theView.getCenterPane().getHeight() - 170);
-            tempImageView.setOpacity(0);
-            this.theView.getCenterPane().getChildren().add(
-                    theView.getImageViews().get(RPGView.ImageType.DOWNARROW));
+            loadDownArrow();
         }
 
         if (this.theModel.getCurrentRoom().getWest() != null) {
-            tempImageView = theView.getImageViews().get(
-                    RPGView.ImageType.LEFTARROW);
-            tempImageView.setX(100);
-            tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
-            tempImageView.setOpacity(0);
-            this.theView.getCenterPane().getChildren().add(
-                    theView.getImageViews().get(RPGView.ImageType.LEFTARROW));
+            loadLeftArrow();
         }
 
         if (this.theModel.getCurrentRoom().getEast() != null) {
-            tempImageView = theView.getImageViews().get(
-                    RPGView.ImageType.RIGHTARROW);
-            tempImageView.setX(this.theView.getCenterPane().getWidth() - 160);
-            tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
-            tempImageView.setOpacity(0);
-            this.theView.getCenterPane().getChildren().add(
-                    theView.getImageViews().get(RPGView.ImageType.RIGHTARROW));
+            loadRightArrow();
         }
     }
 
