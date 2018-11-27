@@ -23,8 +23,7 @@ import model.item.Item;
  * NPC Class creates constructor and methods associated with the NPCs throughout
  * the RPG. It's a child of RPGCharacter.
  *
- * @author Logan Stiles
- * @version 0.1
+ * @author lts010, ks061
  */
 public class NPC extends RPGCharacter {
 

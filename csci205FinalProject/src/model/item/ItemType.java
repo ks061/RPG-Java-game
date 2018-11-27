@@ -9,18 +9,17 @@
   *
   * Project: csci205FinalProject
   * Package: model.item
-  * File: EquipmentType
-  * Description: This file contains EquipmentType.
+  * File: ItemType
+  * Description: This file contains ItemType.
   * ****************************************
  */
 package model.item;
 
 /**
- * created to determine which inventory slot an item belongs in
+ * ItemType contains various types of items in the game
  *
- * @author Jason Kang
- * @version 0.1
+ * @author ishk001, ks061
  */
-public enum EquipmentType {
-    WEAPON, SHIELD, ARMOR;
+public enum ItemType {
+    CONTROL, WEAPON, SHIELD, ARMOR;
 }
