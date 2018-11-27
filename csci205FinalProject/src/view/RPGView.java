@@ -52,16 +52,21 @@ import view.wrapper.ItemImageViewWrapper;
 public class RPGView {
 
     /**
-     * The buttons and action bubbles that appear on the screen
-     *
+     * ImageType represents the buttons and action bubbles that appear 
+     * on the screen. Image types representing game controls are listed 
+     * in the first group of enumeration elements.
+     * 
      * @author lts010, ks061
      */
     public enum ImageType {
-        UPARROW, DOWNARROW, LEFTARROW, RIGHTARROW,
         INVENTORY, ATTACK, SEARCH, TRADE,
         POW, BAM, WHIFF, CRUNCH,
-        SWORD, SHIELD, NPC, UNSPECIFIED;
-    }
+        UPARROW, DOWNARROW, LEFTARROW, RIGHTARROW,
+        
+        WEAPON1, WEAPON2, WEAPON3,
+        SHIELD1, SHIELD2, SHIELD3,
+        ARMOR1, ARMOR2, ARMOR3;
+    };
 
     /*
      * Models for the application
