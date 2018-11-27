@@ -25,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import model.character.NPC;
 import view.RPGView;
+import view.wrapper.ItemImageViewWrapper;
 
 /**
  * Mouse event handler for the controller
@@ -192,7 +193,7 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
         Dragboard db = source.startDragAndDrop(TransferMode.ANY);
         db.setDragView(source.getImage());
         ClipboardContent content = new ClipboardContent();
-        content.putString(source.getImageKey().name());
+        content.putString(source.getImageType().name());
         db.setContent(content);
     }
 
