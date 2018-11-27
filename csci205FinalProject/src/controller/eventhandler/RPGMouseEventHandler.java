@@ -16,6 +16,7 @@
 package controller.eventhandler;
 
 import controller.RPGController;
+import java.io.File;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
@@ -23,6 +24,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import model.character.NPC;
 import view.RPGView;
 import view.wrapper.ItemImageViewWrapper;
@@ -62,6 +65,19 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
             theController.getTheModel().setCurrentRoom(
                     theController.getTheModel().getCurrentRoom().getNorth());
             theController.refresh();
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        String sfx = "wav/footsteps.wav";
+                        Media walk = new Media(new File(sfx).toURI().toString());
+                        MediaPlayer mediaPlayer = new MediaPlayer(walk);
+                        mediaPlayer.play();
+                    } catch (Exception e) {
+                    }
+                }
+
+            }
+            ).start();
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             theController.getTheView().getImageViews().get(
@@ -87,6 +103,19 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
             theController.getTheModel().setCurrentRoom(
                     theController.getTheModel().getCurrentRoom().getSouth());
             theController.refresh();
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        String sfx = "wav/footsteps.wav";
+                        Media walk = new Media(new File(sfx).toURI().toString());
+                        MediaPlayer mediaPlayer = new MediaPlayer(walk);
+                        mediaPlayer.play();
+                    } catch (Exception e) {
+                    }
+                }
+
+            }
+            ).start();
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             theController.getTheView().getImageViews().get(
@@ -112,6 +141,19 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
             theController.getTheModel().setCurrentRoom(
                     theController.getTheModel().getCurrentRoom().getWest());
             theController.refresh();
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        String sfx = "wav/footsteps.wav";
+                        Media walk = new Media(new File(sfx).toURI().toString());
+                        MediaPlayer mediaPlayer = new MediaPlayer(walk);
+                        mediaPlayer.play();
+                    } catch (Exception e) {
+                    }
+                }
+
+            }
+            ).start();
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             theController.getTheView().getImageViews().get(
@@ -137,6 +179,19 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
             theController.getTheModel().setCurrentRoom(
                     theController.getTheModel().getCurrentRoom().getEast());
             theController.refresh();
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        String sfx = "wav/footsteps.wav";
+                        Media walk = new Media(new File(sfx).toURI().toString());
+                        MediaPlayer mediaPlayer = new MediaPlayer(walk);
+                        mediaPlayer.play();
+                    } catch (Exception e) {
+                    }
+                }
+
+            }
+            ).start();
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             theController.getTheView().getImageViews().get(
