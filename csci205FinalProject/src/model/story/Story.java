@@ -129,35 +129,35 @@ public class Story {
 //                    }, true);
 
         //Set 1
-        Equipment weapon1 = new Equipment("weapon1",
+        Equipment weapon1 = new Equipment("Pen & Paper",
                                           new ItemStatistics(0, 1, 0, 1),
                                           WEAPON);
-        Equipment shield1 = new Equipment("shield1",
+        Equipment shield1 = new Equipment("Machine Code",
                                           new ItemStatistics(1, 0, 0, 1),
                                           SHIELD);
-        Equipment armor1 = new Equipment("armor1",
+        Equipment armor1 = new Equipment("API",
                                          new ItemStatistics(0, 0, 1, 1),
                                          ARMOR);
 
         //Set 2
-        Equipment weapon2 = new Equipment("weapon2",
+        Equipment weapon2 = new Equipment("Notepad++",
                                           new ItemStatistics(0, 2, 0, 1),
                                           WEAPON);
-        Equipment shield2 = new Equipment("shield2",
+        Equipment shield2 = new Equipment("HTML",
                                           new ItemStatistics(2, 0, 0, 1),
                                           SHIELD);
-        Equipment armor2 = new Equipment("armor2",
+        Equipment armor2 = new Equipment("Stack Overflow",
                                          new ItemStatistics(0, 0, 2, 1),
                                          ARMOR);
 
         //Set 3
-        Equipment weapon3 = new Equipment("weapon3",
+        Equipment weapon3 = new Equipment("Netbeans",
                                           new ItemStatistics(0, 3, 0, 1),
                                           WEAPON);
-        Equipment shield3 = new Equipment("shield3",
+        Equipment shield3 = new Equipment("Java",
                                           new ItemStatistics(3, 0, 0, 1),
                                           SHIELD);
-        Equipment armor3 = new Equipment("armor3",
+        Equipment armor3 = new Equipment("the Winklevoss Twins",
                                          new ItemStatistics(0, 0, 3, 1),
                                          ARMOR);
 
@@ -186,7 +186,7 @@ public class Story {
                                           add(shield1);
                                       }
                                   });
-        RoomContent rc3 = new RoomContent("Cana 213",
+        RoomContent rc3 = new RoomContent("Bana 213",
                                           new ArrayList<NPCImageViewWrapper>() {
                                       {
                                           add(new NPCImageViewWrapper(npc3,
@@ -284,7 +284,7 @@ public class Story {
 //                                           add(armor3);
 //                                       }
 //                                   });
-//        RoomContent rc11 = new RoomContent("Dill",
+//        RoomContent rc11 = new RoomContent("Outside of Dustin's Secret Lab",
 //                                           new ArrayList<NPCImageViewWrapper>() {
 //                                       {
 //                                           add(new NPCImageViewWrapper(npc11,
