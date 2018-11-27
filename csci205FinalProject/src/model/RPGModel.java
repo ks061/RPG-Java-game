@@ -16,6 +16,7 @@
 package model;
 
 import java.util.ArrayList;
+import model.character.NPC;
 import model.character.Player;
 import model.map.Room;
 import model.story.RoomContent;
@@ -40,6 +41,8 @@ public class RPGModel {
      * Selected player
      */
     private Player player;
+
+    private NPC finalBoss;
 
     /**
      * Row index of the room that the player will start in
@@ -271,6 +274,10 @@ public class RPGModel {
                 roomContent = Story.getInstance().getRandomRoomContent();
                 r.setName(roomContent.getName());
                 r.setNPCViewWrappers(roomContent.getNPCWrappers());
+                if (roomContent.getNPCWrappers().get(0).getNpc().getName().equals(
+                        "Angry Dance")) {
+                    this.finalBoss = roomContent.getNPCWrappers().get(0).getNpc();
+                }
                 r.setHiddenItems(roomContent.getItems());
             }
         }
@@ -307,6 +314,10 @@ public class RPGModel {
      */
     public Player getPlayer() {
         return player;
+    }
+
+    public NPC getFinalBoss() {
+        return this.finalBoss;
     }
 
 //

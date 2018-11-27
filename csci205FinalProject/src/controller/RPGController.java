@@ -18,9 +18,13 @@ package controller;
 
 import controller.eventhandler.RPGDragEventHandler;
 import controller.eventhandler.RPGMouseEventHandler;
+import java.io.File;
 import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javax.swing.JOptionPane;
 import model.RPGModel;
 import model.character.NPC;
 import model.item.Item;
@@ -140,7 +144,7 @@ public class RPGController {
         this.mapImageViewToNPC = new HashMap<>();
 
         setEventHandlerOfComponents();
-        
+
         this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragOver(
                 rpgDragEventHandler);
         this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragDropped(
@@ -167,7 +171,7 @@ public class RPGController {
                 rpgMouseEventHandler);
         this.theView.getImageViews().get(ImageType.ARMOR3).setOnDragDetected(
                 rpgMouseEventHandler);
-                
+
         this.theView.getBottomHBox().getChildren().add(
                 this.theView.getImageViews().get(ImageType.INVENTORY));
         this.theView.getBottomHBox().getChildren().add(
@@ -468,24 +472,44 @@ public class RPGController {
      */
     public void continueAttack(ImageView imageView) {
         theView.getCenterPane().getChildren().remove(imageView);
-        String NPCAttacksPlayer = theModel.getCurrentRoom().getNPCViewWrappers().get(
-                0).getNpc().attack(theModel.getPlayer());
-        ImageView newImageView = theView.handleActionBubble(ImageType.BAM,
-                                                            NPCAttacksPlayer);
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (Exception e) {
-                }
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        finishAttack(newImageView);
+        System.out.println(
+                theModel.getFinalBoss().getCharacterStats().getHealth());
+        if (!theModel.getFinalBoss().isIsAlive()) {
+            theView.updateStoryText("You win!");
+            JOptionPane.showMessageDialog(null,
+                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
+                                          "The End", JOptionPane.PLAIN_MESSAGE);
+            System.exit(0);
+        }
+        else if (!theModel.getCurrentRoom().getNPCViewWrappers().get(0).getNpc().isIsAlive()) {
+            theView.updateStoryText(String.format("%s is dead!",
+                                                  theModel.getCurrentRoom().getNPCViewWrappers().get(
+                                                          0).getNpc().getName()));
+        }
+        else {
+            String NPCAttacksPlayer = theModel.getCurrentRoom().getNPCViewWrappers().get(
+                    0).getNpc().attack(theModel.getPlayer());
+            ImageView newImageView = theView.handleActionBubble(ImageType.BAM,
+                                                                NPCAttacksPlayer);
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        String sfx = "wav/batman2.wav";
+                        Media hit = new Media(new File(sfx).toURI().toString());
+                        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+                        mediaPlayer.play();
+                        Thread.sleep(2000);
+                    } catch (Exception e) {
                     }
-                });
-            }
-        }).start();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            finishAttack(newImageView);
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 
     /**
@@ -498,6 +522,13 @@ public class RPGController {
     public void finishAttack(ImageView imageView) {
         theView.getCenterPane().getChildren().remove(imageView);
         attackActive = false;
+        if (!theModel.getPlayer().isIsAlive()) {
+            theView.updateStoryText("You have died!");
+            JOptionPane.showMessageDialog(null,
+                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
+                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+            System.exit(0);
+        }
     }
 
     /**
