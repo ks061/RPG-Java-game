@@ -15,11 +15,13 @@
  */
 package model.character;
 
+import model.item.Item;
+
 /**
  * Player class creates constructor and methods associated with the Players
  * throughout the RPG. It's a child of RPCCharacter.
  *
- * @author lts010
+ * @author lts010, ks061
  */
 public class Player extends RPGCharacter {
 
@@ -44,6 +46,8 @@ public class Player extends RPGCharacter {
      * Player constructor that instantiates the attributes of the player
      *
      * @param name - the name of the player
+     *
+     * @author ks061, lts010
      */
     public Player(String name) {
         super(name, new RPGCharacterStats(Player.DEFAULT_MAX_HEALTH,
@@ -52,25 +56,13 @@ public class Player extends RPGCharacter {
               Player.DEFAULT_INVENTORY_SIZE);
     }
 
-    // TODO: Discuss; may be unneeded.
-    /**
-     * Overrides moveTo in the RPGCharacter class
-     *
-     * @param room - room to move to
-     * @return String representing the room the player moved to
-     */
-//    public String moveTo(Room room) {
-//        this.getLocation().setPlayer(null);
-//        this.setLocation(room);
-//        this.getLocation().setPlayer(this);
-//        return String.format("%s moved to the %s",
-//                             this.getName(), this.getLocation().getName());
-//    }
     /**
      * Toggles the current dialogue of the NPC and returns it (has the NPC talk)
      *
      * @param npc - NPC to be talking
      * @return String representing current dialogue of the NPC
+     *
+     * @author ks061, lts010
      */
     public String talk(NPC npc) {
         String dialogue = npc.getCurrentDialogue();
@@ -141,45 +133,47 @@ public class Player extends RPGCharacter {
 //                    this.getName(), hiddenItem.getName());
 //        }
 //    }
-    // TODO: Discuss implementation of search in NPC or Player class and
-    // logic behind the method.
     /**
      * Searches the body of a dead NPC to gather its items
      *
      * @param npc - NPC to loot
      * @return String representing what items were found and added to player
      * inventory
+     *
+     * @author lts010
      */
-//    public String search(NPC npc) {
-//        if (npc.isIsAlive()) {
-//            return "Cannot search the bodies of characters who are alive";
-//        }
-//        else {
-//            if (npc.getInventory().isEmpty()) {
-//                return String.format("%s searched %s but found nothing",
-//                                     this.getName(), npc.getName());
-//            }
-//            Item item = npc.getInventory().get(0);
-//            if (this.isInventoryFull()) {
-//                return String.format(
-//                        "%s found %s on %s but their inventory is full",
-//                        this.getName(), item.getName(), npc.getName());
-//            }
-//            else {
-//                this.getInventory().add(item);
-//                npc.getInventory().remove(item);
-//                item.setOwner(this);
-//                return String.format("%s took %s off the body of %s",
-//                                     this.getName(), item.getName(),
-//                                     npc.getName());
-//            }
-//        }
-//    }
+    public String search(NPC npc) {
+        if (npc.isIsAlive()) {
+            return "Cannot search the bodies of characters who are alive";
+        }
+        else {
+            if (npc.getInventory().isEmpty()) {
+                return String.format("%s searched %s but found nothing",
+                                     this.getName(), npc.getName());
+            }
+            Item item = npc.getInventory().get(0);
+            if (this.isInventoryFull()) {
+                return String.format(
+                        "%s found %s on %s but their inventory is full",
+                        this.getName(), item.getName(), npc.getName());
+            }
+            else {
+                this.getInventory().add(item);
+                npc.getInventory().remove(item);
+                return String.format("%s took %s off the body of %s",
+                                     this.getName(), item.getName(),
+                                     npc.getName());
+            }
+        }
+    }
+
     /**
      * Starts a battle with a hostile NPC
      *
      * @param npc - NPC to battle
      * @return String describing who was killed in battle
+     *
+     * @author lts010
      */
     public String startBattle(NPC npc) {
         if (npc.isFriendly()) {

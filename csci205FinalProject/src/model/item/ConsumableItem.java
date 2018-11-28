@@ -15,6 +15,8 @@
  */
 package model.item;
 
+import view.RPGView;
+
 /**
  * An item that is for one-time-use only. Child of Item class.
  *
@@ -28,45 +30,12 @@ public class ConsumableItem extends Item {
      *
      * @param name name of item owner
      * @param itemStatistics statistics of the item
+     * @param imageViewKey Key for RPGView EnumMap to get the imageView of equipment
      *
      * @author ks061
      */
-    public ConsumableItem(String name, ItemStatistics itemStatistics) {
-        super(name, itemStatistics);
+    public ConsumableItem(String name, ItemStatistics itemStatistics, RPGView.ImageType imageViewKey) {
+        super(name, itemStatistics, imageViewKey);
     }
 
-// TODO: Discuss implementation
-//    /**
-//     * Consumes the items and correspondingly change the health of item owner
-//     *
-//     * @return String representing what was consumed
-//     */
-//    public String consume() {
-//        //For HEALTH potions
-//        int curHealth = super.getOwner().getCharacterStats().getHealth();
-//        if (curHealth + super.getDeltaHealth() > super.getOwner().getCharacterStats().getMaxHealth()) {
-//            //sets the health of the player to max health if health + potion turns
-//            //out to fill up the health bar of the player
-//            super.getOwner().getCharacterStats().setHealth(
-//                    super.getOwner().getCharacterStats().getMaxHealth());
-//        }
-//        else {
-//            super.getOwner().getCharacterStats().setHealth(
-//                    curHealth + super.getDeltaHealth());
-//        }
-//
-//        //For ATTACK potions
-//        super.getOwner().getCharacterStats().setAttack(
-//                super.getOwner().getCharacterStats().getAttack() + super.getDeltaAttack());
-//
-//        //For DEFENSE potions
-//        super.getOwner().getCharacterStats().setDefense(
-//                super.getOwner().getCharacterStats().getDefense() + super.getDeltaDefense());
-//
-//        //For items that permanantely increase inventory size
-//        super.getOwner().setInventorySize(
-//                super.getOwner().getInventorySize() + super.getDeltaInventory());
-//        this.getOwner().getInventory().remove(this);
-//        return String.format("Consumed the %s", this.getName());
-//    }
 }
