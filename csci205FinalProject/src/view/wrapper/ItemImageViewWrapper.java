@@ -33,6 +33,8 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
      */
     private final ItemType itemType;
 
+    private String tooltip;
+
     //public static final int ITEM_VIEW_WIDTH = 30;
     // public static final int ITEM_VIEW_HEIGHT = 30;
     /**
@@ -50,6 +52,10 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
                                 RPGView.ImageType imageType) {
         super(image, image, location, imageType);
         this.itemType = itemType;
+        if (imageType.toString() != imageType.name()) {
+            tooltip = new String(imageType.toString());
+            this.setTooltip(tooltip);
+        }
     }
 
     /**
@@ -61,5 +67,13 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
      */
     public ItemType getItemType() {
         return itemType;
+    }
+
+    private void setTooltip(String tooltip) {
+        this.tooltip = tooltip;
+    }
+
+    private String getTooltip() {
+        return this.tooltip;
     }
 }

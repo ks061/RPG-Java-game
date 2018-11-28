@@ -60,14 +60,38 @@ public class RPGView {
      */
     public enum ImageType {
         // Game controls
-        INVENTORY, ATTACK, SEARCH, TRADE,
+        INVENTORY(
+                "Backpack: Click to view your inventory\n" + "Drag items here to store in your inventory"),
+        ATTACK, SEARCH, TRADE,
         POW, BAM, WHIFF, CRUNCH,
-        UPARROW, DOWNARROW, LEFTARROW, RIGHTARROW,
+        UPARROW("Up arrow: Click to move to room above"),
+        DOWNARROW("Down arrow: Click to move to room below"),
+        LEFTARROW("Left arrow: Click to move to room on left"),
+        RIGHTARROW("Right arror: Click to move to room on right"),
         // Game entities
-        NPC,
-        WEAPON1, WEAPON2, WEAPON3,
-        SHIELD1, SHIELD2, SHIELD3,
-        ARMOR1, ARMOR2, ARMOR3;
+        NPC("Character: Click to talk to NPC"),
+        PEN_AND_PAPER("Code using pen and paper: attack +10"), NOTEPAD(
+                "Code using Notepad: attack +20"),
+        NETBEANS("Code using Netbeans: attack +30"),
+        MACHINE_CODE("Learned Assembly language: health +5"), HTML(
+                "Learned HTML: health +7"), JAVA("Learned Java: health +10"),
+        API("Able to use the API: defense +10"), STACK_OVERFLOW(
+                "Able to use Stack Overflow: defense +20"),
+        WINKLEVOSS_TWINS(
+                "Able to use the Winklevoss Twins: defense +30");
+
+        /**
+         * String representing tooltip associated with each tool
+         */
+        private String tooltip;
+
+        ImageType(String tooltip) {
+            this.tooltip = tooltip;
+        }
+
+        ImageType() {
+            this.tooltip = null;
+        }
     };
 
     /*
@@ -667,33 +691,34 @@ public class RPGView {
         this.imageViews.put(ImageType.CRUNCH, loadImage("img/CRUNCH.png",
                                                         ItemType.CONTROL,
                                                         ImageType.CRUNCH));
-        this.imageViews.put(ImageType.WEAPON1, loadImage("img/SWORD.png",
+        this.imageViews.put(ImageType.PEN_AND_PAPER, loadImage("img/SWORD.png",
+                                                               ItemType.WEAPON,
+                                                               ImageType.PEN_AND_PAPER));
+        this.imageViews.put(ImageType.NOTEPAD, loadImage("img/SWORD.png",
                                                          ItemType.WEAPON,
-                                                         ImageType.WEAPON1));
-        this.imageViews.put(ImageType.WEAPON2, loadImage("img/SWORD.png",
-                                                         ItemType.WEAPON,
-                                                         ImageType.WEAPON2));
-        this.imageViews.put(ImageType.WEAPON3, loadImage("img/SWORD.png",
-                                                         ItemType.WEAPON,
-                                                         ImageType.WEAPON3));
-        this.imageViews.put(ImageType.ARMOR1, loadImage("img/SWORD.png",
-                                                        ItemType.ARMOR,
-                                                        ImageType.ARMOR1));
-        this.imageViews.put(ImageType.ARMOR2, loadImage("img/SWORD.png",
-                                                        ItemType.ARMOR,
-                                                        ImageType.ARMOR2));
-        this.imageViews.put(ImageType.ARMOR3, loadImage("img/SWORD.png",
-                                                        ItemType.ARMOR,
-                                                        ImageType.ARMOR3));
-        this.imageViews.put(ImageType.SHIELD1, loadImage("img/SHIELD.png",
-                                                         ItemType.SHIELD,
-                                                         ImageType.SHIELD1));
-        this.imageViews.put(ImageType.SHIELD2, loadImage("img/SHIELD.png",
-                                                         ItemType.SHIELD,
-                                                         ImageType.SHIELD2));
-        this.imageViews.put(ImageType.SHIELD3, loadImage("img/SHIELD.png",
-                                                         ItemType.SHIELD,
-                                                         ImageType.SHIELD3));
+                                                         ImageType.NOTEPAD));
+        this.imageViews.put(ImageType.NETBEANS, loadImage("img/SWORD.png",
+                                                          ItemType.WEAPON,
+                                                          ImageType.NETBEANS));
+        this.imageViews.put(ImageType.API, loadImage("img/SWORD.png",
+                                                     ItemType.ARMOR,
+                                                     ImageType.API));
+        this.imageViews.put(ImageType.STACK_OVERFLOW, loadImage("img/SWORD.png",
+                                                                ItemType.ARMOR,
+                                                                ImageType.STACK_OVERFLOW));
+        this.imageViews.put(ImageType.WINKLEVOSS_TWINS, loadImage(
+                            "img/SWORD.png",
+                            ItemType.ARMOR,
+                            ImageType.WINKLEVOSS_TWINS));
+        this.imageViews.put(ImageType.MACHINE_CODE, loadImage("img/SHIELD.png",
+                                                              ItemType.SHIELD,
+                                                              ImageType.MACHINE_CODE));
+        this.imageViews.put(ImageType.HTML, loadImage("img/SHIELD.png",
+                                                      ItemType.SHIELD,
+                                                      ImageType.HTML));
+        this.imageViews.put(ImageType.JAVA, loadImage("img/SHIELD.png",
+                                                      ItemType.SHIELD,
+                                                      ImageType.JAVA));
     }
 
     /**
