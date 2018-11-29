@@ -16,6 +16,7 @@
 package controller.eventhandler;
 
 import controller.RPGController;
+import java.io.File;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
@@ -23,6 +24,8 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import model.character.NPC;
 import view.RPGView;
 import view.wrapper.ItemImageViewWrapper;
@@ -158,26 +161,50 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
      * @author ks061, lts010
      */
     private void handleAttack(MouseEvent event) {
-        String playerAttacksNPC = theController.getTheModel().getPlayer().attack(
-                theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
-                        0).getNpc());
-        ImageView imageView = theController.getTheView().handleActionBubble(
-                RPGView.ImageType.POW,
-                playerAttacksNPC);
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (Exception e) {
-                }
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        theController.continueAttack(imageView);
+        if (theController.isAttackActive()) {
+            //do nothing
+        }
+        else if (theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
+                0).getNpc().isFriendly()) {
+            theController.getTheView().updateStoryText(String.format(
+                    "%s is a friend!",
+                    theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
+                            0).getNpc().getName()));
+        }
+        else if (!theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
+                0).getNpc().isIsAlive()) {
+            theController.getTheView().updateStoryText(String.format(
+                    "%s is already dead!",
+                    theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
+                            0).getNpc().getName()));
+        }
+        else {
+            theController.setAttackActive(true);
+            String playerAttacksNPC = theController.getTheModel().getPlayer().attack(
+                    theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
+                            0).getNpc());
+            ImageView imageView = theController.getTheView().handleActionBubble(
+                    RPGView.ImageType.POW,
+                    playerAttacksNPC);
+            new Thread(new Runnable() {
+                public void run() {
+                    try {
+                        String sfx = "wav/batman1.wav";
+                        Media hit = new Media(new File(sfx).toURI().toString());
+                        MediaPlayer mediaPlayer = new MediaPlayer(hit);
+                        mediaPlayer.play();
+                        Thread.sleep(2000);
+                    } catch (Exception e) {
                     }
-                });
-            }
-        }).start();
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            theController.continueAttack(imageView);
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 
     /**
