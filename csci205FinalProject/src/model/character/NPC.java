@@ -32,9 +32,17 @@ public class NPC extends RPGCharacter {
      */
     private String dialogueToSpeak;
     /**
-     * Lines of dialogue
+     * Lines of dialogue currently displayed by an NPC
      */
     private ArrayList<String> dialogues;
+    /**
+     * Lines of dialogue for funsies
+     */
+    private ArrayList<String> regDialogues;
+    /**
+     * Lines of dialogue that gives clues for the player
+     */
+    private ArrayList<String> hintDialogues;
     /**
      * Iterator for lines of dialogue
      */
@@ -57,21 +65,24 @@ public class NPC extends RPGCharacter {
      *
      * @param name - name of NPC
      * @param npcStats - statistics of the NPC
-     * @param dialogues - series of dialogues
+     * @param regDialogues - series of dialogues
      * @param isFriendly - friendly or hostile attribute
      *
      * @author lts010, ks061
      */
     public NPC(String name, RPGCharacterStats npcStats,
-               ArrayList<String> dialogues, boolean isFriendly) {
+               ArrayList<String> regDialogues, ArrayList<String> hintDialouges,
+               boolean isFriendly) {
         super(name, npcStats, NPC.DEFAULT_INVENTORY_SIZE);
 
-        this.dialogues = dialogues;
+        this.regDialogues = regDialogues;
+        this.hintDialogues = hintDialouges;
+        this.dialogues = regDialogues;
         if (this.dialogues.isEmpty()) {
             this.dialogueIterator = null;
         }
         else {
-            dialogueIterator = dialogues.iterator();
+            dialogueIterator = regDialogues.iterator();
             if (dialogueIterator.hasNext()) {
                 this.dialogueToSpeak = dialogueIterator.next();
             }
