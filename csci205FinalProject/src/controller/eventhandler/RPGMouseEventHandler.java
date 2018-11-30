@@ -81,6 +81,18 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
                 theController.handleAttack(event);
             }
         }
+        else if (event.getSource() == theController.getTheView().getImageViews().get(
+                ImageKey.TRADE)) {
+            theController.getTheView().setStoryText(
+                    theController.getTheModel().getPlayer().trade(
+                            theController.getTheModel().getCurrentRoom().getNPCViewWrapper().getNPC()));
+        }
+        else if (event.getSource() == theController.getTheView().getImageViews().get(
+                ImageKey.SEARCH)) {
+            theController.getTheView().setStoryText(
+                    theController.getTheModel().getPlayer().search(
+                            theController.getTheModel().getCurrentRoom().getNPCViewWrapper().getNPC()));
+        }
         else if (event.getEventType().equals(MouseEvent.DRAG_DETECTED)) {
             handleDrag(event);
         }

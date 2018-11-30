@@ -102,7 +102,6 @@ public class NPC extends RPGCharacter {
 
         this.dialogueIterator = this.dialogues.iterator();
         return speak();
-
     }
 
     /**

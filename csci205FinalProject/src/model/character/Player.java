@@ -91,33 +91,32 @@ public class Player extends RPGCharacter {
     }
 
     /**
-     * Starts a battle with a hostile NPC
+     * Trades desired item of player with desired item of NPC and adds these to
+     * inventory
      *
-     * @param npc NPC to battle
-     * @return string describing who was killed in battle
-     *
-     * @author lts010, ks061
+     * @param npc - NPC to trade with
+     * @return String represented what items have been traded
      */
-    public String startBattle(NPC npc) {
-        if (npc.isFriendly()) {
-            return "Cannot start fights with friendly characters";
+    public String trade(NPC npc) {
+        if (npc.getDesiredItem() == null) {
+            return String.format("%s does not want to trade", npc.getName());
+        }
+        Item desiredItemOfNPC = npc.getDesiredItem();
+        if (this.getInventory().contains(desiredItemOfNPC)) {
+            Item desiredItemOfPlayer = npc.getInventory().get(0);
+            npc.getInventory().remove(desiredItemOfPlayer);
+            this.getInventory().remove(desiredItemOfNPC);
+            npc.getInventory().add(desiredItemOfNPC);
+            this.getInventory().add(desiredItemOfPlayer);
+            npc.setDesiredItem(desiredItemOfPlayer);
+            return String.format("%s traded the %s for the %s",
+                                 this.getName(),
+                                 desiredItemOfNPC.getName(),
+                                 desiredItemOfPlayer.getName());
         }
         else {
-            while (this.isAlive() & npc.isAlive()) {
-                this.attack(npc);
-                if (npc.isAlive()) {
-                    npc.attack(this);
-                }
-            }
-            if (this.isAlive()) {
-                return String.format("%s have killed %s", this.getName(),
-                                     npc.getName());
-            }
-            else {
-                return String.format("%s has killed %s", npc.getName(),
-                                     this.getName());
-            }
+            return String.format("%s does not have the item that %s wants",
+                                 this.getName(), npc.getName());
         }
     }
-
 }

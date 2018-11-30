@@ -487,7 +487,7 @@ public abstract class RPGCharacter {
         switch (equipment.getType()) {
             case WEAPON:
                 if (this.getWeapon() != null) {
-                    return this.swapEquipment(this.getWeapon());
+                    return this.swapEquipment(equipment);
                 }
                 else {
                     this.setWeapon(equipment);
@@ -495,7 +495,7 @@ public abstract class RPGCharacter {
                 break;
             case ARMOR:
                 if (this.getArmor() != null) {
-                    return this.swapEquipment(this.getArmor());
+                    return this.swapEquipment(equipment);
                 }
                 else {
                     this.setArmor(equipment);
@@ -503,7 +503,7 @@ public abstract class RPGCharacter {
                 break;
             case SHIELD:
                 if (this.getShield() != null) {
-                    return this.swapEquipment(this.getShield());
+                    return this.swapEquipment(equipment);
                 }
                 else {
                     this.setShield(equipment);
