@@ -18,9 +18,9 @@ package model;
 import java.util.ArrayList;
 import model.character.NPC;
 import model.character.Player;
+import model.data.Story;
 import model.map.Room;
-import model.story.RoomContent;
-import model.story.Story;
+import model.map.RoomContent;
 
 /**
  * RPGModel serves as the model for the RPG game application.
@@ -34,61 +34,54 @@ public class RPGModel {
      */
     private ArrayList<ArrayList<Room>> map;
     /**
-     * Current room that the player is in
+     * Current room player is in
      */
     private Room currentRoom;
     /**
-     * Selected player
+     * Player playing the game
      */
-    private Player player;
-
+    private final Player player;
+    /**
+     * Final NPC boss that player will defeat in order to complete the game
+     */
     private NPC finalBoss;
 
     /**
      * Row index of the room that the player will start in
      */
     private static final int ROW_INDEX_OF_STARTING_ROOM = 0;
-
     /**
      * Column index of the room that the player will start in
      */
     private static final int COL_INDEX_OF_STARTING_ROOM = 0;
-
     /**
      * Number of rooms per row in the map
      */
     private static final int NUM_ROOMS_PER_ROW = 3;
-
     /**
      * Number of rows of rooms in the map
      */
     private static final int NUM_ROWS = 3;
 
-//    /**
-//     * The properties that represent the current statistics of the player
-//     */
-//    private StringProperty propPlayerCurrentHealth;
-//    private StringProperty propPlayerAttack;
-//    private StringProperty propPlayerDefense;
-//
-//    /**
-//     * The properties that represent the player's current equipment
-//     */
-//    private StringProperty propPlayerWeapon;
-//    private StringProperty propPlayerArmor;
-//    private StringProperty propPlayerShield;
+    /**
+     * Prefix of the room background image file
+     */
+    private static final String ROOM_IMAGE_FILE_PATH_PREFIX = "img/room";
+    /**
+     * Extension of the room background image file
+     */
+    private static final String ROOM_IMAGE_FILE_PATH_EXT = ".png";
+    /**
+     * Name of the NPC boss
+     */
+    private static final String FINAL_BOSS_NAME = "Angry Dance";
+
     /**
      * Constructor that initializes the model of the application
      *
      * @author ks061
      */
     public RPGModel() {
-//        this.propPlayerCurrentHealth = new SimpleStringProperty("");
-//        this.propPlayerAttack = new SimpleStringProperty("");
-//        this.propPlayerDefense = new SimpleStringProperty("");
-//        this.propPlayerWeapon = new SimpleStringProperty("");
-//        this.propPlayerArmor = new SimpleStringProperty("");
-//        this.propPlayerShield = new SimpleStringProperty("");
         this.player = new Player("Student");
         this.currentRoom = initGridOfRooms();
     }
@@ -133,7 +126,7 @@ public class RPGModel {
      * Links a grid of rooms to one another and sets the background image to one
      * with the correct doors for the connections.
      *
-     * @author ks061 lts010
+     * @author ks061, lts010
      */
     private void connectGridOfRooms() {
         Room roomAbove;
@@ -146,7 +139,7 @@ public class RPGModel {
             for (int colIndex = 0; colIndex < NUM_ROOMS_PER_ROW; colIndex++) {
                 roomNumber = rowIndex * NUM_ROOMS_PER_ROW + colIndex;
                 this.map.get(rowIndex).get(colIndex).setBackgroundImagePath(
-                        "img/room" + roomNumber + ".png");
+                        ROOM_IMAGE_FILE_PATH_PREFIX + roomNumber + ROOM_IMAGE_FILE_PATH_EXT);
                 try {
                     roomAbove = this.map.get(rowIndex - 1).get(colIndex);
                     this.map.get(rowIndex).get(colIndex).setNorth(roomAbove);
@@ -171,95 +164,6 @@ public class RPGModel {
         }
     }
 
-//    /**
-//     * Updates the current health property of the player
-//     *
-//     * @author ks061, lts010
-//     */
-//    private void updateCurrentHealthProperty() {
-//        String currentHealthString = String.format("%d",
-//                                                   this.player.getCharacterStats().getHealth());
-//        this.propPlayerCurrentHealth.setValue(currentHealthString);
-//    }
-//
-//    /**
-//     * Updates the attack property of the player
-//     *
-//     * @author ks061, lts010
-//     */
-//    private void updateAttackProperty() {
-//        String attackString = String.format("%d",
-//                                            this.player.getCharacterStats().getAttack());
-//        this.propPlayerAttack.setValue(attackString);
-//    }
-//
-//    /**
-//     * Updates the defense property of the player
-//     *
-//     * @author ks061, lts010
-//     */
-//    private void updateDefenseProperty() {
-//        String defenseString = String.format("%d",
-//                                             this.player.getCharacterStats().getDefense());
-//        this.propPlayerDefense.setValue(defenseString);
-//    }
-//
-//    /**
-//     * Updates the weapon name property of the player
-//     *
-//     * @author ks061, lts010
-//     */
-//    private void updateWeaponProperty() {
-//        if (this.player.getWeapon() == null) {
-//            this.propPlayerWeapon.setValue("None");
-//        }
-//        else {
-//            this.propPlayerWeapon.setValue(this.player.getWeapon().getName());
-//        }
-//    }
-//
-//    /**
-//     * Updates the armor name property of the player
-//     *
-//     * @author ks061, lts010
-//     */
-//    private void updateArmorProperty() {
-//        if (this.player.getArmor() == null) {
-//            this.propPlayerArmor.setValue("None");
-//        }
-//        else {
-//            this.propPlayerArmor.setValue(this.player.getArmor().getName());
-//        }
-//    }
-//
-//    /**
-//     * Updates the shield name property of the player
-//     *
-//     * @author ks061, lts010
-//     */
-//    private void updateShieldProperty() {
-//        if (this.player.getShield() == null) {
-//            this.propPlayerShield.setValue("None");
-//        }
-//        else {
-//            this.propPlayerShield.setValue(this.player.getShield().getName());
-//        }
-//    }
-//    /**
-//     * Updates the properties representing the player's statistics and equipment
-//     * to keep them current with the player
-//     *
-//     * @author lts010, ks061
-//     */
-//    public void updateProperties() {
-//        updateCurrentHealthProperty();
-//        updateAttackProperty();
-//        updateDefenseProperty();
-//
-//        updateWeaponProperty();
-//        updateArmorProperty();
-//        updateShieldProperty();
-//    }
     /**
      * Initializes each room in the map with the content coded into the story
      * within the model
@@ -273,10 +177,10 @@ public class RPGModel {
             for (Room r : mapRow) {
                 roomContent = Story.getInstance().getRandomRoomContent();
                 r.setName(roomContent.getName());
-                r.setNPCViewWrappers(roomContent.getNPCWrappers());
-                if (roomContent.getNPCWrappers().get(0).getNpc().getName().equals(
-                        "Angry Dance")) {
-                    this.finalBoss = roomContent.getNPCWrappers().get(0).getNpc();
+                r.setNPCViewWrapper(roomContent.getNPCWrapper());
+                if (roomContent.getNPCWrapper().getNPC().getName().equals(
+                        FINAL_BOSS_NAME)) {
+                    this.finalBoss = roomContent.getNPCWrapper().getNPC();
                 }
                 r.setHiddenItems(roomContent.getItems());
             }
@@ -316,74 +220,14 @@ public class RPGModel {
         return player;
     }
 
+    /**
+     * Gets the final boss NPC
+     *
+     * @return final boss NPC
+     *
+     * @author ks061
+     */
     public NPC getFinalBoss() {
         return this.finalBoss;
     }
-
-//
-//    /**
-//     * Gets the string property representing the player's current health
-//     *
-//     * @return the string property representing the player's current health
-//     *
-//     * @author lts010
-//     */
-//    public StringProperty getPropPlayerCurrentHealth() {
-//        return propPlayerCurrentHealth;
-//    }
-//
-//    /**
-//     * Gets the string property representing the player's current attack
-//     *
-//     * @return the string property representing the player's current attack
-//     *
-//     * @author lts010
-//     */
-//    public StringProperty getPropPlayerAttack() {
-//        return propPlayerAttack;
-//    }
-//
-//    /**
-//     * Gets the string property representing the player's current defense
-//     *
-//     * @return the string property representing the player's current defense
-//     *
-//     * @author lts010
-//     */
-//    public StringProperty getPropPlayerDefense() {
-//        return propPlayerDefense;
-//    }
-//
-//    /**
-//     * Gets the string property representing the player's current weapon
-//     *
-//     * @return the string property representing the player's current weapon
-//     *
-//     * @author lts010
-//     */
-//    public StringProperty getPropPlayerWeapon() {
-//        return propPlayerWeapon;
-//    }
-//
-//    /**
-//     * Gets the string property representing the player's current armor
-//     *
-//     * @return the string property representing the player's current armor
-//     *
-//     * @author lts010
-//     */
-//    public StringProperty getPropPlayerArmor() {
-//        return propPlayerArmor;
-//    }
-//
-//    /**
-//     * Gets the string property representing the player's current armor
-//     *
-//     * @return the string property representing the player's current armor
-//     *
-//     * @author lts010
-//     */
-//    public StringProperty getPropPlayerShield() {
-//        return propPlayerShield;
-//    }
 }

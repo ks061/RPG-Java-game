@@ -66,7 +66,6 @@ public class RPGMain extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        this.theView.loadImages();
         theCtrl = new RPGController(theModel, theView);
 
         Scene scene = new Scene(this.theView.getRootNode());

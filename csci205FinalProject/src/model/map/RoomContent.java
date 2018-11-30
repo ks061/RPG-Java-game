@@ -13,7 +13,7 @@
   * Description: This file contains RoomContent.
   * ****************************************
  */
-package model.story;
+package model.map;
 
 import java.util.ArrayList;
 import model.item.Item;
@@ -27,26 +27,33 @@ import view.wrapper.NPCImageViewWrapper;
  */
 public class RoomContent {
 
-    private String name;
-
-    private ArrayList<NPCImageViewWrapper> npcWrappers;
-
-    private ArrayList<Item> items;
+    /**
+     * Name of the room
+     */
+    private final String name;
+    /**
+     * Wrapper of the NPC in the room
+     */
+    private final NPCImageViewWrapper npcWrapper;
+    /**
+     * List of items in the room
+     */
+    private final ArrayList<Item> items;
 
     /**
      * Constructor that initializes the content of a room
      *
      * @param name name of room
-     * @param npcWrappers list of NPC Wrapper objects containing the NPC and the
-     * image view of the NPC
+     * @param npcWrapper NPC wrapper object containing the NPC and the image
+     * view of the NPC
      * @param items list of items in a room
      *
      * @author cjs051, ks061
      */
-    public RoomContent(String name, ArrayList<NPCImageViewWrapper> npcWrappers,
+    public RoomContent(String name, NPCImageViewWrapper npcWrapper,
                        ArrayList<Item> items) {
         this.name = name;
-        this.npcWrappers = npcWrappers;
+        this.npcWrapper = npcWrapper;
         this.items = items;
     }
 
@@ -62,14 +69,14 @@ public class RoomContent {
     }
 
     /**
-     * Gets the list of NPC wrapper objects of NPCs in the room
+     * Gets the NPC wrapper object of NPC in the room
      *
-     * @return list of NPC wrapper objects of NPCs in the room
+     * @return NPC wrapper objects of NPC in the room
      *
      * @author cjs051, ks061
      */
-    public ArrayList<NPCImageViewWrapper> getNPCWrappers() {
-        return this.npcWrappers;
+    public NPCImageViewWrapper getNPCWrapper() {
+        return this.npcWrapper;
     }
 
     /**

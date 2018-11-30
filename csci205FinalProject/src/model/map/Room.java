@@ -31,9 +31,9 @@ public class Room {
      */
     private String name;
     /**
-     * NPCs in the room
+     * Wrapper of the NPC in the room
      */
-    private ArrayList<NPCImageViewWrapper> npcWrappers;
+    private NPCImageViewWrapper npcWrapper;
     /**
      * Items hidden in the room
      */
@@ -55,15 +55,15 @@ public class Room {
      * Room to the left of this room
      */
     private Room west;
+
     /**
      * Background image path of this room
      */
     private String backgroundImagePath;
 
     /**
-     * Constructor that assigns a name to the room, initializes empty lists for
-     * NPCs and hidden items, and sets the player and adjacent room pointers to
-     * null.
+     * Constructor that assigns a name to the room, initializes the list of
+     * hidden items, and sets the player and adjacent room pointers to null.
      *
      * @param name name of the room
      *
@@ -71,8 +71,8 @@ public class Room {
      */
     public Room(String name) {
         this.name = name;
-        this.npcWrappers = null;
-        this.hiddenItems = null;
+        this.npcWrapper = null;
+        this.hiddenItems = new ArrayList<>();
 
         this.north = null;
         this.south = null;
@@ -81,26 +81,26 @@ public class Room {
     }
 
     /**
-     * Adds a list of NPC wrapper objects containing the NPCs to the room
+     * Sets the NPC wrapper object containing the NPC to be added to the room
      *
-     * @param npcWrappers list of NPC wrapper objects containing the NPCs to be
-     * added to the room
+     * @param npcWrapper NPC wrapper object containing the NPC to be added to
+     * the room
      *
      * @author ks061
      */
-    public void setNPCViewWrappers(ArrayList<NPCImageViewWrapper> npcWrappers) {
-        this.npcWrappers = npcWrappers;
+    public void setNPCViewWrapper(NPCImageViewWrapper npcWrapper) {
+        this.npcWrapper = npcWrapper;
     }
 
     /**
-     * Gets a list of NPC wrapper objects containing the NPCs in the room
+     * Gets NPC wrapper object containing the NPC in the room
      *
-     * @return list of NPC wrapper objects containing the NPCs in the room
+     * @return NPC wrapper object containing the NPC in the room
      *
      * @author ks061
      */
-    public ArrayList<NPCImageViewWrapper> getNPCViewWrappers() {
-        return npcWrappers;
+    public NPCImageViewWrapper getNPCViewWrapper() {
+        return npcWrapper;
     }
 
     /**
@@ -123,41 +123,6 @@ public class Room {
      */
     public ArrayList<Item> getHiddenItems() {
         return this.hiddenItems;
-    }
-
-    /**
-     * Adds a hidden item to the room
-     *
-     * @param hiddenItem hidden item to be added to the room
-     *
-     * @return true if inputted element removed as a result of calling the
-     * method
-     *
-     * @see
-     * <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html#add-E-">Java
-     * 8 API Collections</a>
-     *
-     * @author ks061
-     */
-    public boolean addHiddenItem(Item hiddenItem) {
-        return this.hiddenItems.add(hiddenItem);
-    }
-
-    /**
-     * Removes a hidden item from the room
-     *
-     * @param hiddenItem hidden item to be removed from the room
-     *
-     * @return true if collection changes from calling this method
-     *
-     * @see
-     * <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html#remove-E-">Java
-     * 8 API Collections</a>
-     *
-     * @author ks061
-     */
-    public boolean removeHiddenItem(Item hiddenItem) {
-        return this.hiddenItems.remove(hiddenItem);
     }
 
     /**
@@ -271,19 +236,21 @@ public class Room {
     }
 
     /**
-     * Gets the path for the Room Background Image
+     * Gets the path for the background image of the room
      *
-     * @author lts010
+     * @return background image path
+     *
+     * @author lts010, ks061
+     *
      */
     public String getBackgroundImagePath() {
         return backgroundImagePath;
     }
 
     /**
-     * Sets the path for the Room Background Image
+     * Sets the path for the background image of the room
      *
-     * @param backgroundImagePath is the path name for the background image
-     * file.
+     * @param backgroundImagePath the file path for the background image
      *
      * @author lts010, ks061
      */

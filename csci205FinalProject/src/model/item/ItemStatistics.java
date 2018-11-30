@@ -27,20 +27,20 @@ public class ItemStatistics {
     /**
      * Change in the health player statistic as a result of obtaining the item
      */
-    private int deltaHealth;
+    private final int deltaHealth;
     /**
      * Change in the attack player statistic as a result of obtaining the item
      */
-    private int deltaAttack;
+    private final int deltaAttack;
     /**
      * Change in the defense player statistic as a result of obtaining the item
      */
-    private int deltaDefense;
+    private final int deltaDefense;
     /**
      * Change in the size of the player inventory as a result of obtaining the
      * item
      */
-    private int deltaInventory;
+    private final int deltaInventory;
 
     /**
      * Explicit constructor for ItemStatistics
@@ -78,19 +78,6 @@ public class ItemStatistics {
     }
 
     /**
-     * Sets the change in the player health statistic as a result of obtaining
-     * the item
-     *
-     * @param deltaHealth change in the player health statistic as a result of
-     * obtaining the item
-     *
-     * @author lts010, ks061
-     */
-    public void setDeltaHealth(int deltaHealth) {
-        this.deltaHealth = deltaHealth;
-    }
-
-    /**
      * Gets the change in the player attack statistic as a result of obtaining
      * the item
      *
@@ -101,19 +88,6 @@ public class ItemStatistics {
      */
     public int getDeltaAttack() {
         return deltaAttack;
-    }
-
-    /**
-     * Sets the change in the player attack statistic as a result of obtaining
-     * the item
-     *
-     * @param deltaAttack change in the player attack statistic as a result of
-     * obtaining the item
-     *
-     * @author lts010, ks061
-     */
-    public void setDeltaAttack(int deltaAttack) {
-        this.deltaAttack = deltaAttack;
     }
 
     /**
@@ -130,19 +104,6 @@ public class ItemStatistics {
     }
 
     /**
-     * Sets the change in the player defense statistic as a result of obtaining
-     * the item
-     *
-     * @param deltaDefense change in the player defense statistic as a result of
-     * obtaining the item
-     *
-     * @author lts010, ks061
-     */
-    public void setDeltaDefense(int deltaDefense) {
-        this.deltaDefense = deltaDefense;
-    }
-
-    /**
      * Gets the change in the size of the player inventory as a result of
      * obtaining the item
      *
@@ -154,18 +115,4 @@ public class ItemStatistics {
     public int getDeltaInventory() {
         return deltaInventory;
     }
-
-    /**
-     * Sets the change in the size of the player inventory as a result of
-     * obtaining the item
-     *
-     * @param deltaInventory change in the size of the player inventory as a
-     * result of obtaining the item
-     *
-     * @author lts010, ks061
-     */
-    public void setDeltaInventory(int deltaInventory) {
-        this.deltaInventory = deltaInventory;
-    }
-
 }

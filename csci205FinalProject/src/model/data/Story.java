@@ -13,7 +13,7 @@
   * Description: This file contains Story.
   * ****************************************
  */
-package model.story;
+package model.data;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,7 +24,8 @@ import model.item.Equipment;
 import model.item.Item;
 import model.item.ItemStatistics;
 import static model.item.ItemType.*;
-import view.RPGView;
+import model.map.RoomContent;
+import view.ImageKey;
 import view.wrapper.NPCImageViewWrapper;
 
 /**
@@ -35,9 +36,14 @@ import view.wrapper.NPCImageViewWrapper;
  */
 public class Story {
 
+    /**
+     * The instance of Story
+     */
     private static Story instance;
-
-    private ArrayList<RoomContent> roomContents;
+    /**
+     * List of contents to put in the rooms
+     */
+    private final ArrayList<RoomContent> roomContents;
 
     /**
      * Constructs Story, containing the starting data and/or story-line behind
@@ -46,7 +52,7 @@ public class Story {
      * @author cjs051, ks061
      */
     private Story() {
-        roomContents = new ArrayList<>();
+        this.roomContents = new ArrayList<>();
 
         NPC npc1 = new NPC("Dr. Dance", new RPGCharacterStats(20, 0, 0),
                            new ArrayList<String>() {
@@ -114,142 +120,108 @@ public class Story {
                            add("something");
                        }
                    }, true);
-//TODO create an RPGVIEW.ImageType, image, and ImageView Object for each.
+
         Equipment weapon1 = new Equipment("weapon1", new ItemStatistics(0, 1, 0,
                                                                         1),
-                                          WEAPON, RPGView.ImageType.WEAPON1);
+                                          WEAPON, ImageKey.WEAPON1);
         Equipment shield1 = new Equipment("shield1", new ItemStatistics(1, 0, 0,
                                                                         1),
-                                          SHIELD, RPGView.ImageType.SHIELD1);
+                                          SHIELD, ImageKey.SHIELD1);
         Equipment armor1 = new Equipment("armor1",
                                          new ItemStatistics(0, 0, 1, 1), ARMOR,
-                                         RPGView.ImageType.ARMOR1);
+                                         ImageKey.ARMOR1);
 
         Equipment weapon2 = new Equipment("weapon2", new ItemStatistics(0, 2, 0,
                                                                         1),
-                                          WEAPON, RPGView.ImageType.WEAPON2);
+                                          WEAPON, ImageKey.WEAPON2);
         Equipment shield2 = new Equipment("shield2", new ItemStatistics(2, 0, 0,
                                                                         1),
-                                          SHIELD, RPGView.ImageType.SHIELD2);
+                                          SHIELD, ImageKey.SHIELD2);
         Equipment armor2 = new Equipment("armor2",
                                          new ItemStatistics(0, 0, 2, 1), ARMOR,
-                                         RPGView.ImageType.ARMOR2);
+                                         ImageKey.ARMOR2);
 
         Equipment weapon3 = new Equipment("weapon3", new ItemStatistics(0, 3, 0,
                                                                         1),
-                                          WEAPON, RPGView.ImageType.WEAPON3);
+                                          WEAPON, ImageKey.WEAPON3);
         Equipment shield3 = new Equipment("shield3", new ItemStatistics(3, 0, 0,
                                                                         1),
-                                          SHIELD, RPGView.ImageType.SHIELD3);
+                                          SHIELD, ImageKey.SHIELD3);
         Equipment armor3 = new Equipment("armor3",
                                          new ItemStatistics(0, 0, 3, 1), ARMOR,
-                                         RPGView.ImageType.ARMOR3);
+                                         ImageKey.ARMOR3);
 
         Point2D npcLocation = new Point2D(0, 200);
-        RoomContent rc1 = new RoomContent("room1",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc1,
-                                                                      "Dancee.png",
-                                                                      npcLocation));
-                                      }
-                                  }, new ArrayList<Item>() {
+        RoomContent rc1 = new RoomContent("room1", new NPCImageViewWrapper(npc1,
+                                                                           "Dancee.png",
+                                                                           npcLocation),
+                                          new ArrayList<Item>() {
                                       {
                                           add(weapon1);
                                       }
                                   });
         RoomContent rc2 = new RoomContent("room2",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc2,
-                                                                      "Muz.png",
-                                                                      npcLocation));
-                                      }
-                                  }, new ArrayList<Item>() {
+                                          new NPCImageViewWrapper(npc2,
+                                                                  "Muz.png",
+                                                                  npcLocation),
+                                          new ArrayList<Item>() {
                                       {
                                           add(shield1);
                                       }
                                   });
-        RoomContent rc3 = new RoomContent("room3",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc3,
-                                                                      "Reef.png",
-                                                                      npcLocation));
-                                      }
-                                  }, new ArrayList<Item>() {
+        RoomContent rc3 = new RoomContent("room3", new NPCImageViewWrapper(npc3,
+                                                                           "Reef.png",
+                                                                           npcLocation),
+                                          new ArrayList<Item>() {
                                       {
                                           add(armor1);
                                       }
                                   });
         RoomContent rc4 = new RoomContent("room4",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc4,
-                                                                      "Izi.png",
-                                                                      npcLocation));
-                                      }
-                                  }, new ArrayList<Item>() {
+                                          new NPCImageViewWrapper(npc4,
+                                                                  "Izi.png",
+                                                                  npcLocation),
+                                          new ArrayList<Item>() {
                                       {
                                           add(weapon2);
                                       }
                                   });
         RoomContent rc5 = new RoomContent("room5",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc5,
-                                                                      "AngryDancee.jpg",
-                                                                      npcLocation));
-                                      }
-                                  }, new ArrayList<Item>() {
+                                          new NPCImageViewWrapper(npc5,
+                                                                  "AngryDancee.jpg",
+                                                                  npcLocation),
+                                          new ArrayList<Item>() {
                                       {
                                           add(shield2);
                                       }
                                   });
-        RoomContent rc6 = new RoomContent("room6",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc6,
-                                                                      "King.png",
-                                                                      npcLocation));
-                                      }
-                                  }, new ArrayList<Item>() {
+        RoomContent rc6 = new RoomContent("room6", new NPCImageViewWrapper(npc6,
+                                                                           "King.png",
+                                                                           npcLocation),
+                                          new ArrayList<Item>() {
                                       {
                                           add(armor2);
                                       }
                                   });
-        RoomContent rc7 = new RoomContent("room7",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc7,
-                                                                      "Martin.png",
-                                                                      npcLocation));
-                                      }
-                                  }, new ArrayList<Item>() {
+        RoomContent rc7 = new RoomContent("room7", new NPCImageViewWrapper(npc7,
+                                                                           "Martin.png",
+                                                                           npcLocation),
+                                          new ArrayList<Item>() {
                                       {
                                           add(weapon3);
                                       }
                                   });
-        RoomContent rc8 = new RoomContent("room8",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc8,
-                                                                      "Dustin.png",
-                                                                      npcLocation));
-                                      }
-                                  }, new ArrayList<Item>() {
+        RoomContent rc8 = new RoomContent("room8", new NPCImageViewWrapper(npc8,
+                                                                           "Dustin.png",
+                                                                           npcLocation),
+                                          new ArrayList<Item>() {
                                       {
                                           add(shield3);
                                       }
                                   });
-        RoomContent rc9 = new RoomContent("room9",
-                                          new ArrayList<NPCImageViewWrapper>() {
-                                      {
-                                          add(new NPCImageViewWrapper(npc9,
-                                                                      "Beck.png",
-                                                                      npcLocation));
-                                      }
-                                  },
+        RoomContent rc9 = new RoomContent("room9", new NPCImageViewWrapper(npc9,
+                                                                           "Beck.png",
+                                                                           npcLocation),
                                           new ArrayList<Item>() {
                                       {
                                           add(armor3);

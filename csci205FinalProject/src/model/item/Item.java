@@ -15,7 +15,7 @@
  */
 package model.item;
 
-import view.RPGView;
+import view.ImageKey;
 
 /**
  * An abstract class that can be extended to either a consumable or an equipable
@@ -28,29 +28,28 @@ public class Item {
     /**
      * Name of item
      */
-    private String name;
+    private final String name;
     /**
      * Statistics of the item
      */
-    private ItemStatistics itemStatistics;
-
+    private final ItemStatistics itemStatistics;
     /**
      * Key for locating the ImageView in RPGVIEW
      */
-    private RPGView.ImageType imageViewKey;
+    private final ImageKey imageViewKey;
 
     /**
      * Constructor that instantiates all attributes of an item
      *
      * @param name name of item
      * @param itemStatistics statistics of the item
-     * @param imageViewKey Key for RPGView EnumMap to get the imageView of
+     * @param imageViewKey key for RPGView EnumMap to get the imageView of
      * equipment
      *
      * @author ishk001, ks061, lts010
      */
     public Item(String name, ItemStatistics itemStatistics,
-                RPGView.ImageType imageViewKey) {
+                ImageKey imageViewKey) {
         this.imageViewKey = imageViewKey;
         this.name = name;
         this.itemStatistics = itemStatistics;
@@ -85,7 +84,7 @@ public class Item {
      *
      * @author lts010, ks061
      */
-    public RPGView.ImageType getImageViewKey() {
+    public ImageKey getImageViewKey() {
         return imageViewKey;
     }
 

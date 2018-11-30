@@ -16,7 +16,6 @@
 package view;
 
 import java.io.File;
-import java.util.ArrayList;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,48 +29,60 @@ import javafx.scene.layout.HBox;
 public class StatusBar extends HBox {
 
     private final boolean leftJustified;
-    private final ArrayList<ImageView> tensImageViews;
-    private final ArrayList<ImageView> unitsImageViews;
+    private final Image onesImage;
+    private final Image tensImage;
     private int value;
     private static final int PREF_SPACING = 5;
+    private final int DEFAULT_VALUE = 37;
 
     /**
-     * Represents a status bar of a player statistic
+     * Creates a status bar of a player statistic
      *
-     * @param tensImagePath image representing ten units of the player statistic
+     * @param onesImagePath image representing one unit of the player statistic
      * this status bar represents
-     * @param unitsImagePath image representing one unit of the player statistic
+     * @param tensImagePath image representing ten units of the player statistic
      * this status bar represents
      * @param leftJustified whether or not the status bar should be left
      * justified
      *
      * @author ks061, lts010
      */
-    public StatusBar(String tensImagePath, String unitsImagePath,
+    public StatusBar(String onesImagePath, String tensImagePath,
                      boolean leftJustified) {
         super();
-        this.unitsImageViews = new ArrayList<>();
-        this.tensImageViews = new ArrayList<>();
+        this.onesImage = getUnitsImage(onesImagePath);
+        this.tensImage = getUnitsImage(tensImagePath);
         this.leftJustified = leftJustified;
+        this.value = DEFAULT_VALUE;
 
-        String imageURI = new File(unitsImagePath).toURI().toString();
-        Image unitsImage = new Image(imageURI);
+        formatStatusBar();
 
-        imageURI = new File(tensImagePath).toURI().toString();
-        Image tensImage = new Image(imageURI);
-        ImageView tempImageView;
-        for (int i = 0; i < 10; i++) {
-            tempImageView = new ImageView(unitsImage);
+        this.refresh();
+    }
 
-            this.unitsImageViews.add(tempImageView);
-            this.tensImageViews.add(new ImageView(tensImage));
-        }
-        this.setPrefHeight(tensImage.getHeight());
-        this.setMaxHeight(tensImage.getHeight());
+    /**
+     * Formats and aligns the status bar
+     *
+     * @author ks061
+     */
+    private void formatStatusBar() {
+        this.setPrefHeight(this.tensImage.getHeight());
+        this.setMaxHeight(this.tensImage.getHeight());
         this.setSpacing(PREF_SPACING);
         this.setAlignment(Pos.CENTER);
-        this.value = 37;
-        this.refresh();
+    }
+
+    /**
+     * Gets the icon representing
+     *
+     * @param unitsImagePath file path of the units image
+     * @return icon representing
+     *
+     * @author ks061
+     */
+    private Image getUnitsImage(String unitsImagePath) {
+        String imageURI = new File(unitsImagePath).toURI().toString();
+        return new Image(imageURI);
     }
 
     /**
@@ -79,28 +90,28 @@ public class StatusBar extends HBox {
      *
      * @author lts010, ks061
      */
-    private void refresh() {
+    public void refresh() {
         int numberOfTens = value / 10;
         if (numberOfTens > 9) {
             numberOfTens = 9;
         }
-        int numberOfUnits = value % 10;
+        int numberOfOnes = value % 10;
         this.getChildren().clear();
         if (leftJustified) {
             this.setAlignment(Pos.CENTER_LEFT);
             for (int i = 0; i < numberOfTens; i++) {
-                this.getChildren().add(tensImageViews.get(i));
+                this.getChildren().add(new ImageView(tensImage));
             }
         }
 
-        for (int i = 0; i < numberOfUnits; i++) {
-            this.getChildren().add(unitsImageViews.get(i));
+        for (int i = 0; i < numberOfOnes; i++) {
+            this.getChildren().add(new ImageView(onesImage));
         }
 
         if (!leftJustified) {
             this.setAlignment(Pos.CENTER_RIGHT);
             for (int i = 0; i < numberOfTens; i++) {
-                this.getChildren().add(tensImageViews.get(i));
+                this.getChildren().add(new ImageView(tensImage));
             }
         }
     }

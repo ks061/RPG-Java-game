@@ -19,7 +19,7 @@ import java.io.File;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import model.character.NPC;
-import view.RPGView;
+import view.ImageKey;
 
 /**
  * Wrapper class for NPC including NPC, image of the NPC, and location where the
@@ -29,10 +29,18 @@ import view.RPGView;
  */
 public class NPCImageViewWrapper extends ImageViewWrapper {
 
+    /**
+     * Width of the NPC view
+     */
     public static final int NPC_VIEW_WIDTH = 50;
+    /**
+     * Height of the NPC view
+     */
     public static final int NPC_VIEW_HEIGHT = 70;
-
-    public static final String IMAGE_PATH_PARENT_DIR = "img/";
+    /**
+     * Image path of the parent NPC directory
+     */
+    public static final String IMAGE_PATH_PARENT_DIR = "img/npc/";
 
     /**
      * Explicit constructor that initializes an NPC character, image view of the
@@ -48,7 +56,7 @@ public class NPCImageViewWrapper extends ImageViewWrapper {
     public NPCImageViewWrapper(NPC npc, String imageFilename, Point2D location) {
         super(npc, new Image(
               new File(IMAGE_PATH_PARENT_DIR + imageFilename).toURI().toString()),
-              location, RPGView.ImageType.NPC, NPC_VIEW_WIDTH, NPC_VIEW_HEIGHT);
+              location, ImageKey.NPC, NPC_VIEW_WIDTH, NPC_VIEW_HEIGHT);
     }
 
     /**
@@ -58,7 +66,7 @@ public class NPCImageViewWrapper extends ImageViewWrapper {
      *
      * @author ks061
      */
-    public NPC getNpc() {
+    public NPC getNPC() {
         return (NPC) super.getWrappedObject();
     }
 

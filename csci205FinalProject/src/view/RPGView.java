@@ -17,12 +17,9 @@ package view;
 
 import java.io.File;
 import java.util.EnumMap;
-import java.util.Random;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -41,7 +38,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.RPGModel;
+import model.data.Properties;
 import model.item.ItemType;
+import utility.RPGUtility;
 import view.wrapper.ItemImageViewWrapper;
 
 /**
@@ -52,156 +51,115 @@ import view.wrapper.ItemImageViewWrapper;
 public class RPGView {
 
     /**
-     * ImageType represents the buttons and action bubbles that appear on the
-     * screen. Image types representing game controls are listed in the first
-     * group of enumeration elements.
-     *
-     * @author lts010, ks061
+     * Model for the application
      */
-    public enum ImageType {
-        // Game controls
-        INVENTORY, ATTACK, SEARCH, TRADE,
-        POW, BAM, WHIFF, CRUNCH,
-        UPARROW, DOWNARROW, LEFTARROW, RIGHTARROW,
-        // Game entities
-        NPC,
-        WEAPON1, WEAPON2, WEAPON3,
-        SHIELD1, SHIELD2, SHIELD3,
-        ARMOR1, ARMOR2, ARMOR3;
-    };
-
-    /*
-     * Models for the application
-     */
-    private RPGModel theModel;
-    /*
+    private final RPGModel theModel;
+    /**
      * Root node on the stage in the GUI
      */
-    private BorderPane root;
-
-    /*
-     * topPane
-     * -Variables involved in the top pane of the border pane root
-     * -Contains the name of the current room the player is in (i.e. BRKI 164)
+    private final BorderPane root;
+    /**
+     * Room name display
      */
-    //private FlowPane topPane;
-    //private Label roomNameLabel;
-    //private Label roomName;
-
-    /*
-     * leftPane
-     * -Variables involved in the left pane of the border pane root
-     * -Contains the player's stats (health, attack, and armor)
-     * -Also contains the player's current equipment (weapon, armor, shield)
+    private final Text roomNameDisplay;
+    /**
+     * Associates an ImageKey enum element as a key to a ItemImageViewWrapper
+     * value
      */
-//    private VBox leftPane;
-//    private Label playerStatLabel;
-//    private Label playerHealthLabel;
-//    private Text playerHealth;
-//    private Label playerAttackLabel;
-//    private Text playerAttack;
-//    private Label playerDefenseLabel;
-//    private Text playerDefense;
-//    public Text playerShield;
-//    public Text playerArmor;
-//    public Text playerWeapon;
-//    public Label ShieldLabel;
-//    public Label ArmorLabel;
-//    public Label WeaponLabel;
-//    public Label EquipmentLabel;
-
-    /*
-     * rightPane
-     * -Variables involved in the left pane of the border pane root
-     * -Contains buttons that the player can click to perform different actions
-     */
-    private VBox rightPane;
-    private Button buttonEquipment;
-    private Button buttonItem;
-    /*
-     * Buttons are stored in a BorderPane for organizational purposes.
-     * These buttons make the player go to different rooms in the north, east,
-     * west, and south of its current location, so we chose this instead of
-     * putting everything in, for example, an HBox.
-     */
-    private BorderPane toRoomButtons;
-    /*
-     * Buttons starting with "to" moves the player to another adjacent room.
-     * Buttons starting with null are there as a filler for the "to" buttons
-     * because we don't want players moving to the left if they are already on
-     * the left edge of the map.
-     */
-//    private Button toRoomAbove;
-//    private Button toRoomToLeft;
-//    private Button toRoomToRight;
-//    private Button toRoomBelow;
-
-
-    /*
-     * bottomHBox
-     * -Has ImageViews to let the user control the action.
-     * -Contains the reference point for the model to output the plot line
-     */
-    private HBox bottomHBox;
-    private Text storyText;
-    private FlowPane storyTextFP;
-
-    /*
-     * This pane is in the center and contain only items that will change when
-     * the player moves between rooms.
-     */
-    private Pane centerPane;
-
-    /*
-     * This pane is in the center behind the center pane. It will  only items
-     * that don't change when the player moves between rooms.
-     */
-    private StackPane centerBackPane;
-
-    /*
-     * This GridPane will contain the healh, strength and status bars on the
-     * left for the player and will have the same bars on the right for the NPC
-     * Should be invisible if there is no NPC to fight in the room.
-     */
-    private GridPane statusGridPane;
-
-    /*
-     * Create the status bars to put into the statusGridPane
-     */
-    private StatusBar playerHealthBar;
-    private StatusBar playerStrengthBar;
-    private StatusBar playerDefenseBar;
-    private StatusBar nPCHealthBar;
-    private StatusBar nPCStrengthBar;
-    private StatusBar nPCDefenseBar;
-    private Text statusRoomName;
+    private final EnumMap<ImageKey, ItemImageViewWrapper> imageKeytoItemImageMap;
 
     /**
-     * The map that stores all the ItemImageViewWrapper objects using the
-     * ImageType enum as a key
+     * Contains buttons that the player can click to perform game actions
      */
-    private EnumMap<ImageType, ItemImageViewWrapper> imageViews;
+    private VBox rightPane;
 
-    /*
-     * Random number generator so we can place objects at random place in room.
+    /**
+     * Contains items that will change in the game scene view when the player
+     * moves between rooms.
      */
-    private static Random random;
+    private final Pane centerPane;
+    /**
+     * Contains items that will not change in the game scene view when the
+     * player moves between rooms.
+     */
+    private final StackPane centerBackPane;
 
-    /*
-     * Static finals for the view
-     * Recommended by Prof. Dancy :)
+    /**
+     * This "status grid pane" contains the health, strength, and defense status
+     * bars on the left for the player and another set on the right for the NPC.
+     */
+    private final GridPane statusGridPane;
+    /**
+     * Player health bar within statusGridPane
+     */
+    private final StatusBar playerHealthBar;
+    /**
+     * Player strength bar within statusGridPane
+     */
+    private final StatusBar playerStrengthBar;
+    /**
+     * Player defense bar within statusGridPane
+     */
+    private final StatusBar playerDefenseBar;
+    /**
+     * NPC health bar within statusGridPane
+     */
+    private final StatusBar npcHealthBar;
+    /**
+     * NPC strength bar within statusGridPane
+     */
+    private final StatusBar npcStrengthBar;
+    /**
+     * NPC defense bar within statusGridPane
+     */
+    private final StatusBar npcDefenseBar;
+
+    /**
+     * Contains clickable icons for game actions and an area where the game plot
+     * line will be displayed
+     */
+    private final HBox bottomHBox;
+    /**
+     * Contains game plot line
+     */
+    private final FlowPane storyTextFP;
+    /**
+     * Contains text of game plot line
+     */
+    private final Text storyText;
+
+    /**
+     * Preferred window width
      */
     private static final int PREF_WINDOW_WIDTH = 1600;
+    /**
+     * Preferred window height
+     */
     private static final int PREF_WINDOW_HEIGHT = 1000;
+    /**
+     * Preferred window padding
+     */
     private static final int PREF_PADDING = 15;
-    //  private static final double TRAVEL_BUTTON_WIDTH = 57.0;
-    //  private static final double RIGHT_PANE_MIN_WIDTH = 2 * TRAVEL_BUTTON_WIDTH;
+    /**
+     * Preferred width for the center pane
+     */
     private static final int PREF_CENTER_PANE_WIDTH = 1400;
+    /**
+     * Preferred height for the center pane
+     */
     private static final int PREF_CENTER_PANE_HEIGHT = 800;
-    // private static final int PREF_SIDE_PANES_WIDTH = 100;
+    /**
+     * Preferred vertical gap between adjacent nodes
+     */
+    private static final int PREF_VERT_GAP = 7;
+    /**
+     * Font size for the room name display
+     */
     private static final int ROOM_NAME_FONT_SIZE = 26;
+    /**
+     * Font size for the game plot line display
+     */
     private static final int STORY_TEXT_FONT_SIZE = 16;
-    private static final int PREF_GAP = 7;
 
     /**
      * Constructor that initializes a pointer to the model of the application
@@ -213,167 +171,139 @@ public class RPGView {
      */
     public RPGView(RPGModel theModel) {
         this.theModel = theModel;
-        this.random = new Random();
-        /*
-         * BorderPane created
-         * -set preferred height and width as well as padding
-         */
+
+        // Importing the images to use in the view
+        this.imageKeytoItemImageMap = new EnumMap<>(
+                ImageKey.class);
+        initImageKeyToItemImageMap();
+
+        // Initializing the root
         this.root = new BorderPane();
         this.root.setPrefWidth(PREF_WINDOW_WIDTH);
         this.root.setPrefHeight(PREF_WINDOW_HEIGHT);
         this.root.setPadding(new Insets(PREF_PADDING));
 
-        /*
-         * TopPane created
-         * -Labels to display the room name has been added
-         * -Alignment has been set to center
-         */
-        //this.topPane = new FlowPane(Orientation.HORIZONTAL);
-        //this.roomNameLabel = new Label(String.format("%s is in ",
-        //                                           this.theModel.getPlayer().getName()));
-        //this.roomName = new Label(theModel.getCurrentRoom().getName());
-        //this.topPane.getChildren().add(roomNameLabel);
-        //this.topPane.getChildren().add(roomName);
-        //this.topPane.setAlignment(Pos.CENTER);
-
-        /*
-         * LeftPane created
-         * -Labels for the player's stats have been added
-         * -Alignment has been set to center
-         */
-//        this.leftPane = new VBox();
-//        this.leftPane.setSpacing(PREF_PADDING);
-//        this.leftPane.setPrefWidth(PREF_SIDE_PANES_WIDTH);
-//        this.playerStatLabel = new Label("Player Status");
-//        this.playerHealthLabel = new Label("Health: ");
-//        this.playerHealth = new Text();
-//        this.playerAttackLabel = new Label("Attack: ");
-//        this.playerAttack = new Text();
-//        this.playerDefenseLabel = new Label("Defense: ");
-//        this.playerDefense = new Text();
-//
-//        EquipmentLabel = new Label("Equipment");
-//        WeaponLabel = new Label("Your Weapon:");
-//        ArmorLabel = new Label("Your Armor:");
-//        ShieldLabel = new Label("Your Shield:");
-//        playerWeapon = new Text();
-//        playerArmor = new Text();
-//        playerShield = new Text();
-//        this.leftPane.getChildren().add(new FlowPane(playerStatLabel));
-//        this.leftPane.getChildren().add(new FlowPane(playerHealthLabel,
-//                                                     playerHealth));
-//        this.leftPane.getChildren().add(new FlowPane(playerAttackLabel,
-//                                                     playerAttack));
-//        this.leftPane.getChildren().add(new FlowPane(playerDefenseLabel,
-//                                                     playerDefense));
-//        this.leftPane.getChildren().add(new FlowPane());
-//        this.leftPane.getChildren().add(new FlowPane(EquipmentLabel));
-//        this.leftPane.getChildren().add(new FlowPane(WeaponLabel));
-//        this.leftPane.getChildren().add(new FlowPane(playerWeapon));
-//        this.leftPane.getChildren().add(new FlowPane(ArmorLabel));
-//        this.leftPane.getChildren().add(new FlowPane(playerArmor));
-//        this.leftPane.getChildren().add(new FlowPane(ShieldLabel));
-//        this.leftPane.getChildren().add(new FlowPane(playerShield));
-//        this.leftPane.setAlignment(Pos.CENTER_LEFT);
-
-        /*
-         * RightPane created
-         * -Alignment has been set to center
-         */
-//        this.rightPane = new VBox();
-//        this.rightPane.setSpacing(PREF_PADDING);
-//        this.rightPane.setPrefWidth(PREF_SIDE_PANES_WIDTH);
-//        this.buttonEquipment = new Button("Equipment");
-//        this.buttonItem = new Button("Item");
-//        this.rightPane.getChildren().add(this.buttonEquipment);
-//        this.rightPane.getChildren().add(this.buttonItem);
-
-        /*
-         * Button settings
-         * -Width of the buttons have been set to constants because RightPane would
-         * automatically update the width and be bothersome to the players
-         */
-//        this.toRoomButtons = new BorderPane();
-//        this.toRoomAbove = new Button("Above");
-//        this.toRoomAbove.setMinWidth(TRAVEL_BUTTON_WIDTH);
-//        this.toRoomBelow = new Button("Below");
-//        this.toRoomBelow.setMinWidth(TRAVEL_BUTTON_WIDTH);
-//        this.toRoomToLeft = new Button("Left");
-//        this.toRoomToLeft.setMinWidth(TRAVEL_BUTTON_WIDTH);
-//        this.toRoomToRight = new Button("Right");
-//        this.toRoomToRight.setMinWidth(TRAVEL_BUTTON_WIDTH);
-//        this.rightPane.getChildren().add(this.toRoomButtons);
-//        this.rightPane.setAlignment(Pos.CENTER);
-//        this.rightPane.setMinWidth(RIGHT_PANE_MIN_WIDTH);
-        /*
-         * BottomHBox created
-         * -Spaces to dispaly the story in text form
-         *  and ImageView controls
-         *
-         */
-//  HBox.setHgrow(storyTextFP, Priority.ALWAYS);
+        // Story and action icons bar
         this.bottomHBox = new HBox();
-        bottomHBox.setPrefWidth(PREF_CENTER_PANE_WIDTH);
-        bottomHBox.setAlignment(Pos.CENTER_RIGHT);
-        bottomHBox.setSpacing(PREF_GAP);
-        //bottomHBox.setPadding(new INSERT);
+        initBottomHBox();
         this.storyTextFP = new FlowPane();
-        this.storyText = new Text(" ");
-        storyText.setFont(Font.font(STORY_TEXT_FONT_SIZE));
-        storyTextFP.setAlignment(Pos.CENTER_LEFT);
-        storyTextFP.getChildren().add(this.storyText);
-        storyTextFP.setAlignment(Pos.CENTER);
         this.bottomHBox.getChildren().add(this.storyTextFP);
+        this.storyText = new Text(" ");
+        initStoryText();
+        this.storyTextFP.getChildren().add(this.storyText);
+        initActionIcons();
 
-        // Creates status bars and labels
-        playerHealthBar = new StatusBar("img/redBall25.png", "img/redBall15.png",
-                                        true);
-        playerStrengthBar = new StatusBar("img/attack25.png", "img/attack15.png",
-                                          true);
-        playerDefenseBar = new StatusBar("img/shield25.png", "img/shield15.png",
-                                         true);
-        nPCHealthBar = new StatusBar("img/redBall25.png", "img/redBall15.png",
-                                     false);
-        nPCStrengthBar = new StatusBar("img/attack25.png", "img/attack15.png",
-                                       false);
-        nPCDefenseBar = new StatusBar("img/shield25.png", "img/shield15.png",
-                                      false);
-        statusRoomName = new Text("Room Name");
-        statusRoomName.setFont(Font.font(ROOM_NAME_FONT_SIZE));
+        // Status bar
+        this.playerHealthBar = new StatusBar(
+                Properties.ONE_HEALTH_ICON_FILE_PATH,
+                Properties.TEN_HEALTH_ICON_FILE_PATH,
+                true);
+        this.playerStrengthBar = new StatusBar(
+                Properties.ONE_STRENGTH_ICON_FILE_PATH,
+                Properties.TEN_STRENGTH_ICON_FILE_PATH,
+                true);
+        this.playerDefenseBar = new StatusBar(
+                Properties.ONE_DEFENSE_ICON_FILE_PATH,
+                Properties.TEN_DEFENSE_ICON_FILE_PATH,
+                true);
+        this.npcHealthBar = new StatusBar(Properties.ONE_HEALTH_ICON_FILE_PATH,
+                                          Properties.TEN_HEALTH_ICON_FILE_PATH,
+                                          false);
+        this.npcStrengthBar = new StatusBar(
+                Properties.ONE_STRENGTH_ICON_FILE_PATH,
+                Properties.TEN_STRENGTH_ICON_FILE_PATH,
+                false);
+        this.npcDefenseBar = new StatusBar(Properties.ONE_DEFENSE_ICON_FILE_PATH,
+                                           Properties.TEN_DEFENSE_ICON_FILE_PATH,
+                                           false);
 
-        // Creates and populates the grid panes containing status bars for both
-        // the player and NPC
-        GridPane.setHgrow(statusRoomName, Priority.ALWAYS);
-        GridPane.setHalignment(statusRoomName, HPos.CENTER);
-        this.statusGridPane = new GridPane();
-        statusGridPane.setVgap(PREF_GAP);
-        statusGridPane.add(playerHealthBar, 0, 0);
-        statusGridPane.add(playerStrengthBar, 0, 1);
-        statusGridPane.add(playerDefenseBar, 0, 2);
-        statusGridPane.add(statusRoomName, 1, 0, 1, 2);
-        statusGridPane.add(nPCHealthBar, 2, 0);
-        statusGridPane.add(nPCStrengthBar, 2, 1);
-        statusGridPane.add(nPCDefenseBar, 2, 2);
+        this.roomNameDisplay = new Text(theModel.getCurrentRoom().getName());
+        this.roomNameDisplay.setFont(Font.font(ROOM_NAME_FONT_SIZE));
 
-        // Center panes and back center panes created
+        // Center pane
         this.centerPane = new Pane();
-        this.centerPane.setMinHeight(PREF_CENTER_PANE_HEIGHT);
-        this.centerPane.setMinWidth(PREF_CENTER_PANE_WIDTH);
-        this.centerBackPane = new StackPane();
-        this.centerBackPane.setMinHeight(PREF_CENTER_PANE_HEIGHT);
-        this.centerBackPane.setMinWidth(PREF_CENTER_PANE_WIDTH);
-        this.loadImages();
 
-        centerBackPane.getChildren().add(this.statusGridPane);
-        this.centerBackPane.getChildren().add(centerPane);
+        this.statusGridPane = new GridPane();
+        initStatusGridPane();
+
+        this.centerBackPane = new StackPane();
+        formatCenterPanes();
+
+        this.centerBackPane.getChildren().add(this.statusGridPane);
+        this.centerBackPane.getChildren().add(this.centerPane);
 
         // All elements added to the root node
         this.root.setCenter(this.centerBackPane);
-        //this.root.setTop(this.topPane);
-        //this.root.setLeft(this.leftPane);
         this.root.setRight(this.rightPane);
         this.root.setBottom(this.bottomHBox);
         BorderPane.setAlignment(this.centerBackPane, Pos.CENTER_LEFT);
+    }
+
+    /**
+     * Initializes the story text
+     *
+     * @author ks061
+     */
+    private void initStoryText() {
+        this.storyText.setFont(Font.font(STORY_TEXT_FONT_SIZE));
+        this.storyTextFP.setAlignment(Pos.CENTER);
+    }
+
+    /**
+     * Initializes the bottom HBox
+     *
+     * @author ks061
+     */
+    private void initBottomHBox() {
+        bottomHBox.setPrefWidth(PREF_CENTER_PANE_WIDTH);
+        bottomHBox.setAlignment(Pos.CENTER_RIGHT);
+        bottomHBox.setSpacing(PREF_VERT_GAP);
+    }
+
+    /**
+     * Initializes the game action icons
+     *
+     * @author ks061
+     */
+    private void initActionIcons() {
+        this.bottomHBox.getChildren().add(this.imageKeytoItemImageMap.get(
+                ImageKey.INVENTORY));
+        this.bottomHBox.getChildren().add(this.imageKeytoItemImageMap.get(
+                ImageKey.SEARCH));
+        this.bottomHBox.getChildren().add(this.imageKeytoItemImageMap.get(
+                ImageKey.TRADE));
+        this.bottomHBox.getChildren().add(this.imageKeytoItemImageMap.get(
+                ImageKey.ATTACK));
+    }
+
+    /**
+     * Initializes the status grid pane
+     *
+     * @author ks061
+     */
+    private void initStatusGridPane() {
+        GridPane.setHgrow(this.roomNameDisplay, Priority.ALWAYS);
+        GridPane.setHalignment(this.roomNameDisplay, HPos.CENTER);
+        this.statusGridPane.setVgap(PREF_VERT_GAP);
+        this.statusGridPane.add(this.playerHealthBar, 0, 0);
+        this.statusGridPane.add(this.playerStrengthBar, 0, 1);
+        this.statusGridPane.add(this.playerDefenseBar, 0, 2);
+        this.statusGridPane.add(this.roomNameDisplay, 1, 0, 1, 2);
+        this.statusGridPane.add(this.npcHealthBar, 2, 0);
+        this.statusGridPane.add(this.npcStrengthBar, 2, 1);
+        this.statusGridPane.add(this.npcDefenseBar, 2, 2);
+    }
+
+    /**
+     * Formats and aligns the center panes
+     *
+     * @author ks061
+     */
+    private void formatCenterPanes() {
+        this.centerPane.setMinHeight(PREF_CENTER_PANE_HEIGHT);
+        this.centerPane.setMinWidth(PREF_CENTER_PANE_WIDTH);
+        this.centerBackPane.setMinHeight(PREF_CENTER_PANE_HEIGHT);
+        this.centerBackPane.setMinWidth(PREF_CENTER_PANE_WIDTH);
     }
 
     /**
@@ -399,37 +329,37 @@ public class RPGView {
         this.centerPane.setBackground(centerBackground);
     }
 
-    /*
-     *  Makes the StatusBars for the NPC visable
+    /**
+     * Makes the status bars for the NPC visible
      *
-     * @author lts010
+     * @author lts010, ks061
      */
-    public void makeNPCStatusVisable() {
-        this.nPCHealthBar.setVisible(true);
-        this.nPCStrengthBar.setVisible(true);
-        this.nPCDefenseBar.setVisible(true);
+    public void makeNPCStatusVisible() {
+        this.npcHealthBar.setVisible(true);
+        this.npcStrengthBar.setVisible(true);
+        this.npcDefenseBar.setVisible(true);
     }
 
-    /*
-     *  Makes the StatusBars for the NPC invisable
-     *  The StatusBars should be invisible when there is no NPC to fight
-     *  in the room.
+    /**
+     * Makes the status bars for the NPC invisible
      *
-     * @author lts010
+     * @author lts010, ks061
      */
-    public void makeNPCStatusInvisable() {
-        this.nPCHealthBar.setVisible(false);
-        this.nPCStrengthBar.setVisible(false);
-        this.nPCDefenseBar.setVisible(false);
+    public void makeNPCStatusInvisible() {
+        this.npcHealthBar.setVisible(false);
+        this.npcStrengthBar.setVisible(false);
+        this.npcDefenseBar.setVisible(false);
     }
 
-    /*
-     *  Set the name of the roow will be displayed in the StatusGrid
+    /**
+     * Set the name of the room will be displayed in the StatusGrid
      *
-     * @author lts010
+     * @param roomName room name
+     *
+     * @author lts010, ks061
      */
     public void setStatusRoomNameText(String roomName) {
-        this.statusRoomName.setText(roomName);
+        this.roomNameDisplay.setText(roomName);
     }
 
     /**
@@ -443,68 +373,6 @@ public class RPGView {
         return root;
     }
 
-    /**
-     * Gets the button to go to the room above the current one
-     *
-     * @return button to go to the room above the current one
-     *
-     * @author ks061
-     */
-//    public Button getToRoomAbove() {
-//        return toRoomAbove;
-//    }
-    /**
-     * Gets the button to go to the room below the current one
-     *
-     * @return button to go to the room below the current one
-     *
-     * @author ks061
-     */
-//    public Button getToRoomBelow() {
-//        return toRoomBelow;
-//    }
-    /**
-     * Gets the button to go to the room to the left of the current one
-     *
-     * @return button to go to the room to the left of the current one
-     *
-     * @author ks061
-     */
-//    public Button getToRoomToLeft() {
-//        return toRoomToLeft;
-//    }
-    /**
-     * Gets the button to go to the room to the right of the current one
-     *
-     * @return button to go to the room to the right of the current one
-     *
-     * @author ks061
-     */
-//    public Button getToRoomToRight() {
-//        return toRoomToRight;
-//    }
-    /**
-     * Gets the pane of travel buttons
-     *
-     * @return pane of travel buttons
-     *
-     * @author ks061, ishk001
-     */
-//    public BorderPane getToRoomButtonsDisplay() {
-//        return toRoomButtons;
-//    }
-    /**
-     * Creates and returns an empty button to replace a travel button
-     *
-     * @return empty button to replace a travel button
-     *
-     * @author ks061
-     */
-//    public Button getNewNullButton() {
-//        Button newNullButton = new Button("     ");
-//        newNullButton.setMinWidth(TRAVEL_BUTTON_WIDTH);
-//        return newNullButton;
-//    }
     /**
      * Gets the center pane of the view
      *
@@ -523,7 +391,7 @@ public class RPGView {
      *
      * @author ks061
      */
-    public void updateStoryText(String dialog) {
+    public void setStoryText(String dialog) {
         this.storyText.setText(dialog);
     }
 
@@ -536,71 +404,6 @@ public class RPGView {
         this.setStatusRoomNameText(this.theModel.getCurrentRoom().getName());
     }
 
-//    /**
-//     * Gets the text representing the player's current health
-//     *
-//     * @return the text representing the player's current health
-//     *
-//     * @author lts010
-//     */
-//    public Text getPlayerHealth() {
-//        return playerHealth;
-//    }
-//
-//    /**
-//     * Gets the text representing the player's attack
-//     *
-//     * @return the text representing the player's attack
-//     *
-//     * @author lts010
-//     */
-//    public Text getPlayerAttack() {
-//        return playerAttack;
-//    }
-//
-//    /**
-//     * Gets the text representing the player's defense
-//     *
-//     * @return the text representing the player's defense
-//     *
-//     * @author lts010
-//     */
-//    public Text getPlayerDefense() {
-//        return playerDefense;
-//    }
-//
-//    /**
-//     * Gets the text representing the player's shield
-//     *
-//     * @return the text representing the player's defense
-//     *
-//     * @author lts010
-//     */
-//    public Text getPlayerShield() {
-//        return playerShield;
-//    }
-//
-//    /**
-//     * Gets the text representing the player's armor
-//     *
-//     * @return the text representing the player's defense
-//     *
-//     * @author lts010
-//     */
-//    public Text getPlayerArmor() {
-//        return playerArmor;
-//    }
-//
-//    /**
-//     * Gets the text representing the player's weapon
-//     *
-//     * @return the text representing the player's defense
-//     *
-//     * @author lts010
-//     */
-//    public Text getPlayerWeapon() {
-//        return playerWeapon;
-//    }
     /**
      * Gets the image views
      *
@@ -608,8 +411,8 @@ public class RPGView {
      *
      * @author lts010
      */
-    public EnumMap<ImageType, ItemImageViewWrapper> getImageViews() {
-        return imageViews;
+    public EnumMap<ImageKey, ItemImageViewWrapper> getImageViews() {
+        return imageKeytoItemImageMap;
     }
 
     /**
@@ -624,125 +427,182 @@ public class RPGView {
     }
 
     /**
-     * Adds many imageView objects to the EnumMap imageViews
-     *
-     * @author lts010
-     */
-    public void loadImages() {
-        this.imageViews = new EnumMap<ImageType, ItemImageViewWrapper>(
-                ImageType.class);
-        this.imageViews.put(ImageType.UPARROW, loadImage("img/arrow-up.png",
-                                                         ItemType.CONTROL,
-                                                         ImageType.UPARROW));
-        this.imageViews.put(ImageType.DOWNARROW, loadImage("img/arrow-down.png",
-                                                           ItemType.CONTROL,
-                                                           ImageType.DOWNARROW));
-        this.imageViews.put(ImageType.LEFTARROW, loadImage("img/arrow-left.png",
-                                                           ItemType.CONTROL,
-                                                           ImageType.LEFTARROW));
-        this.imageViews.put(ImageType.RIGHTARROW, loadImage(
-                            "img/arrow-right.png", ItemType.CONTROL,
-                            ImageType.RIGHTARROW));
-        this.imageViews.put(ImageType.INVENTORY, loadImage("img/inventory.png",
-                                                           ItemType.CONTROL,
-                                                           ImageType.INVENTORY));
-        this.imageViews.put(ImageType.ATTACK, loadImage("img/attack.png",
-                                                        ItemType.CONTROL,
-                                                        ImageType.ATTACK));
-        this.imageViews.put(ImageType.SEARCH, loadImage("img/search.png",
-                                                        ItemType.CONTROL,
-                                                        ImageType.SEARCH));
-        this.imageViews.put(ImageType.TRADE, loadImage("img/trade.png",
-                                                       ItemType.CONTROL,
-                                                       ImageType.TRADE));
-        this.imageViews.put(ImageType.POW, loadImage("img/POW.png",
-                                                     ItemType.CONTROL,
-                                                     ImageType.POW));
-        this.imageViews.put(ImageType.BAM, loadImage("img/BAM.png",
-                                                     ItemType.CONTROL,
-                                                     ImageType.BAM));
-        this.imageViews.put(ImageType.WHIFF, loadImage("img/WHIFF.png",
-                                                       ItemType.CONTROL,
-                                                       ImageType.WHIFF));
-        this.imageViews.put(ImageType.CRUNCH, loadImage("img/CRUNCH.png",
-                                                        ItemType.CONTROL,
-                                                        ImageType.CRUNCH));
-        this.imageViews.put(ImageType.WEAPON1, loadImage("img/SWORD.png",
-                                                         ItemType.WEAPON,
-                                                         ImageType.WEAPON1));
-        this.imageViews.put(ImageType.WEAPON2, loadImage("img/SWORD.png",
-                                                         ItemType.WEAPON,
-                                                         ImageType.WEAPON2));
-        this.imageViews.put(ImageType.WEAPON3, loadImage("img/SWORD.png",
-                                                         ItemType.WEAPON,
-                                                         ImageType.WEAPON3));
-        this.imageViews.put(ImageType.ARMOR1, loadImage("img/SWORD.png",
-                                                        ItemType.ARMOR,
-                                                        ImageType.ARMOR1));
-        this.imageViews.put(ImageType.ARMOR2, loadImage("img/SWORD.png",
-                                                        ItemType.ARMOR,
-                                                        ImageType.ARMOR2));
-        this.imageViews.put(ImageType.ARMOR3, loadImage("img/SWORD.png",
-                                                        ItemType.ARMOR,
-                                                        ImageType.ARMOR3));
-        this.imageViews.put(ImageType.SHIELD1, loadImage("img/SHIELD.png",
-                                                         ItemType.SHIELD,
-                                                         ImageType.SHIELD1));
-        this.imageViews.put(ImageType.SHIELD2, loadImage("img/SHIELD.png",
-                                                         ItemType.SHIELD,
-                                                         ImageType.SHIELD2));
-        this.imageViews.put(ImageType.SHIELD3, loadImage("img/SHIELD.png",
-                                                         ItemType.SHIELD,
-                                                         ImageType.SHIELD3));
-    }
-
-    /**
-     * Takes a file path leading to an image and converts it to an ImageView
-     * object
-     *
-     * @param imagePath file path leading to an object
-     * @param itemType type of item
-     * @param imageType type of image
-     * @return an ImageView wrapper object
+     * Adds many imageView objects to the EnumMap imageKeytoItemImageMap
      *
      * @author lts010, ks061
      */
-    public static ItemImageViewWrapper loadImage(String imagePath,
-                                                 ItemType itemType,
-                                                 ImageType imageType) {
-        imagePath = new File(imagePath).toURI().toString();
-        Image image = new Image(imagePath);
-        Point2D location = new Point2D(random.nextInt(1000) + 200,
-                                       random.nextInt(400) + 250);
-        return new ItemImageViewWrapper(image, location, itemType, imageType);
+    private void initImageKeyToItemImageMap() {
+        this.imageKeytoItemImageMap.put(ImageKey.UPARROW,
+                                        RPGUtility.loadImage(
+                                                Properties.UP_ARROW_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.UPARROW));
+        this.imageKeytoItemImageMap.put(ImageKey.DOWNARROW,
+                                        RPGUtility.loadImage(
+                                                Properties.DOWN_ARROW_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.DOWNARROW));
+        this.imageKeytoItemImageMap.put(ImageKey.LEFTARROW,
+                                        RPGUtility.loadImage(
+                                                Properties.LEFT_ARROW_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.LEFTARROW));
+        this.imageKeytoItemImageMap.put(ImageKey.RIGHTARROW,
+                                        RPGUtility.loadImage(
+                                                Properties.RIGHT_ARROW_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.RIGHTARROW));
+        this.imageKeytoItemImageMap.put(ImageKey.INVENTORY,
+                                        RPGUtility.loadImage(
+                                                Properties.INVENTORY_ICON_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.INVENTORY));
+        this.imageKeytoItemImageMap.put(ImageKey.ATTACK,
+                                        RPGUtility.loadImage(
+                                                Properties.ATTACK_ICON_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.ATTACK));
+        this.imageKeytoItemImageMap.put(ImageKey.SEARCH,
+                                        RPGUtility.loadImage(
+                                                Properties.SEARCH_ICON_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.SEARCH));
+        this.imageKeytoItemImageMap.put(ImageKey.TRADE,
+                                        RPGUtility.loadImage(
+                                                Properties.TRADE_ICON_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.TRADE));
+        this.imageKeytoItemImageMap.put(ImageKey.POW, RPGUtility.loadImage(
+                                        Properties.POW_IMG_FILE_PATH,
+                                        ItemType.CONTROL,
+                                        ImageKey.POW));
+        this.imageKeytoItemImageMap.put(ImageKey.BAM, RPGUtility.loadImage(
+                                        Properties.BAM_IMG_FILE_PATH,
+                                        ItemType.CONTROL,
+                                        ImageKey.BAM));
+        this.imageKeytoItemImageMap.put(ImageKey.WHIFF,
+                                        RPGUtility.loadImage(
+                                                Properties.WHIFF_IMG_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.WHIFF));
+        this.imageKeytoItemImageMap.put(ImageKey.CRUNCH,
+                                        RPGUtility.loadImage(
+                                                Properties.CRUNCH_IMG_FILE_PATH,
+                                                ItemType.CONTROL,
+                                                ImageKey.CRUNCH));
+        this.imageKeytoItemImageMap.put(ImageKey.WEAPON1,
+                                        RPGUtility.loadImage(
+                                                Properties.WEAPON1_IMG_FILE_PATH,
+                                                ItemType.WEAPON,
+                                                ImageKey.WEAPON1));
+        this.imageKeytoItemImageMap.put(ImageKey.WEAPON2,
+                                        RPGUtility.loadImage(
+                                                Properties.WEAPON2_IMG_FILE_PATH,
+                                                ItemType.WEAPON,
+                                                ImageKey.WEAPON2));
+        this.imageKeytoItemImageMap.put(ImageKey.WEAPON3,
+                                        RPGUtility.loadImage(
+                                                Properties.WEAPON3_IMG_FILE_PATH,
+                                                ItemType.WEAPON,
+                                                ImageKey.WEAPON3));
+        this.imageKeytoItemImageMap.put(ImageKey.ARMOR1,
+                                        RPGUtility.loadImage(
+                                                Properties.ARMOR1_IMG_FILE_PATH,
+                                                ItemType.ARMOR,
+                                                ImageKey.ARMOR1));
+        this.imageKeytoItemImageMap.put(ImageKey.ARMOR2,
+                                        RPGUtility.loadImage(
+                                                Properties.ARMOR2_IMG_FILE_PATH,
+                                                ItemType.ARMOR,
+                                                ImageKey.ARMOR2));
+        this.imageKeytoItemImageMap.put(ImageKey.ARMOR3,
+                                        RPGUtility.loadImage(
+                                                Properties.ARMOR3_IMG_FILE_PATH,
+                                                ItemType.ARMOR,
+                                                ImageKey.ARMOR3));
+        this.imageKeytoItemImageMap.put(ImageKey.SHIELD1,
+                                        RPGUtility.loadImage(
+                                                Properties.SHIELD1_IMG_FILE_PATH,
+                                                ItemType.SHIELD,
+                                                ImageKey.SHIELD1));
+        this.imageKeytoItemImageMap.put(ImageKey.SHIELD2,
+                                        RPGUtility.loadImage(
+                                                Properties.SHIELD2_IMG_FILE_PATH,
+                                                ItemType.SHIELD,
+                                                ImageKey.SHIELD2));
+        this.imageKeytoItemImageMap.put(ImageKey.SHIELD3,
+                                        RPGUtility.loadImage(
+                                                Properties.SHIELD3_IMG_FILE_PATH,
+                                                ItemType.SHIELD,
+                                                ImageKey.SHIELD3));
     }
 
     /**
      * Loads an action bubble on the screen and displays a string
      *
-     * @param defaultBubble the bubble that will be displayed if the string
-     * doesn't meet the criteria for other bubbles
+     * @param defaultBubble the bubble that will be displayed if the string does
+     * not meet the criteria for other bubbles
      * @param action the string to be displayed
      * @return an ImageView object of the bubble
      *
      * @author lts010, ks061
      */
-    public ImageView handleActionBubble(ImageType defaultBubble, String action) {
+    public ImageView handleAttackDisplay(ImageKey defaultBubble, String action) {
         ImageView imageView;
         if (action.contains("missed and did no damage") || action.contains(
                 "did 0 damage")) {
-            imageView = this.imageViews.get(RPGView.ImageType.WHIFF);
+            imageView = this.imageKeytoItemImageMap.get(ImageKey.WHIFF);
         }
         else if (action.contains("Critical Hit!")) {
-            imageView = this.imageViews.get(RPGView.ImageType.CRUNCH);
+            imageView = this.imageKeytoItemImageMap.get(ImageKey.CRUNCH);
         }
         else {
-            imageView = this.imageViews.get(defaultBubble);
+            imageView = this.imageKeytoItemImageMap.get(defaultBubble);
         }
         this.centerPane.getChildren().add(imageView);
         imageView.setX(this.centerPane.getWidth() / 4);
         imageView.setY(this.centerPane.getHeight() / 6);
         this.storyText.setText(action);
-        return (imageView);
+        return imageView;
     }
+
+    /**
+     * Updates the health, strength, and defense status bar values for both the
+     * player and NPC in the current room
+     *
+     * @author ks061
+     */
+    private void updateStatusBarValues() {
+        this.playerHealthBar.setValue(
+                theModel.getPlayer().getCharacterStats().getHealth());
+        this.playerStrengthBar.setValue(
+                theModel.getPlayer().getCharacterStats().getAttack());
+        this.playerHealthBar.setValue(
+                theModel.getPlayer().getCharacterStats().getDefense());
+
+        this.npcHealthBar.setValue(
+                theModel.getCurrentRoom().getNPCViewWrapper().getNPC().getCharacterStats().getHealth());
+        this.npcStrengthBar.setValue(
+                theModel.getCurrentRoom().getNPCViewWrapper().getNPC().getCharacterStats().getAttack());
+        this.npcDefenseBar.setValue(
+                theModel.getCurrentRoom().getNPCViewWrapper().getNPC().getCharacterStats().getDefense());
+    }
+
+    /**
+     * Refreshes the health, strength, and defense status bars for both the
+     * player and the NPC in the current room
+     *
+     * @author ks061
+     */
+    public void refreshStatusBars() {
+        updateStatusBarValues();
+
+        this.playerHealthBar.refresh();
+        this.playerStrengthBar.refresh();
+        this.playerDefenseBar.refresh();
+        this.npcHealthBar.refresh();
+        this.npcStrengthBar.refresh();
+        this.npcDefenseBar.refresh();
+    }
+
 }

@@ -18,7 +18,7 @@ package view.wrapper;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import model.item.ItemType;
-import view.RPGView;
+import view.ImageKey;
 
 /**
  * Wrapper class for Item including Item, image of the Item, and location where
@@ -33,8 +33,6 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
      */
     private final ItemType itemType;
 
-    //public static final int ITEM_VIEW_WIDTH = 30;
-    // public static final int ITEM_VIEW_HEIGHT = 30;
     /**
      * Explicit constructor that initializes the image view with an image and
      * location, the item type, and the image type
@@ -47,7 +45,7 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
      * @author ks061, lts010
      */
     public ItemImageViewWrapper(Image image, Point2D location, ItemType itemType,
-                                RPGView.ImageType imageType) {
+                                ImageKey imageType) {
         super(image, image, location, imageType);
         this.itemType = itemType;
     }

@@ -18,7 +18,7 @@ package view.wrapper;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import view.RPGView;
+import view.ImageKey;
 
 /**
  * Wrapper class for an object, image of the object, and location where the
@@ -35,7 +35,7 @@ public abstract class ImageViewWrapper extends ImageView {
     /**
      * Type of image
      */
-    private RPGView.ImageType imageType;
+    private ImageKey imageKey;
 
     /**
      * Explicit constructor initializes the ImageView
@@ -50,12 +50,12 @@ public abstract class ImageViewWrapper extends ImageView {
      *
      */
     public ImageViewWrapper(Object wrappedObject, Image image, Point2D location,
-                            RPGView.ImageType imageType) {
+                            ImageKey imageType) {
         super(image);
         this.wrappedObject = wrappedObject;
         this.setX(location.getX());
         this.setY(location.getY());
-        this.imageType = imageType;
+        this.imageKey = imageType;
     }
 
     /**
@@ -73,13 +73,9 @@ public abstract class ImageViewWrapper extends ImageView {
      * @author ks061, lts010
      */
     public ImageViewWrapper(Object wrappedObject, Image image, Point2D location,
-                            RPGView.ImageType imageType,
+                            ImageKey imageType,
                             int viewWidth, int viewHeight) {
         this(wrappedObject, image, location, imageType);
-//        super(image);
-//        this.wrappedObject = wrappedObject;
-//        this.setX(location.getX());
-//        this.setY(location.getY());
         this.setFitWidth(viewWidth);
         this.setFitHeight(viewHeight);
     }
@@ -102,8 +98,8 @@ public abstract class ImageViewWrapper extends ImageView {
      *
      * @author ks061, lts010
      */
-    public RPGView.ImageType getImageType() {
-        return imageType;
+    public ImageKey getImageType() {
+        return imageKey;
     }
 
 }

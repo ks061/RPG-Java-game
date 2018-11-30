@@ -36,7 +36,7 @@ public abstract class RPGCharacter {
     /**
      * Character statistics
      */
-    private RPGCharacterStats characterStats;
+    private final RPGCharacterStats characterStats;
     /**
      * Current size of inventory
      */
@@ -65,6 +65,7 @@ public abstract class RPGCharacter {
      * Boolean representing if character is alive
      */
     private boolean isAlive;
+
     /**
      * Default chance of missing while using a weapon during attack
      */
@@ -100,7 +101,7 @@ public abstract class RPGCharacter {
     /**
      * Uses a consumable item or equips/unequips an equipment item
      *
-     * @param item - item to be used
+     * @param item item to be used
      *
      * @author lts010
      */
@@ -210,7 +211,6 @@ public abstract class RPGCharacter {
      * @param enemy enemy being attacked
      * @param damage damage dealt to the enemy from the attack
      * @param criticalHitModifier critical hit modifier of the attack
-     * @param accuracyModifier accuracy modifier of the attack
      *
      * @return message detailing the nature of damage done to character being
      * battled
@@ -218,9 +218,8 @@ public abstract class RPGCharacter {
      * @author ks061
      */
     public String getAttackMessage(RPGCharacter enemy, int damage,
-                                   double criticalHitModifier,
-                                   double accuracyModifier) {
-        if (accuracyModifier == 0) {
+                                   double criticalHitModifier) {
+        if (damage == 0) {
             return String.format("%s missed and did no damage to %s", this.name,
                                  enemy.getName());
         }
@@ -254,8 +253,7 @@ public abstract class RPGCharacter {
         if (enemy.characterStats.getHealth() <= 0) {
             enemy.setIsAlive(false);
         }
-        return getAttackMessage(enemy, damage, criticalHitModifier,
-                                accuracyModifier);
+        return getAttackMessage(enemy, damage, criticalHitModifier);
     }
 
     /**
@@ -441,7 +439,7 @@ public abstract class RPGCharacter {
      *
      * @author ks061, lts010
      */
-    public boolean isIsAlive() {
+    public boolean isAlive() {
         return isAlive;
     }
 
@@ -480,7 +478,7 @@ public abstract class RPGCharacter {
      * Equips the equipment based on its type
      *
      * @param equipment equipment to be equipped
-     * @return String representing what was equipped
+     * @return string representing what was equipped
      *
      * @author ishk001, lts010, ks061
      */
@@ -575,10 +573,10 @@ public abstract class RPGCharacter {
     /**
      * Swaps the current equipment with something from the inventory
      *
-     * @param equipment - equipment that you want to equip
-     * @return String representing what items were swapped
+     * @param equipment equipment that you want to equip
+     * @return string representing what items were swapped
      *
-     * @author ishk001
+     * @author ishk001, ks061
      */
     public String swapEquipment(Equipment equipment) {
         this.inventory.remove(equipment);

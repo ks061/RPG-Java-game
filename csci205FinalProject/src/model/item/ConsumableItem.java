@@ -15,10 +15,10 @@
  */
 package model.item;
 
-import view.RPGView;
+import view.ImageKey;
 
 /**
- * An item that is for one-time-use only. Child of Item class.
+ * An item that is only for one-time-use.
  *
  * @author ishk001
  */
@@ -30,11 +30,13 @@ public class ConsumableItem extends Item {
      *
      * @param name name of item owner
      * @param itemStatistics statistics of the item
-     * @param imageViewKey Key for RPGView EnumMap to get the imageView of equipment
+     * @param imageViewKey Key for RPGView EnumMap to get the imageView of
+     * equipment
      *
      * @author ks061
      */
-    public ConsumableItem(String name, ItemStatistics itemStatistics, RPGView.ImageType imageViewKey) {
+    public ConsumableItem(String name, ItemStatistics itemStatistics,
+                          ImageKey imageViewKey) {
         super(name, itemStatistics, imageViewKey);
     }
 

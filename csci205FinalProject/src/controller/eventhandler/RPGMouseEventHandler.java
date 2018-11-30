@@ -16,18 +16,14 @@
 package controller.eventhandler;
 
 import controller.RPGController;
-import java.io.File;
-import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import model.character.NPC;
-import view.RPGView;
+import view.ImageKey;
 import view.wrapper.ItemImageViewWrapper;
 
 /**
@@ -40,7 +36,7 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
     /**
      * Controller of the RPG game
      */
-    private RPGController theController;
+    private final RPGController theController;
 
     /**
      * Explicit constructor that initializes the controller of the RPG game
@@ -51,6 +47,46 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
      */
     public RPGMouseEventHandler(RPGController theController) {
         this.theController = theController;
+    }
+
+    /**
+     * Handles mouse events generated from interactions with the GUI
+     *
+     * @param event mouse event
+     *
+     * @author ks061, lts010
+     */
+    @Override
+    public void handle(MouseEvent event) {
+        System.out.println("mouse event = " + event.toString());
+        if (event.getSource() == theController.getTheView().getImageViews().get(
+                ImageKey.UPARROW)) {
+            handleUpArrow(event);
+        }
+        else if (event.getSource() == theController.getTheView().getImageViews().get(
+                ImageKey.DOWNARROW)) {
+            handleDownArrow(event);
+        }
+        else if (event.getSource() == theController.getTheView().getImageViews().get(
+                ImageKey.LEFTARROW)) {
+            handleLeftArrow(event);
+        }
+        else if (event.getSource() == theController.getTheView().getImageViews().get(
+                ImageKey.RIGHTARROW)) {
+            handleRightArrow(event);
+        }
+        else if (event.getSource() == theController.getTheView().getImageViews().get(
+                ImageKey.ATTACK)) {
+            if (!theController.isAttackActive()) {
+                theController.handleAttack(event);
+            }
+        }
+        else if (event.getEventType().equals(MouseEvent.DRAG_DETECTED)) {
+            handleDrag(event);
+        }
+        else {
+            handleNPC(event);
+        }
     }
 
     /**
@@ -68,12 +104,12 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             theController.getTheView().getImageViews().get(
-                    RPGView.ImageType.UPARROW).setOpacity(
+                    ImageKey.UPARROW).setOpacity(
                             100);
         }
         else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             theController.getTheView().getImageViews().get(
-                    RPGView.ImageType.UPARROW).setOpacity(
+                    ImageKey.UPARROW).setOpacity(
                             0);
         }
     }
@@ -93,12 +129,12 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             theController.getTheView().getImageViews().get(
-                    RPGView.ImageType.DOWNARROW).setOpacity(
+                    ImageKey.DOWNARROW).setOpacity(
                             100);
         }
         else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             theController.getTheView().getImageViews().get(
-                    RPGView.ImageType.DOWNARROW).setOpacity(
+                    ImageKey.DOWNARROW).setOpacity(
                             0);
         }
     }
@@ -118,12 +154,12 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             theController.getTheView().getImageViews().get(
-                    RPGView.ImageType.LEFTARROW).setOpacity(
+                    ImageKey.LEFTARROW).setOpacity(
                             100);
         }
         else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             theController.getTheView().getImageViews().get(
-                    RPGView.ImageType.LEFTARROW).setOpacity(
+                    ImageKey.LEFTARROW).setOpacity(
                             0);
         }
     }
@@ -143,67 +179,13 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
             theController.getTheView().getImageViews().get(
-                    RPGView.ImageType.RIGHTARROW).setOpacity(
+                    ImageKey.RIGHTARROW).setOpacity(
                             100);
         }
         else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
             theController.getTheView().getImageViews().get(
-                    RPGView.ImageType.RIGHTARROW).setOpacity(
+                    ImageKey.RIGHTARROW).setOpacity(
                             0);
-        }
-    }
-
-    /**
-     * Handles interactions with the attack button
-     *
-     * @param event interaction with the attack button
-     *
-     * @author ks061, lts010
-     */
-    private void handleAttack(MouseEvent event) {
-        if (theController.isAttackActive()) {
-            //do nothing
-        }
-        else if (theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
-                0).getNpc().isFriendly()) {
-            theController.getTheView().updateStoryText(String.format(
-                    "%s is a friend!",
-                    theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
-                            0).getNpc().getName()));
-        }
-        else if (!theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
-                0).getNpc().isIsAlive()) {
-            theController.getTheView().updateStoryText(String.format(
-                    "%s is already dead!",
-                    theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
-                            0).getNpc().getName()));
-        }
-        else {
-            theController.setAttackActive(true);
-            String playerAttacksNPC = theController.getTheModel().getPlayer().attack(
-                    theController.getTheModel().getCurrentRoom().getNPCViewWrappers().get(
-                            0).getNpc());
-            ImageView imageView = theController.getTheView().handleActionBubble(
-                    RPGView.ImageType.POW,
-                    playerAttacksNPC);
-            new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        String sfx = "wav/batman1.wav";
-                        Media hit = new Media(new File(sfx).toURI().toString());
-                        MediaPlayer mediaPlayer = new MediaPlayer(hit);
-                        mediaPlayer.play();
-                        Thread.sleep(2000);
-                    } catch (Exception e) {
-                    }
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            theController.continueAttack(imageView);
-                        }
-                    });
-                }
-            }).start();
         }
     }
 
@@ -238,59 +220,18 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
             npcInCurrentRoom = theController.getMapImageViewToNPC().get(
                     (ImageView) event.getSource());
             try {
-                if (npcInCurrentRoom.isIsAlive()) {
-                    String dialog = theController.getTheModel().getPlayer().talk(
-                            npcInCurrentRoom);
-                    theController.getTheView().updateStoryText(
+                if (npcInCurrentRoom.isAlive()) {
+                    String dialog = npcInCurrentRoom.speak();
+                    theController.getTheView().setStoryText(
                             npcInCurrentRoom.getName() + ": " + dialog);
                 }
                 else {
-                    theController.getTheView().updateStoryText(
+                    theController.getTheView().setStoryText(
                             theController.getTheModel().getPlayer().search(
                                     npcInCurrentRoom));
                 }
             } catch (NullPointerException ex) {
             }
         }
-    }
-
-    /**
-     * Handles mouse events generated from interactions with the GUI
-     *
-     * @param event mouse event
-     *
-     * @author ks061, lts010
-     */
-    @Override
-    public void handle(MouseEvent event) {
-
-        System.out.println("mouse event = " + event.toString());
-        if (event.getSource() == theController.getTheView().getImageViews().get(
-                RPGView.ImageType.UPARROW)) {
-            handleUpArrow(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                RPGView.ImageType.DOWNARROW)) {
-            handleDownArrow(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                RPGView.ImageType.LEFTARROW)) {
-            handleLeftArrow(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                RPGView.ImageType.RIGHTARROW)) {
-            handleRightArrow(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                RPGView.ImageType.ATTACK)) {
-            handleAttack(event);
-        }
-        else if (event.getEventType().equals(MouseEvent.DRAG_DETECTED)) {
-            handleDrag(event);
-        }
-        else {
-            handleNPC(event);
-        }
-
     }
 }
