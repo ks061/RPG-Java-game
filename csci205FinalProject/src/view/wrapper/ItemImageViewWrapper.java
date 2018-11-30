@@ -52,10 +52,6 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
                                 RPGView.ImageType imageType) {
         super(image, image, location, imageType);
         this.itemType = itemType;
-        if (imageType.toString() != imageType.name()) {
-            tooltip = new String(imageType.toString());
-            this.setTooltip(tooltip);
-        }
     }
 
     /**
