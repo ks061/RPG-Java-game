@@ -21,16 +21,66 @@ package view;
  * enumeration elements and game entities in the latter group of enumeration
  * elements.
  *
- * @author ks061, lts010
+ * @author ks061, lts010, cjs051
  */
 public enum ImageKey {
     // Game controls
-    INVENTORY, ATTACK, SEARCH, TRADE,
+    INVENTORY(
+            "Backpack: Click to view your inventory\n" + "Drag items here to store in your inventory"), ATTACK(
+            "Attacks the current NPC in the room"), SEARCH(
+            "Searches deceased NPCs for items"), TRADE(
+            "Give NPC items for more desirable items"),
     POW, BAM, WHIFF, CRUNCH,
-    UPARROW, DOWNARROW, LEFTARROW, RIGHTARROW,
+    UPARROW("Up arrow: Click to move to room above"),
+    DOWNARROW("Down arrow: Click to move to room below"),
+    LEFTARROW("Left arrow: Click to move to room on left"),
+    RIGHTARROW("Right arror: Click to move to room on right"),
     // Game entities
-    NPC,
-    WEAPON1, WEAPON2, WEAPON3,
-    SHIELD1, SHIELD2, SHIELD3,
-    ARMOR1, ARMOR2, ARMOR3;
+    NPC("Character: Click to talk to NPC"),
+    PEN_AND_PAPER("Code using pen and paper: attack +10"), NOTEPAD(
+            "Code using Notepad: attack +20"),
+    NETBEANS("Code using Netbeans: attack +30"),
+    MACHINE_CODE("Learned Assembly language: health +5"), HTML(
+            "Learned HTML: health +7"), JAVA("Learned Java: health +10"),
+    API("Able to use the API: defense +10"), STACK_OVERFLOW(
+            "Able to use Stack Overflow: defense +20"),
+    WINKLEVOSS_TWINS(
+            "Able to use the Winklevoss Twins: defense +30");
+
+    /**
+     * String representing tooltip associated with each tool
+     */
+    private final String tooltip;
+
+    /**
+     * Initializes the tooltip for a view component with this image key
+     *
+     * @param tooltip tool tip
+     *
+     * @author cjs051, ks061
+     */
+    private ImageKey(String tooltip) {
+        this.tooltip = tooltip;
+    }
+
+    /**
+     * Initializes the tooltip to the name of this enum element
+     *
+     * @author cjs051, ks061
+     */
+    private ImageKey() {
+        this.tooltip = this.name();
+    }
+
+    /**
+     * Gets the tooltip
+     *
+     * @return tooltip
+     *
+     * @author cjs051, ks061
+     */
+    public String getTooltip() {
+        return this.tooltip;
+    }
+
 }

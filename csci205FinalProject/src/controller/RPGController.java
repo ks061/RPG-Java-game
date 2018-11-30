@@ -197,23 +197,23 @@ public class RPGController {
                 rpgDragEventHandler);
         this.theView.getImageViews().get(ImageKey.INVENTORY).setOnDragExited(
                 rpgDragEventHandler);
-        this.theView.getImageViews().get(ImageKey.WEAPON1).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.PEN_AND_PAPER).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.WEAPON2).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.NOTEPAD).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.WEAPON3).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.NETBEANS).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.SHIELD1).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.MACHINE_CODE).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.SHIELD2).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.HTML).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.SHIELD3).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.JAVA).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.ARMOR1).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.API).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.ARMOR2).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.STACK_OVERFLOW).setOnDragDetected(
                 rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.ARMOR3).setOnDragDetected(
+        this.theView.getImageViews().get(ImageKey.WINKLEVOSS_TWINS).setOnDragDetected(
                 rpgMouseEventHandler);
     }
 

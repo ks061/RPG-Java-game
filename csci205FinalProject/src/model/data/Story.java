@@ -123,33 +123,33 @@ public class Story {
 
         Equipment weapon1 = new Equipment("weapon1", new ItemStatistics(0, 1, 0,
                                                                         1),
-                                          WEAPON, ImageKey.WEAPON1);
+                                          WEAPON, ImageKey.PEN_AND_PAPER);
         Equipment shield1 = new Equipment("shield1", new ItemStatistics(1, 0, 0,
                                                                         1),
-                                          SHIELD, ImageKey.SHIELD1);
+                                          SHIELD, ImageKey.MACHINE_CODE);
         Equipment armor1 = new Equipment("armor1",
                                          new ItemStatistics(0, 0, 1, 1), ARMOR,
-                                         ImageKey.ARMOR1);
+                                         ImageKey.API);
 
         Equipment weapon2 = new Equipment("weapon2", new ItemStatistics(0, 2, 0,
                                                                         1),
-                                          WEAPON, ImageKey.WEAPON2);
+                                          WEAPON, ImageKey.NOTEPAD);
         Equipment shield2 = new Equipment("shield2", new ItemStatistics(2, 0, 0,
                                                                         1),
-                                          SHIELD, ImageKey.SHIELD2);
+                                          SHIELD, ImageKey.HTML);
         Equipment armor2 = new Equipment("armor2",
                                          new ItemStatistics(0, 0, 2, 1), ARMOR,
-                                         ImageKey.ARMOR2);
+                                         ImageKey.STACK_OVERFLOW);
 
         Equipment weapon3 = new Equipment("weapon3", new ItemStatistics(0, 3, 0,
                                                                         1),
-                                          WEAPON, ImageKey.WEAPON3);
+                                          WEAPON, ImageKey.NETBEANS);
         Equipment shield3 = new Equipment("shield3", new ItemStatistics(3, 0, 0,
                                                                         1),
-                                          SHIELD, ImageKey.SHIELD3);
+                                          SHIELD, ImageKey.JAVA);
         Equipment armor3 = new Equipment("armor3",
                                          new ItemStatistics(0, 0, 3, 1), ARMOR,
-                                         ImageKey.ARMOR3);
+                                         ImageKey.WINKLEVOSS_TWINS);
 
         Point2D npcLocation = new Point2D(0, 200);
         RoomContent rc1 = new RoomContent("room1", new NPCImageViewWrapper(npc1,

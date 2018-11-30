@@ -16,6 +16,7 @@
 package view.wrapper;
 
 import javafx.geometry.Point2D;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import model.item.ItemType;
 import view.ImageKey;
@@ -32,6 +33,10 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
      * Type of item wrapped
      */
     private final ItemType itemType;
+    /**
+     * Tooltip when user hovers over this ImageView
+     */
+    private final Tooltip tooltip;
 
     /**
      * Explicit constructor that initializes the image view with an image and
@@ -40,14 +45,16 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
      * @param image image to be contained within the image view
      * @param location location of the image view in the view
      * @param itemType type of the item
-     * @param imageType type of the image
+     * @param imageKey type of the image
      *
-     * @author ks061, lts010
+     * @author ks061, lts010, cjs051
      */
     public ItemImageViewWrapper(Image image, Point2D location, ItemType itemType,
-                                ImageKey imageType) {
-        super(image, image, location, imageType);
+                                ImageKey imageKey) {
+        super(image, image, location, imageKey);
         this.itemType = itemType;
+        this.tooltip = new Tooltip(imageKey.getTooltip());
+        Tooltip.install(this, this.tooltip);
     }
 
     /**

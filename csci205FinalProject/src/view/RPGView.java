@@ -490,51 +490,51 @@ public class RPGView {
                                                 Properties.CRUNCH_IMG_FILE_PATH,
                                                 ItemType.CONTROL,
                                                 ImageKey.CRUNCH));
-        this.imageKeytoItemImageMap.put(ImageKey.WEAPON1,
+        this.imageKeytoItemImageMap.put(ImageKey.PEN_AND_PAPER,
                                         RPGUtility.loadImage(
                                                 Properties.WEAPON1_IMG_FILE_PATH,
                                                 ItemType.WEAPON,
-                                                ImageKey.WEAPON1));
-        this.imageKeytoItemImageMap.put(ImageKey.WEAPON2,
+                                                ImageKey.PEN_AND_PAPER));
+        this.imageKeytoItemImageMap.put(ImageKey.NOTEPAD,
                                         RPGUtility.loadImage(
                                                 Properties.WEAPON2_IMG_FILE_PATH,
                                                 ItemType.WEAPON,
-                                                ImageKey.WEAPON2));
-        this.imageKeytoItemImageMap.put(ImageKey.WEAPON3,
+                                                ImageKey.NOTEPAD));
+        this.imageKeytoItemImageMap.put(ImageKey.NETBEANS,
                                         RPGUtility.loadImage(
                                                 Properties.WEAPON3_IMG_FILE_PATH,
                                                 ItemType.WEAPON,
-                                                ImageKey.WEAPON3));
-        this.imageKeytoItemImageMap.put(ImageKey.ARMOR1,
+                                                ImageKey.NETBEANS));
+        this.imageKeytoItemImageMap.put(ImageKey.API,
                                         RPGUtility.loadImage(
                                                 Properties.ARMOR1_IMG_FILE_PATH,
                                                 ItemType.ARMOR,
-                                                ImageKey.ARMOR1));
-        this.imageKeytoItemImageMap.put(ImageKey.ARMOR2,
+                                                ImageKey.API));
+        this.imageKeytoItemImageMap.put(ImageKey.STACK_OVERFLOW,
                                         RPGUtility.loadImage(
                                                 Properties.ARMOR2_IMG_FILE_PATH,
                                                 ItemType.ARMOR,
-                                                ImageKey.ARMOR2));
-        this.imageKeytoItemImageMap.put(ImageKey.ARMOR3,
+                                                ImageKey.STACK_OVERFLOW));
+        this.imageKeytoItemImageMap.put(ImageKey.WINKLEVOSS_TWINS,
                                         RPGUtility.loadImage(
                                                 Properties.ARMOR3_IMG_FILE_PATH,
                                                 ItemType.ARMOR,
-                                                ImageKey.ARMOR3));
-        this.imageKeytoItemImageMap.put(ImageKey.SHIELD1,
+                                                ImageKey.WINKLEVOSS_TWINS));
+        this.imageKeytoItemImageMap.put(ImageKey.MACHINE_CODE,
                                         RPGUtility.loadImage(
                                                 Properties.SHIELD1_IMG_FILE_PATH,
                                                 ItemType.SHIELD,
-                                                ImageKey.SHIELD1));
-        this.imageKeytoItemImageMap.put(ImageKey.SHIELD2,
+                                                ImageKey.MACHINE_CODE));
+        this.imageKeytoItemImageMap.put(ImageKey.HTML,
                                         RPGUtility.loadImage(
                                                 Properties.SHIELD2_IMG_FILE_PATH,
                                                 ItemType.SHIELD,
-                                                ImageKey.SHIELD2));
-        this.imageKeytoItemImageMap.put(ImageKey.SHIELD3,
+                                                ImageKey.HTML));
+        this.imageKeytoItemImageMap.put(ImageKey.JAVA,
                                         RPGUtility.loadImage(
                                                 Properties.SHIELD3_IMG_FILE_PATH,
                                                 ItemType.SHIELD,
-                                                ImageKey.SHIELD3));
+                                                ImageKey.JAVA));
     }
 
     /**
