@@ -264,6 +264,9 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
         else {
             handleNPC(event);
         }
+        theController.updateObjectives(
+                theController.getTheModel().getObjectives());
+        theController.updateGame(theController.getTheModel().getObjectives());
 
     }
 }

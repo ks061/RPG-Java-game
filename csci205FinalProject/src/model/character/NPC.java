@@ -82,7 +82,7 @@ public class NPC extends RPGCharacter {
             this.dialogueIterator = null;
         }
         else {
-            dialogueIterator = regDialogues.iterator();
+            dialogueIterator = dialogues.iterator();
             if (dialogueIterator.hasNext()) {
                 this.dialogueToSpeak = dialogueIterator.next();
             }
@@ -194,4 +194,12 @@ public class NPC extends RPGCharacter {
         this.isFriendly = isFriendly;
     }
 
+    public void switchDialogues() {
+        if (this.dialogues == this.regDialogues) {
+            this.dialogues = this.hintDialogues;
+        }
+        else {
+            this.dialogues = this.regDialogues;
+        }
+    }
 }

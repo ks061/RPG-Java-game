@@ -422,4 +422,8 @@ public class Story {
                         roomContents.size()));
     }
 
+    public ArrayList<Objective> getObjectives() {
+        return objectives;
+    }
+
 }

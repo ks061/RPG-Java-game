@@ -18,12 +18,14 @@ package controller;
 
 import controller.eventhandler.RPGDragEventHandler;
 import controller.eventhandler.RPGMouseEventHandler;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 import model.RPGModel;
 import model.character.NPC;
 import model.item.Item;
+import model.story.Objective;
 import view.RPGView;
 import view.RPGView.ImageType;
 import view.wrapper.NPCImageViewWrapper;
@@ -140,7 +142,7 @@ public class RPGController {
         this.mapImageViewToNPC = new HashMap<>();
 
         setEventHandlerOfComponents();
-        
+
         this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragOver(
                 rpgDragEventHandler);
         this.theView.getImageViews().get(ImageType.INVENTORY).setOnDragDropped(
@@ -167,7 +169,7 @@ public class RPGController {
                 rpgMouseEventHandler);
         this.theView.getImageViews().get(ImageType.ARMOR3).setOnDragDetected(
                 rpgMouseEventHandler);
-                
+
         this.theView.getBottomHBox().getChildren().add(
                 this.theView.getImageViews().get(ImageType.INVENTORY));
         this.theView.getBottomHBox().getChildren().add(
@@ -498,6 +500,14 @@ public class RPGController {
     public void finishAttack(ImageView imageView) {
         theView.getCenterPane().getChildren().remove(imageView);
         attackActive = false;
+    }
+
+    public void updateObjectives(ArrayList<Objective> objectives) {
+        //If something happened, update obj1~obj9
+    }
+
+    public void updateGame(ArrayList<Objective> objectives) {
+        //If objectives are cleared, advance
     }
 
     /**

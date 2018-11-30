@@ -18,6 +18,7 @@ package model;
 import java.util.ArrayList;
 import model.character.Player;
 import model.map.Room;
+import model.story.Objective;
 import model.story.RoomContent;
 import model.story.Story;
 
@@ -40,6 +41,8 @@ public class RPGModel {
      * Selected player
      */
     private Player player;
+
+    private ArrayList<Objective> objectives;
 
     /**
      * Row index of the room that the player will start in
@@ -375,4 +378,7 @@ public class RPGModel {
 //    public StringProperty getPropPlayerShield() {
 //        return propPlayerShield;
 //    }
+    public ArrayList<Objective> getObjectives() {
+        return objectives;
+    }
 }
