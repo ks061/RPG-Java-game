@@ -7,7 +7,7 @@
 * Time: 1:47:41 PM
 *
 * Project: csci205FinalProject
-* Package: RPGCharacter
+* Package: model.character
 * File: RPGCharacter
 * Description: This file contains RPGCharacter
 *

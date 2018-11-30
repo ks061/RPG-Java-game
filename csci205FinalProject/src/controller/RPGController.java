@@ -7,7 +7,7 @@
  * Time: 7:19:08 PM
  *
  * Project: csci205
- * Package: lab13.tempconvertmvc
+ * Package: controller
  * File: RPGController
  * Description: This file contains RPGController, which serves as the
  *              connector between the model and view in the RPG game

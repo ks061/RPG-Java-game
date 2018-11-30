@@ -8,7 +8,7 @@
   * Time: 12:40:06 PM
   *
   * Project: csci205FinalProject
-  * Package: view
+  * Package: view.wrapper
   * File: NPCImageViewWrapper
   * Description: This file contains NPCImageViewWrapper.
   * ****************************************

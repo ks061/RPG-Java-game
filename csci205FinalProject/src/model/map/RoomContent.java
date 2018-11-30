@@ -8,7 +8,7 @@
   * Time: 8:37:47 PM
   *
   * Project: csci205FinalProject
-  * Package: story
+  * Package: model.map
   * File: RoomContent
   * Description: This file contains RoomContent.
   * ****************************************

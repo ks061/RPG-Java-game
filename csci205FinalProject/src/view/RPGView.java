@@ -7,7 +7,7 @@
  * Time: 7:18:02 PM
  *
  * Project: csci205
- * Package: lab13.tempconvertmvc
+ * Package: view
  * File: RPGView
  * Description: This file contains RPGView, which serves as the
  *              view for the RPG game application.

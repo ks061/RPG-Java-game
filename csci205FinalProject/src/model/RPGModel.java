@@ -7,7 +7,7 @@
  * Time: 7:17:53 PM
  *
  * Project: csci205
- * Package: lab13.tempconvertmvc
+ * Package: model
  * File: RPGModel
  * Description: This file contains RPGModel, which serves as the
  *              model for the RPG game application.

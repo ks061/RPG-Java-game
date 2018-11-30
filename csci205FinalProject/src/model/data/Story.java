@@ -8,7 +8,7 @@
   * Time: 8:53:32 PM
   *
   * Project: csci205FinalProject
-  * Package: story
+  * Package: model.data
   * File: Story
   * Description: This file contains Story.
   * ****************************************
