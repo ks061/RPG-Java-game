@@ -89,6 +89,7 @@ public class RPGMain extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+        introScreen();
         this.theView.loadImages();
         theCtrl = new RPGController(theModel, theView);
 
@@ -103,19 +104,36 @@ public class RPGMain extends Application {
     /**
      * Displays the intro screen of the game
      *
-     * @return String representing name of chosen player
      */
-    public String introScreen() {
+    public void introScreen() {
         JOptionPane.showMessageDialog(frame, introMessage);
         Object[] characterChoices = {"Kartikeya", "Logan", "Claudia", "Jason"};
-        chosenPlayer = (String) JOptionPane.showInputDialog(frame,
-                                                            "Choose your player: ",
-                                                            "Player Options",
-                                                            JOptionPane.PLAIN_MESSAGE,
-                                                            null,
-                                                            characterChoices,
-                                                            "Kartikeya");
-        return chosenPlayer;
+        this.chosenPlayer = (String) JOptionPane.showInputDialog(frame,
+                                                                 "Choose your player: ",
+                                                                 "Player Options",
+                                                                 JOptionPane.PLAIN_MESSAGE,
+                                                                 null,
+                                                                 characterChoices,
+                                                                 "Kartikeya");
+        setChosenPlayer(this.chosenPlayer);
+    }
+
+    /**
+     * Sets the player the user chose
+     *
+     * @param chosenPlayer - String for name of chosen player
+     */
+    public void setChosenPlayer(String chosenPlayer) {
+        this.chosenPlayer = chosenPlayer;
+    }
+
+    /**
+     * Returns the chosen player
+     *
+     * @return String for name of player
+     */
+    public String getChosenPlayer() {
+        return this.chosenPlayer;
     }
 
     /**
