@@ -7,7 +7,7 @@
  * Time: 7:17:53 PM
  *
  * Project: csci205
- * Package: lab13.tempconvertmvc
+ * Package: model
  * File: RPGModel
  * Description: This file contains RPGModel, which serves as the
  *              model for the RPG game application.
@@ -16,10 +16,11 @@
 package model;
 
 import java.util.ArrayList;
+import model.character.NPC;
 import model.character.Player;
+import model.data.Story;
 import model.map.Room;
-import model.story.RoomContent;
-import model.story.Story;
+import model.map.RoomContent;
 
 /**
  * RPGModel serves as the model for the RPG game application.
@@ -33,33 +34,47 @@ public class RPGModel {
      */
     private ArrayList<ArrayList<Room>> map;
     /**
-     * Current room that the player is in
+     * Current room player is in
      */
     private Room currentRoom;
     /**
-     * Selected player
+     * Player playing the game
      */
-    private Player player;
+    private final Player player;
+    /**
+     * Final NPC boss that player will defeat in order to complete the game
+     */
+    private NPC finalBoss;
 
     /**
      * Row index of the room that the player will start in
      */
     private static final int ROW_INDEX_OF_STARTING_ROOM = 0;
-
     /**
      * Column index of the room that the player will start in
      */
     private static final int COL_INDEX_OF_STARTING_ROOM = 0;
-
     /**
      * Number of rooms per row in the map
      */
     private static final int NUM_ROOMS_PER_ROW = 3;
-
     /**
      * Number of rows of rooms in the map
      */
     private static final int NUM_ROWS = 3;
+
+    /**
+     * Prefix of the room background image file
+     */
+    private static final String ROOM_IMAGE_FILE_PATH_PREFIX = "img/room";
+    /**
+     * Extension of the room background image file
+     */
+    private static final String ROOM_IMAGE_FILE_PATH_EXT = ".png";
+    /**
+     * Name of the NPC boss
+     */
+    private static final String FINAL_BOSS_NAME = "Angry Dance";
 
     /**
      * Constructor that initializes the model of the application
@@ -67,9 +82,8 @@ public class RPGModel {
      * @author ks061
      */
     public RPGModel() {
-        this.currentRoom = initGridOfRooms();
-
         this.player = new Player("Student");
+        this.currentRoom = initGridOfRooms();
     }
 
     /**
@@ -109,18 +123,23 @@ public class RPGModel {
     }
 
     /**
-     * Links a grid of rooms to one another
+     * Links a grid of rooms to one another and sets the background image to one
+     * with the correct doors for the connections.
      *
-     * @author ks061
+     * @author ks061, lts010
      */
     private void connectGridOfRooms() {
         Room roomAbove;
         Room roomBelow;
         Room roomToLeft;
         Room roomToRight;
+        int roomNumber;
 
         for (int rowIndex = 0; rowIndex < NUM_ROWS; rowIndex++) {
             for (int colIndex = 0; colIndex < NUM_ROOMS_PER_ROW; colIndex++) {
+                roomNumber = rowIndex * NUM_ROOMS_PER_ROW + colIndex;
+                this.map.get(rowIndex).get(colIndex).setBackgroundImagePath(
+                        ROOM_IMAGE_FILE_PATH_PREFIX + roomNumber + ROOM_IMAGE_FILE_PATH_EXT);
                 try {
                     roomAbove = this.map.get(rowIndex - 1).get(colIndex);
                     this.map.get(rowIndex).get(colIndex).setNorth(roomAbove);
@@ -158,7 +177,11 @@ public class RPGModel {
             for (Room r : mapRow) {
                 roomContent = Story.getInstance().getRandomRoomContent();
                 r.setName(roomContent.getName());
-                r.setNPCViewWrappers(roomContent.getNPCWrappers());
+                r.setNPCViewWrapper(roomContent.getNPCWrapper());
+                if (roomContent.getNPCWrapper().getNPC().getName().equals(
+                        FINAL_BOSS_NAME)) {
+                    this.finalBoss = roomContent.getNPCWrapper().getNPC();
+                }
                 r.setHiddenItems(roomContent.getItems());
             }
         }
@@ -197,4 +220,14 @@ public class RPGModel {
         return player;
     }
 
+    /**
+     * Gets the final boss NPC
+     *
+     * @return final boss NPC
+     *
+     * @author ks061
+     */
+    public NPC getFinalBoss() {
+        return this.finalBoss;
+    }
 }

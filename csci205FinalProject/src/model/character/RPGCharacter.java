@@ -7,7 +7,7 @@
 * Time: 1:47:41 PM
 *
 * Project: csci205FinalProject
-* Package: RPGCharacter
+* Package: model.character
 * File: RPGCharacter
 * Description: This file contains RPGCharacter
 *
@@ -17,8 +17,8 @@ package model.character;
 
 import java.util.ArrayList;
 import java.util.Random;
+import model.item.ConsumableItem;
 import model.item.Equipment;
-import model.item.EquipmentType;
 import model.item.Item;
 import model.map.Room;
 
@@ -36,7 +36,7 @@ public abstract class RPGCharacter {
     /**
      * Character statistics
      */
-    private RPGCharacterStats characterStats;
+    private final RPGCharacterStats characterStats;
     /**
      * Current size of inventory
      */
@@ -65,6 +65,7 @@ public abstract class RPGCharacter {
      * Boolean representing if character is alive
      */
     private boolean isAlive;
+
     /**
      * Default chance of missing while using a weapon during attack
      */
@@ -73,6 +74,11 @@ public abstract class RPGCharacter {
      * Default chance of a critical hit while using a weapon during attack
      */
     public static final double DEFAULT_CRITICAL_CHANCE = 0.0625;
+    /**
+     * The factor by which damage from a critical hit differs from that of a
+     * standard hit
+     */
+    public static final double CRITICAL_HIT_FACTOR = 1.5;
 
     /**
      * Constructor for RPGCharacter initializing all its attributes
@@ -80,6 +86,8 @@ public abstract class RPGCharacter {
      * @param name name of character
      * @param characterStats character stats
      * @param inventorySize size of the inventory
+     *
+     * @author lts010
      */
     public RPGCharacter(String name, RPGCharacterStats characterStats,
                         int inventorySize) {
@@ -90,92 +98,170 @@ public abstract class RPGCharacter {
         this.isAlive = true;
     }
 
-//    /**
-//     * Uses a consumable item or equips/unequips an equipment item
-//     *
-//     * @param item - item to be used
-//     */
-//    public void use(Item item) {
-//        if (item instanceof ConsumableItem) {
-//            ConsumableItem consumable = (ConsumableItem) item;
-//            consumable.consume();
-//        }
-//        else if (item instanceof Equipment && this.isEquipped((Equipment) item)) {
-//            Equipment equipment = (Equipment) item;
-//            equipment.unequip();
-//        }
-//        else {
-//            Equipment equipment = (Equipment) item;
-//            equipment.equip();
-//        }
-//    }
     /**
-     * Determines the type of equipment and equips it
+     * Uses a consumable item or equips/unequips an equipment item
      *
-     * @param equipment - equipment to be equipped
-     * @return boolean representing equipment equipped
+     * @param item item to be used
+     *
+     * @author lts010
      */
-    public boolean isEquipped(Equipment equipment) {
-        if (equipment.getType() == EquipmentType.WEAPON) {
-            return equipment == this.weapon;
+    public void use(Item item) {
+        if (item instanceof ConsumableItem) {
+            ConsumableItem consumable = (ConsumableItem) item;
+            this.consume(consumable);
         }
-        else if (equipment.getType() == EquipmentType.SHIELD) {
-            return equipment == this.shield;
-        }
-        else {
-            return equipment == this.armor;
+        else if (item instanceof Equipment) {
+            if (this.isEquipped((Equipment) item)) {
+                Equipment equipment = (Equipment) item;
+                this.unequip(equipment);
+            }
+            else {
+                Equipment equipment = (Equipment) item;
+                this.equip(equipment);
+            }
         }
     }
 
     /**
-     * Attacks an enemy RPG character Damage calculations based on formulas
-     * taken from bulbapedia
+     * Determines the type of equipment and equips it
      *
-     * @param enemy - RPGCharacter to attack
+     * @param equipment equipment to be equipped
+     *
+     * @return boolean representing equipment equipped
+     *
+     * @author ks061, lts010
      */
-    public String attack(RPGCharacter enemy) {
-        Random RandomModifiers = new Random();
-        double criticalHitModifier;
-        double accuracyModifier;
+    public boolean isEquipped(Equipment equipment) {
+        switch (equipment.getType()) {
+            case WEAPON:
+                return equipment == this.weapon;
+            case SHIELD:
+                return equipment == this.shield;
+            default:
+                return equipment == this.armor;
+        }
+    }
 
-        if (RandomModifiers.nextDouble() < RPGCharacter.DEFAULT_MISS_CHANCE) {
-            accuracyModifier = 0.0;
+    /**
+     * Returns the critical hit modifier if it will be applied to the damage
+     * (based on the RPGCharacter's default critical chance); otherwise returns
+     * 1.0
+     *
+     * @return critical hit modifier
+     *
+     * @author ks061
+     */
+    private double getCriticalHitModifier() {
+        Random randomNumberGenerator = new Random();
+        if (randomNumberGenerator.nextDouble() < RPGCharacter.DEFAULT_CRITICAL_CHANCE) {
+            return CRITICAL_HIT_FACTOR;
         }
         else {
-            accuracyModifier = 1.0;
+            return 1.0;
         }
+    }
 
-        if (RandomModifiers.nextDouble() < RPGCharacter.DEFAULT_CRITICAL_CHANCE) {
-            criticalHitModifier = 1.5;
+    /**
+     * Returns 0.0 if the attack is unsuccessful (based on the RPGCharacter's
+     * default miss chance); otherwise returns 1.0
+     *
+     * @return 0.0 if the attack is unsuccessful (based on the RPGCharacter's
+     * default miss chance); otherwise returns 1.0
+     *
+     * @author ks061
+     */
+    private double getAccuracyModifier() {
+        Random randomNumberGenerator = new Random();
+        if (randomNumberGenerator.nextDouble() < RPGCharacter.DEFAULT_MISS_CHANCE) {
+            return 0.0;
         }
         else {
-            criticalHitModifier = 1.0;
+            return 1.0;
         }
+    }
 
-        double damageCalculation = this.characterStats.getAttack() - enemy.characterStats.getDefense();
-        int trueDamage = (int) Math.round(
-                damageCalculation * criticalHitModifier * accuracyModifier);
-        enemy.characterStats.setHealth(
-                enemy.characterStats.getHealth() - trueDamage);
-        if (enemy.characterStats.getHealth() <= 0) {
-            enemy.setIsAlive(false);
+    /**
+     * Calculates the damage dealt to the enemy by the character based upon the
+     * critical hit and accuracy modifiers
+     *
+     * @param enemy enemy that this RPGCharacter is attacking
+     *
+     * @return damage done to the enemy
+     *
+     * @author ks061
+     */
+    private int calculateDamage(RPGCharacter enemy, double criticalHitModifier,
+                                double accuracyModifier) {
+        double damage = this.characterStats.getAttack() - enemy.characterStats.getDefense();
+        int roundedDamage = (int) Math.round(
+                damage * criticalHitModifier * accuracyModifier);
+        if (roundedDamage <= 0) {
+            return 0;
         }
-        if (accuracyModifier == 0) {
+        if (enemy.getCharacterStats().getMaxHealth() == enemy.getCharacterStats().getHealth() && roundedDamage >= enemy.getCharacterStats().getMaxHealth()) {
+            roundedDamage = enemy.getCharacterStats().getMaxHealth() - 1;
+        }
+        return roundedDamage;
+    }
+
+    /**
+     * Returns message detailing the nature of damage done to character being
+     * battled
+     *
+     * @param enemy enemy being attacked
+     * @param damage damage dealt to the enemy from the attack
+     * @param criticalHitModifier critical hit modifier of the attack
+     *
+     * @return message detailing the nature of damage done to character being
+     * battled
+     *
+     * @author ks061
+     */
+    public String getAttackMessage(RPGCharacter enemy, int damage,
+                                   double criticalHitModifier) {
+        if (damage == 0) {
             return String.format("%s missed and did no damage to %s", this.name,
                                  enemy.getName());
         }
         if (criticalHitModifier == 1.5) {
             return String.format("Critical Hit! %s did %d damage to %s",
-                                 this.name, trueDamage, enemy.getName());
+                                 this.name, damage, enemy.getName());
         }
-        return String.format("%s did %d damage to %s", this.name, trueDamage,
+        return String.format("%s did %d damage to %s", this.name, damage,
                              enemy.getName());
+    }
+
+    /**
+     * Attack the given enemy lowering their health based
+     *
+     * @param enemy - RPGCharacter to attack
+     *
+     * @return message detailing nature of damage done to character being
+     * battled
+     *
+     * @author lts010, ks061
+     */
+    public String attack(RPGCharacter enemy) {
+
+        double criticalHitModifier = getCriticalHitModifier();
+        double accuracyModifier = getAccuracyModifier();
+
+        int damage = calculateDamage(enemy, criticalHitModifier,
+                                     accuracyModifier);
+
+        enemy.characterStats.setHealth(enemy.characterStats.getHealth() - damage);
+        if (enemy.characterStats.getHealth() <= 0) {
+            enemy.setIsAlive(false);
+        }
+        return getAttackMessage(enemy, damage, criticalHitModifier);
     }
 
     /**
      * Determines if inventory is full
      *
      * @return boolean representing if inventory is at max size
+     *
+     * @author ks061, lts010
      */
     public boolean isInventoryFull() {
         return this.inventory.size() >= this.inventorySize;
@@ -192,17 +278,12 @@ public abstract class RPGCharacter {
         return characterStats;
     }
 
-//    /**
-//     * Abstract moveTo method to be implemented by other classes
-//     *
-//     * @param room - Room to move to
-//     * @return String representing who moved where
-//     */
-//    public abstract String moveTo(Room room);
     /**
      * Gets the name of the character
      *
      * @return String representing the character's name
+     *
+     * @author ks061, lts010
      */
     public String getName() {
         return name;
@@ -211,7 +292,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the name of the character
      *
-     * @param name - name to be set to
+     * @param name name to be set to
+     *
+     * @author ks061, lts010
      */
     public void setName(String name) {
         this.name = name;
@@ -221,6 +304,8 @@ public abstract class RPGCharacter {
      * Gets the current size of the inventory
      *
      * @return integer for inventory size
+     *
+     * @author ks061, lts010
      */
     public int getInventorySize() {
         return inventorySize;
@@ -229,7 +314,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the current inventory size
      *
-     * @param inventorySize - integer representing size to be set to
+     * @param inventorySize integer representing size to be set to
+     *
+     * @author ks061, lts010
      */
     public void setInventorySize(int inventorySize) {
         this.inventorySize = inventorySize;
@@ -239,6 +326,8 @@ public abstract class RPGCharacter {
      * Gets the inventory
      *
      * @return ArrayList of items representing the inventory
+     *
+     * @author ks061, lts010
      */
     public ArrayList<Item> getInventory() {
         return inventory;
@@ -247,7 +336,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the inventory
      *
-     * @param inventory - ArrayList of items to set the inventory
+     * @param inventory ArrayList of items to set the inventory
+     *
+     * @author ks061, lts010
      */
     public void setInventory(ArrayList<Item> inventory) {
         this.inventory = inventory;
@@ -256,7 +347,9 @@ public abstract class RPGCharacter {
     /**
      * Gets the weapon equipment variable
      *
-     * @return Equipment object representing weapon
+     * @return equipment object representing weapon
+     *
+     * @author ks061, lts010
      */
     public Equipment getWeapon() {
         return weapon;
@@ -265,7 +358,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the weapon variable
      *
-     * @param weapon - equipment object for weapon to be set to
+     * @param weapon equipment object for weapon to be set to
+     *
+     * @author ks061, lts010
      */
     public void setWeapon(Equipment weapon) {
         this.weapon = weapon;
@@ -274,7 +369,9 @@ public abstract class RPGCharacter {
     /**
      * Gets the shield variable
      *
-     * @return Equipment object representing shield
+     * @return equipment object representing shield
+     *
+     * @author ks061, lts010
      */
     public Equipment getShield() {
         return shield;
@@ -283,7 +380,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the shield variable
      *
-     * @param shield - equipment object for shield to be set to
+     * @param shield equipment object for shield to be set to
+     *
+     * @author ks061, lts010
      */
     public void setShield(Equipment shield) {
         this.shield = shield;
@@ -292,7 +391,9 @@ public abstract class RPGCharacter {
     /**
      * Gets the armor variable
      *
-     * @return Equipment object representing armor
+     * @return equipment object representing armor
+     *
+     * @author ks061, lts010
      */
     public Equipment getArmor() {
         return armor;
@@ -301,7 +402,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the armor variable
      *
-     * @param armor - equipment object for armor to be set to
+     * @param armor equipment object for armor to be set to
+     *
+     * @author ks061, lts010
      */
     public void setArmor(Equipment armor) {
         this.armor = armor;
@@ -311,6 +414,8 @@ public abstract class RPGCharacter {
      * Gets the current location of character
      *
      * @return Room object representing location
+     *
+     * @author ks061, lts010
      */
     public Room getLocation() {
         return location;
@@ -319,7 +424,9 @@ public abstract class RPGCharacter {
     /**
      * Sets the current location of character
      *
-     * @param location - Room object for location to be set to
+     * @param location Room object for location to be set to
+     *
+     * @author ks061, lts010
      */
     public void setLocation(Room location) {
         this.location = location;
@@ -329,18 +436,219 @@ public abstract class RPGCharacter {
      * Checks if character is alive
      *
      * @return boolean representing if character is alive
+     *
+     * @author ks061, lts010
      */
-    public boolean isIsAlive() {
+    public boolean isAlive() {
         return isAlive;
     }
 
     /**
-     * Sets the character's aliveness
+     * Sets whether the character is alive or not
      *
-     * @param isAlive - boolean representing if character is alive
+     * @param isAlive boolean representing if character is alive
+     *
+     * @author ks061, lts010
      */
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
+    }
+
+    /**
+     * Adjusts the character statistics, such as maximum health, attack,
+     * defense, and inventory size, based upon the statistics of the equipment
+     * and current statistics of this RPGCharacter
+     *
+     * @param equipment equipment this RPGCharacter is being equipped with
+     *
+     * @author ks061, ishk001, lts010
+     */
+    private void adjustCharacterStatisticsFromEquip(Equipment equipment) {
+        this.getCharacterStats().setMaxHealth(
+                this.getCharacterStats().getMaxHealth() + equipment.getItemStatistics().getDeltaHealth());
+        this.getCharacterStats().setAttack(
+                this.getCharacterStats().getAttack() + equipment.getItemStatistics().getDeltaAttack());
+        this.getCharacterStats().setDefense(
+                this.getCharacterStats().getDefense() + equipment.getItemStatistics().getDeltaDefense());
+        this.setInventorySize(
+                this.getInventorySize() + equipment.getItemStatistics().getDeltaInventory());
+    }
+
+    /**
+     * Equips the equipment based on its type
+     *
+     * @param equipment equipment to be equipped
+     * @return string representing what was equipped
+     *
+     * @author ishk001, lts010, ks061
+     */
+    public String equip(Equipment equipment) {
+        adjustCharacterStatisticsFromEquip(equipment);
+        switch (equipment.getType()) {
+            case WEAPON:
+                if (this.getWeapon() != null) {
+                    return this.swapEquipment(this.getWeapon());
+                }
+                else {
+                    this.setWeapon(equipment);
+                }
+                break;
+            case ARMOR:
+                if (this.getArmor() != null) {
+                    return this.swapEquipment(this.getArmor());
+                }
+                else {
+                    this.setArmor(equipment);
+                }
+                break;
+            case SHIELD:
+                if (this.getShield() != null) {
+                    return this.swapEquipment(this.getShield());
+                }
+                else {
+                    this.setShield(equipment);
+                }
+                break;
+        }
+        this.getInventory().remove(equipment);
+        return String.format("Equipped the %s as a %s",
+                             equipment.getName(), equipment.getType().name());
+    }
+
+    /**
+     * Adjusts the character statistics, such as maximum health, attack,
+     * defense, and inventory size, based upon the statistics of the equipment
+     * and current statistics of this RPGCharacter
+     *
+     * @param equipment equipment being unequipped from this RPGCharacter
+     *
+     * @author ks061, ishk001, lts010
+     */
+    private void adjustCharacterStatisticsFromUnequip(Equipment equipment) {
+        this.getCharacterStats().setMaxHealth(
+                this.getCharacterStats().getMaxHealth() - equipment.getItemStatistics().getDeltaHealth());
+        this.getCharacterStats().setAttack(
+                this.getCharacterStats().getAttack() - equipment.getItemStatistics().getDeltaAttack());
+        this.getCharacterStats().setDefense(
+                this.getCharacterStats().getDefense() - equipment.getItemStatistics().getDeltaDefense());
+        this.setInventorySize(
+                this.getInventorySize() - equipment.getItemStatistics().getDeltaInventory());
+    }
+
+    /**
+     * Unequips the equipment and adds it to inventory
+     *
+     * @param equipment the equipment you want to unequip
+     * @return message detailing unequipment
+     *
+     * @author ishk001, lts010, ks061
+     */
+    public String unequip(Equipment equipment) {
+        if (this.isInventoryFull()) {
+            return String.format(
+                    "Cannot unequip the %s because your inventory is full",
+                    equipment.getName());
+        }
+        if (null != equipment.getType()) {
+            switch (equipment.getType()) {
+                case WEAPON:
+                    this.setWeapon(null);
+                    break;
+                case ARMOR:
+                    this.setArmor(null);
+                    break;
+                case SHIELD:
+                    this.setShield(null);
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.inventory.add(equipment);
+        adjustCharacterStatisticsFromUnequip(equipment);
+        return String.format("Unequipped the %s and added it to your inventory",
+                             equipment.getName());
+    }
+
+    /**
+     * Swaps the current equipment with something from the inventory
+     *
+     * @param equipment equipment that you want to equip
+     * @return string representing what items were swapped
+     *
+     * @author ishk001, ks061
+     */
+    public String swapEquipment(Equipment equipment) {
+        this.inventory.remove(equipment);
+        Equipment oldEquipment = null;
+        switch (equipment.getType()) {
+            case WEAPON:
+                oldEquipment = this.weapon;
+                this.unequip(this.weapon);
+                this.setWeapon(equipment);
+                break;
+            case ARMOR:
+                oldEquipment = this.armor;
+                this.unequip(this.armor);
+                this.setArmor(equipment);
+                break;
+            case SHIELD:
+                oldEquipment = this.shield;
+                this.unequip(this.shield);
+                this.setShield(equipment);
+                break;
+        }
+        return String.format("Unequipped the %s and equipped the %s",
+                             oldEquipment.getName(),
+                             equipment.getName());
+    }
+
+    /**
+     * Adjusts the character statistics, such as maximum health, attack,
+     * defense, and inventory size, based upon the statistics of the consumable
+     * item and current statistics of this RPGCharacter
+     *
+     * @param consumableItem equipment being consumed by this RPGCharacter
+     *
+     * @author ks061, ishk001, lts010
+     */
+    private void adjustCharacterStatisticsFromConsume(
+            ConsumableItem consumableItem) {
+        //For HEALTH potions
+        int curHealth = this.getCharacterStats().getHealth();
+        if (curHealth + consumableItem.getItemStatistics().getDeltaHealth() > this.getCharacterStats().getMaxHealth()) {
+            //sets the health of the player to max health if health + potion turns
+            //out to fill up the health bar of the player
+            this.getCharacterStats().setHealth(
+                    this.getCharacterStats().getMaxHealth());
+        }
+        else {
+            this.getCharacterStats().setHealth(
+                    curHealth + consumableItem.getItemStatistics().getDeltaHealth());
+        }
+        //For ATTACK potions
+        this.getCharacterStats().setAttack(
+                this.getCharacterStats().getAttack() + consumableItem.getItemStatistics().getDeltaAttack());
+        //For DEFENSE potions
+        this.getCharacterStats().setDefense(
+                this.getCharacterStats().getDefense() + consumableItem.getItemStatistics().getDeltaDefense());
+        //For items that permanantely increase inventory size
+        this.setInventorySize(
+                this.getInventorySize() + consumableItem.getItemStatistics().getDeltaInventory());
+    }
+
+    /**
+     * Consumes the items and correspondingly change the health of item owner
+     *
+     * @param consumableItem consumable item being consumed by this character
+     * @return String representing what was consumed
+     *
+     * @author ishk001, lts010, ks061
+     */
+    public String consume(ConsumableItem consumableItem) {
+        adjustCharacterStatisticsFromConsume(consumableItem);
+        this.getInventory().remove(consumableItem);
+        return String.format("Consumed the %s", consumableItem.getName());
     }
 
 }

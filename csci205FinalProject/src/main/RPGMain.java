@@ -73,6 +73,7 @@ public class RPGMain extends Application {
         primaryStage.setTitle("RPG Game");
         primaryStage.setScene(scene);
         primaryStage.show();
+        theCtrl.refresh();
     }
 
     /**

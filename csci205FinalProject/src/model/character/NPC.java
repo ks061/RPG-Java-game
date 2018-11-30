@@ -21,21 +21,16 @@ import model.item.Item;
 
 /**
  * NPC Class creates constructor and methods associated with the NPCs throughout
- * the RPG. It's a child of RPGCharacter.
+ * the RPG.
  *
- * @author Logan Stiles
- * @version 0.1
+ * @author lts010, ks061
  */
 public class NPC extends RPGCharacter {
 
     /**
-     * Current dialogue for the NPC
-     */
-    private String dialogueToSpeak;
-    /**
      * Lines of dialogue
      */
-    private ArrayList<String> dialogues;
+    private final ArrayList<String> dialogues;
     /**
      * Iterator for lines of dialogue
      */
@@ -56,10 +51,10 @@ public class NPC extends RPGCharacter {
     /**
      * Constructor for the NPC which initializes its values
      *
-     * @param name - name of NPC
-     * @param npcStats - statistics of the NPC
-     * @param dialogues - series of dialogues
-     * @param isFriendly - friendly or hostile attribute
+     * @param name name of NPC
+     * @param npcStats statistics of the NPC
+     * @param dialogues series of dialogues
+     * @param isFriendly friendly or hostile attribute
      *
      * @author lts010, ks061
      */
@@ -68,82 +63,52 @@ public class NPC extends RPGCharacter {
         super(name, npcStats, NPC.DEFAULT_INVENTORY_SIZE);
 
         this.dialogues = dialogues;
-        if (this.dialogues.isEmpty()) {
-            this.dialogueIterator = null;
-        }
-        else {
-            dialogueIterator = dialogues.iterator();
-            if (dialogueIterator.hasNext()) {
-                this.dialogueToSpeak = dialogueIterator.next();
-            }
-            else {
-                this.dialogueToSpeak = null;
-            }
-        }
+        setupDialogues(dialogues);
 
         this.isFriendly = isFriendly;
     }
 
     /**
-     * Returns whether the dialogue iterator is null
+     * Sets up the dialogue iterator
      *
-     * @return true if dialogue iterator is null; otherwise false
+     * @param dialogues dialogues of the NPC
      *
      * @author ks061
      */
-    public boolean isDialogueIteratorNull() {
-        if (this.dialogueIterator == null) {
-            return true;
+    private void setupDialogues(ArrayList<String> dialogues) {
+        if (this.dialogues.isEmpty()) {
+            this.dialogueIterator = null;
         }
-        return false;
+        else {
+            dialogueIterator = dialogues.iterator();
+        }
     }
 
     /**
-     * Sets up the next dialogue for the NPC to communicate
+     * Returns the next dialogue that the NPC speaks
+     *
+     * @return next dialogue that the NPC speaks
      *
      * @author ks061
      */
-    public void nextDialogueToSpeak() {
-        if (isDialogueIteratorNull()) {
-            return;
+    public String speak() {
+        if (this.dialogueIterator == null) {
+            return "";
         }
 
         if (dialogueIterator.hasNext()) {
-            this.dialogueToSpeak = dialogueIterator.next();
+            return dialogueIterator.next();
         }
-        else {
-            this.dialogueIterator = this.dialogues.iterator();
-            nextDialogueToSpeak();
-        }
-    }
 
-    /**
-     * Gets the current dialog
-     *
-     * @return String of dialogueToSpeak
-     *
-     * @author lts010, ks061
-     */
-    public String getCurrentDialogue() {
-        return dialogueToSpeak;
-    }
+        this.dialogueIterator = this.dialogues.iterator();
+        return speak();
 
-    /**
-     * Sets the current dialogue
-     *
-     * @param currentDialogue - String representing what dialogueToSpeak should
-     * be set to
-     *
-     * @author lts010, ks061
-     */
-    public void setCurrentDialogue(String currentDialogue) {
-        this.dialogueToSpeak = currentDialogue;
     }
 
     /**
      * Gets the desired item
      *
-     * @return Item representing the desired item
+     * @return item representing the desired item
      *
      * @author lts010
      */
@@ -154,7 +119,7 @@ public class NPC extends RPGCharacter {
     /**
      * Sets the desired item
      *
-     * @param desiredItem - Item to set desiredItem to
+     * @param desiredItem item to set desiredItem to
      *
      * @author lts010
      */
@@ -183,5 +148,4 @@ public class NPC extends RPGCharacter {
     public void setIsFriendly(boolean isFriendly) {
         this.isFriendly = isFriendly;
     }
-
 }

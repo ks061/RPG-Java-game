@@ -16,7 +16,10 @@
 package view.wrapper;
 
 import javafx.geometry.Point2D;
-import model.item.Item;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import model.item.ItemType;
+import view.ImageKey;
 
 /**
  * Wrapper class for Item including Item, image of the Item, and location where
@@ -26,23 +29,42 @@ import model.item.Item;
  */
 public class ItemImageViewWrapper extends ImageViewWrapper {
 
-    public static final int ITEM_VIEW_WIDTH = 30;
-    public static final int ITEM_VIEW_HEIGHT = 30;
+    /**
+     * Type of item wrapped
+     */
+    private final ItemType itemType;
+    /**
+     * Tooltip when user hovers over this ImageView
+     */
+    private final Tooltip tooltip;
 
-    public ItemImageViewWrapper(Item item, String imageFilename,
-                                Point2D location) {
-        super(item, imageFilename, location, ITEM_VIEW_WIDTH, ITEM_VIEW_HEIGHT);
+    /**
+     * Explicit constructor that initializes the image view with an image and
+     * location, the item type, and the image type
+     *
+     * @param image image to be contained within the image view
+     * @param location location of the image view in the view
+     * @param itemType type of the item
+     * @param imageKey type of the image
+     *
+     * @author ks061, lts010, cjs051
+     */
+    public ItemImageViewWrapper(Image image, Point2D location, ItemType itemType,
+                                ImageKey imageKey) {
+        super(image, image, location, imageKey);
+        this.itemType = itemType;
+        this.tooltip = new Tooltip(imageKey.getTooltip());
+        Tooltip.install(this, this.tooltip);
     }
 
     /**
-     * Gets the item
+     * Gets the type of the encapsulated item
      *
-     * @return item
+     * @return type of the encapsulated item
      *
-     * @author ks061
+     * @author ks061, lts010
      */
-    public Item getItem() {
-        return (Item) super.getWrappedObject();
+    public ItemType getItemType() {
+        return itemType;
     }
-
 }
