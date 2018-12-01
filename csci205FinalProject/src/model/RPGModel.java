@@ -18,6 +18,7 @@ package model;
 import java.util.ArrayList;
 import model.character.NPC;
 import model.character.Player;
+import model.data.Objective;
 import model.data.Story;
 import model.map.Room;
 import model.map.RoomContent;
@@ -41,6 +42,9 @@ public class RPGModel {
      * Player playing the game
      */
     private final Player player;
+
+    private ArrayList<Objective> objectives;
+
     /**
      * Final NPC boss that player will defeat in order to complete the game
      */
@@ -230,4 +234,9 @@ public class RPGModel {
     public NPC getFinalBoss() {
         return this.finalBoss;
     }
+
+    public ArrayList<Objective> getObjectives() {
+        return objectives;
+    }
+
 }

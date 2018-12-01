@@ -19,6 +19,7 @@ package controller;
 import controller.eventhandler.RPGDragEventHandler;
 import controller.eventhandler.RPGMouseEventHandler;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
@@ -28,6 +29,7 @@ import javafx.scene.media.MediaPlayer;
 import javax.swing.JOptionPane;
 import model.RPGModel;
 import model.character.NPC;
+import model.data.Objective;
 import model.item.Item;
 import view.ImageKey;
 import view.RPGView;
@@ -487,6 +489,14 @@ public class RPGController {
                                           "Game Over", JOptionPane.PLAIN_MESSAGE);
             System.exit(0);
         }
+    }
+
+    public void updateObjectives(ArrayList<Objective> objectives) {
+        //If some action happens, update the arraylist
+    }
+
+    public void updateStoryline(ArrayList<Objective> objectives) {
+        //If objective(s) are complete, switch story content
     }
 
     /**
