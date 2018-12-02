@@ -42,6 +42,10 @@ public class Story {
 
     private ArrayList<Objective> objectives;
 
+    private ArrayList<NPC> npcs;
+
+    private static final int NUMBER_OF_OBJECTIVES = 10;
+
     /**
      * Constructs Story, containing the starting data and/or story-line behind
      * the game map and game itself
@@ -51,31 +55,31 @@ public class Story {
     private Story() {
         roomContents = new ArrayList<>();
 
-        NPC npc1 = new NPC("Dr. Dance", new RPGCharacterStats(20, 0, 0),
-                           new ArrayList<String>() {
-                       {
-                           add("Class dismissed. Work on your"
-                               + " homework and DON’T PROCRASTINATE...and R E F A C T O R ! Your textbook and the "
-                               + "Java API are your best friends");
-                           add("Don't forget to REFACTOR!");
-                       }
-                   }, new ArrayList<String>() {
-                       {
-                           add("Hey");
-                       }
-                   }, true);
-        NPC npc2 = new NPC("Muz", new RPGCharacterStats(20, 0, 0),
-                           new ArrayList<String>() {
-                       {
-                           add("Yo Dancee, lookin' sharp!");
-                           add("Yo homie, don't give up! You can do this!");
-                       }
-                   }, new ArrayList<String>() {
-                       {
-                           add("Hey");
-                       }
-                   }, true);
-        NPC npc3 = new NPC("Reef", new RPGCharacterStats(20, 0, 0),
+        NPC drDance = new NPC("Dr. Dance", new RPGCharacterStats(20, 0, 0),
+                              new ArrayList<String>() {
+                          {
+                              add("Class dismissed. Work on your"
+                                  + " homework and DON’T PROCRASTINATE...and R E F A C T O R ! Your textbook and the "
+                                  + "Java API are your best friends");
+                              add("Don't forget to REFACTOR!");
+                          }
+                      }, new ArrayList<String>() {
+                          {
+                              add("Hey");
+                          }
+                      }, true);
+        NPC muz = new NPC("Muz", new RPGCharacterStats(20, 0, 0),
+                          new ArrayList<String>() {
+                      {
+                          add("Yo Dancee, lookin' sharp!");
+                          add("Yo homie, don't give up! You can do this!");
+                      }
+                  }, new ArrayList<String>() {
+                      {
+                          add("Hey");
+                      }
+                  }, true);
+        NPC reef = new NPC("Reef", new RPGCharacterStats(20, 0, 0),
                            new ArrayList<String>() {
                        {
                            add("*watching fork-knife*");
@@ -86,62 +90,62 @@ public class Story {
                            add("Hey");
                        }
                    }, true);
-        NPC npc4 = new NPC("Izi", new RPGCharacterStats(25, 2, 3),
-                           new ArrayList<String>() {
-                       {
-                           add("Food insecurity is a major problem on Bucknell's campus!");
-                           add("I'm gonna email Bravman.");
-                       }
-                   }, new ArrayList<String>() {
-                       {
-                           add("Hey");
-                       }
-                   }, true);
-        NPC npc5 = new NPC("Angry Dance", new RPGCharacterStats(30, 8, 8),
-                           new ArrayList<String>() {
-                       {
-                           add("Karti B, stop slacking me so many questions!");
-                           add("I told you to R E F A C T O R !!!");
-                       }
-                   }, new ArrayList<String>() {
-                       {
-                           add("Hey");
-                       }
-                   }, true);
-        NPC npc6 = new NPC("Dr. Queen", new RPGCharacterStats(20, 0, 0),
-                           new ArrayList<String>() {
-                       {
-                           add("Watch the videos!");
-                           add("Take Data Science!");
-                       }
-                   }, new ArrayList<String>() {
-                       {
-                           add("Hey");
-                       }
-                   }, true);
-        NPC npc7 = new NPC("Martin", new RPGCharacterStats(25, 4, 3),
-                           new ArrayList<String>() {
-                       {
-                           add("I'll grade labs 9-12 by Monday!");
-                           add("I'll grade labs 9-12 by Friday!");
-                       }
-                   }, new ArrayList<String>() {
-                       {
-                           add("Hey");
-                       }
-                   }, true);
-        NPC npc8 = new NPC("Dustin", new RPGCharacterStats(25, 4, 3),
-                           new ArrayList<String>() {
-                       {
-                           add("I recoded Java last night. Took me a couple hours...");
-                           add("Are you a double? The thought of you always floats inside my head. B)");
-                       }
-                   }, new ArrayList<String>() {
-                       {
-                           add("Hey");
-                       }
-                   }, true);
-        NPC npc9 = new NPC("Beck", new RPGCharacterStats(20, 0, 0),
+        NPC izi = new NPC("Izi", new RPGCharacterStats(25, 2, 3),
+                          new ArrayList<String>() {
+                      {
+                          add("Food insecurity is a major problem on Bucknell's campus!");
+                          add("I'm gonna email Bravman.");
+                      }
+                  }, new ArrayList<String>() {
+                      {
+                          add("Hey");
+                      }
+                  }, true);
+        NPC angryDance = new NPC("Angry Dance", new RPGCharacterStats(30, 8, 8),
+                                 new ArrayList<String>() {
+                             {
+                                 add("Karti B, stop slacking me so many questions!");
+                                 add("I told you to R E F A C T O R !!!");
+                             }
+                         }, new ArrayList<String>() {
+                             {
+                                 add("Hey");
+                             }
+                         }, true);
+        NPC drQueen = new NPC("Dr. Queen", new RPGCharacterStats(20, 0, 0),
+                              new ArrayList<String>() {
+                          {
+                              add("Watch the videos!");
+                              add("Take Data Science!");
+                          }
+                      }, new ArrayList<String>() {
+                          {
+                              add("Hey");
+                          }
+                      }, true);
+        NPC martin = new NPC("Martin", new RPGCharacterStats(25, 4, 3),
+                             new ArrayList<String>() {
+                         {
+                             add("I'll grade labs 9-12 by Monday!");
+                             add("I'll grade labs 9-12 by Friday!");
+                         }
+                     }, new ArrayList<String>() {
+                         {
+                             add("Hey");
+                         }
+                     }, true);
+        NPC dustin = new NPC("Dustin", new RPGCharacterStats(25, 4, 3),
+                             new ArrayList<String>() {
+                         {
+                             add("I recoded Java last night. Took me a couple hours...");
+                             add("Are you a double? The thought of you always floats inside my head. B)");
+                         }
+                     }, new ArrayList<String>() {
+                         {
+                             add("Hey");
+                         }
+                     }, true);
+        NPC beck = new NPC("Beck", new RPGCharacterStats(20, 0, 0),
                            new ArrayList<String>() {
                        {
                            add("I'm gonna grade lab13 while skydiving.");
@@ -152,20 +156,30 @@ public class Story {
                            add("Hey");
                        }
                    }, true);
-//        NPC npc10 = new NPC("Robo-Dustin", new RPGCharacterStats(20, 0, 0),
-//                            new ArrayList<String>() {
-//                        {
-//                            add("I... AM... Hello World... DUSTIN");
-//                            add("Error Error Error Error Error Error!!!");
-//                        }
-//                    }, true);
-//        NPC npc11 = new NPC("Dill", new RPGCharacterStats(20, 0, 0),
-//                            new ArrayList<String>() {
-//                        {
-//                            add("I will rule over the world!");
-//                            add("Pickles are the best.");
-//                        }
-//                    }, true);
+        NPC roboDustin = new NPC("Robo-Dustin", new RPGCharacterStats(20, 0, 0),
+                                 new ArrayList<String>() {
+                             {
+                                 add("I... AM... Hello World... DUSTIN");
+                                 add("Error Error Error Error Error Error!!!");
+                             }
+                         }, true);
+        NPC dill = new NPC("Dill", new RPGCharacterStats(20, 0, 0),
+                           new ArrayList<String>() {
+                       {
+                           add("I will rule over the world!");
+                           add("Pickles are the best.");
+                       }
+                   }, true);
+
+        this.npcs.add(muz);
+        this.npcs.add(izi);
+        this.npcs.add(dustin);
+        this.npcs.add(martin);
+        this.npcs.add(reef);
+        this.npcs.add(roboDustin);
+        this.npcs.add(dill);
+        this.npcs.add(drQueen);
+        this.npcs.add(beck);
 
         //Set 1
         Equipment weapon1 = new Equipment("Pen & Paper",
@@ -202,7 +216,7 @@ public class Story {
 
         Point2D npcLocation = new Point2D(0, 200);
         RoomContent rc1 = new RoomContent("Bana 340",
-                                          new NPCImageViewWrapper(npc1,
+                                          new NPCImageViewWrapper(drDance,
                                                                   "Dancee.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -211,7 +225,7 @@ public class Story {
                                       }
                                   });
         RoomContent rc2 = new RoomContent("SAE",
-                                          new NPCImageViewWrapper(npc2,
+                                          new NPCImageViewWrapper(muz,
                                                                   "Muz.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -220,7 +234,7 @@ public class Story {
                                       }
                                   });
         RoomContent rc3 = new RoomContent("Bana 213",
-                                          new NPCImageViewWrapper(npc3,
+                                          new NPCImageViewWrapper(reef,
                                                                   "Reef.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -229,7 +243,7 @@ public class Story {
                                       }
                                   });
         RoomContent rc4 = new RoomContent("Out and about",
-                                          new NPCImageViewWrapper(npc4,
+                                          new NPCImageViewWrapper(izi,
                                                                   "Izi.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -238,7 +252,7 @@ public class Story {
                                       }
                                   });
         RoomContent rc5 = new RoomContent("Penn State University",
-                                          new NPCImageViewWrapper(npc5,
+                                          new NPCImageViewWrapper(angryDance,
                                                                   "AngryDancee.jpg",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -247,7 +261,7 @@ public class Story {
                                       }
                                   });
         RoomContent rc6 = new RoomContent("Crackmetal 169",
-                                          new NPCImageViewWrapper(npc6,
+                                          new NPCImageViewWrapper(drQueen,
                                                                   "King.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -256,7 +270,7 @@ public class Story {
                                       }
                                   });
         RoomContent rc7 = new RoomContent("Crackmetal 164",
-                                          new NPCImageViewWrapper(npc7,
+                                          new NPCImageViewWrapper(martin,
                                                                   "Martin.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -265,7 +279,7 @@ public class Story {
                                       }
                                   });
         RoomContent rc8 = new RoomContent("Secret Lab in Bana",
-                                          new NPCImageViewWrapper(npc8,
+                                          new NPCImageViewWrapper(dustin,
                                                                   "Dustin.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -274,7 +288,7 @@ public class Story {
                                       }
                                   });
         RoomContent rc9 = new RoomContent("In the sky",
-                                          new NPCImageViewWrapper(npc9,
+                                          new NPCImageViewWrapper(beck,
                                                                   "Beck.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
@@ -329,42 +343,7 @@ public class Story {
 
         ///roomContents.add(rc10);
         //roomContents.add(rc11);
-        Objective obj1 = new Objective(false);
-
-        Objective obj2 = new Objective(false);
-
-        Objective obj3 = new Objective(false);
-
-        Objective obj4 = new Objective(false);
-
-        Objective obj5 = new Objective(false);
-
-        Objective obj6 = new Objective(false);
-
-        Objective obj7 = new Objective(false);
-
-        Objective obj8 = new Objective(false);
-
-        Objective obj9 = new Objective(false);
-
-        objectives.add(obj1);
-
-        objectives.add(obj2);
-
-        objectives.add(obj3);
-
-        objectives.add(obj4);
-
-        objectives.add(obj5);
-
-        objectives.add(obj6);
-
-        objectives.add(obj7);
-
-        objectives.add(obj8);
-
-        objectives.add(obj9);
-
+        createObjectiveList();
     }
 
     /**
@@ -397,6 +376,16 @@ public class Story {
 
     public ArrayList<Objective> getObjectives() {
         return objectives;
+    }
+
+    private void createObjectiveList() {
+        for (int i = 0; i < NUMBER_OF_OBJECTIVES; i++) {
+            this.objectives.add(new Objective(false));
+        }
+    }
+
+    public ArrayList<NPC> getNpcs() {
+        return npcs;
     }
 
 }

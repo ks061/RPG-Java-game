@@ -38,4 +38,8 @@ public class Objective {
         this.done = done;
     }
 
+    public boolean getDone() {
+        return this.done;
+    }
+
 }

@@ -42,14 +42,15 @@ public class RPGModel {
      * Player playing the game
      */
     private final Player player;
-
+    /**
+     * List of objectives to create
+     */
     private ArrayList<Objective> objectives;
-
+    private ArrayList<NPC> npcs;
     /**
      * Final NPC boss that player will defeat in order to complete the game
      */
     private NPC finalBoss;
-
     /**
      * Row index of the room that the player will start in
      */
@@ -235,8 +236,19 @@ public class RPGModel {
         return this.finalBoss;
     }
 
+    /**
+     * Gets the list of objectives
+     *
+     * @return list of objectives
+     *
+     * @author ishk001
+     */
     public ArrayList<Objective> getObjectives() {
         return objectives;
+    }
+
+    public ArrayList<NPC> getNPCs() {
+        return npcs;
     }
 
 }

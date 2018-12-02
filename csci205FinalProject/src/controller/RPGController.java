@@ -32,6 +32,7 @@ import model.character.NPC;
 import model.data.Objective;
 import model.item.Item;
 import view.ImageKey;
+import static view.ImageKey.*;
 import view.RPGView;
 import view.wrapper.NPCImageViewWrapper;
 
@@ -492,11 +493,35 @@ public class RPGController {
     }
 
     public void updateObjectives(ArrayList<Objective> objectives) {
-        //If some action happens, update the arraylist
+        /*
+        If player talks to Izi while izi.quote is hint, obj2 is complete.
+         */
+        if (theModel.getNPCs().get(1).isTalkedTo() == true) {
+            theModel.getObjectives().get(1).setDone(true);
+        }
+        /*
+        If player has NOTEPAD as their weapon, obj1 is complete.
+         */
+        else if (theModel.getPlayer().getWeapon().getImageViewKey() == NOTEPAD) {
+            theModel.getObjectives().get(0).setDone(true);
+        }
     }
 
     public void updateStoryline(ArrayList<Objective> objectives) {
-        //If objective(s) are complete, switch story content
+        if (theModel.getObjectives().get(1).getDone()) {
+            theModel.getNPCs().get(2).setDialogues(
+                    theModel.getNPCs().get(2).getHintDialogues());
+            //BOOGERS available (Dustin)
+        }
+        /*
+        If obj1 is complete, set muz.quote to regular and set izi.quote to hint.
+         */
+        else if (theModel.getObjectives().get(0).getDone()) {
+            theModel.getNPCs().get(0).setDialogues(
+                    theModel.getNPCs().get(0).getRegDialogues());
+            theModel.getNPCs().get(1).setDialogues(
+                    theModel.getNPCs().get(1).getHintDialogues());
+        }
     }
 
     /**

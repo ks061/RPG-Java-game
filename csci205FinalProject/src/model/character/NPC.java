@@ -44,6 +44,11 @@ public class NPC extends RPGCharacter {
      */
     private ArrayList<String> hintDialogues;
     /**
+     * Lines of dialogue that give responses to possible quests that have been
+     * complete
+     */
+    private ArrayList<String> hintDoneDialogues;
+    /**
      * Iterator for lines of dialogue
      */
     private Iterator<String> dialogueIterator;
@@ -55,17 +60,50 @@ public class NPC extends RPGCharacter {
      * Attribute of NPC describing if it's friendly or hostile
      */
     private boolean isFriendly;
+    private boolean talkedTo;
     /**
      * Default inventory size for the character
      */
     public static final int DEFAULT_INVENTORY_SIZE = 1;
 
     /**
-     * Constructor for the NPC which initializes its values
+     * Constructor for the NPC which initializes its values (ONE SET OF QUTOES)
      *
      * @param name - name of NPC
      * @param npcStats - statistics of the NPC
      * @param regDialogues - series of dialogues
+     * @param isFriendly - friendly or hostile attribute
+     *
+     * @author lts010, ks061
+     */
+    public NPC(String name, RPGCharacterStats npcStats,
+               ArrayList<String> regDialogues, boolean isFriendly) {
+        super(name, npcStats, NPC.DEFAULT_INVENTORY_SIZE);
+        this.dialogues = regDialogues;
+        if (this.dialogues.isEmpty()) {
+            this.dialogueIterator = null;
+        }
+        else {
+            dialogueIterator = dialogues.iterator();
+            if (dialogueIterator.hasNext()) {
+                this.dialogueToSpeak = dialogueIterator.next();
+            }
+            else {
+                this.dialogueToSpeak = null;
+            }
+        }
+
+        this.isFriendly = isFriendly;
+        this.talkedTo = false;
+    }
+
+    /**
+     * Constructor for the NPC which initializes its values (TWO SETS OF QUOTES)
+     *
+     * @param name - name of NPC
+     * @param npcStats - statistics of the NPC
+     * @param regDialogues - series of dialogues
+     * @param hintDialogue - series of dialogues that give hints to the player
      * @param isFriendly - friendly or hostile attribute
      *
      * @author lts010, ks061
@@ -77,6 +115,41 @@ public class NPC extends RPGCharacter {
 
         this.regDialogues = regDialogues;
         this.hintDialogues = hintDialouges;
+        this.dialogues = regDialogues;
+        if (this.dialogues.isEmpty()) {
+            this.dialogueIterator = null;
+        }
+        else {
+            dialogueIterator = dialogues.iterator();
+            if (dialogueIterator.hasNext()) {
+                this.dialogueToSpeak = dialogueIterator.next();
+            }
+            else {
+                this.dialogueToSpeak = null;
+            }
+        }
+
+        this.isFriendly = isFriendly;
+    }
+
+    /**
+     * Constructor for the NPC which initializes its values (TWO SETS OF QUOTES)
+     *
+     * @param name - name of NPC
+     * @param npcStats - statistics of the NPC
+     * @param regDialogues - series of dialogues
+     * @param hintDialogue - series of dialogues that give hints to the player
+     * @param isFriendly - friendly or hostile attribute
+     *
+     * @author lts010, ks061
+     */
+    public NPC(String name, RPGCharacterStats npcStats,
+               ArrayList<String> regDialogues, ArrayList<String> hintDialouges,
+               ArrayList<String> hintDoneDialogues, boolean isFriendly) {
+        super(name, npcStats, NPC.DEFAULT_INVENTORY_SIZE);
+        this.regDialogues = regDialogues;
+        this.hintDialogues = hintDialouges;
+        this.hintDoneDialogues = hintDoneDialogues;
         this.dialogues = regDialogues;
         if (this.dialogues.isEmpty()) {
             this.dialogueIterator = null;
@@ -193,12 +266,44 @@ public class NPC extends RPGCharacter {
         this.isFriendly = isFriendly;
     }
 
-    public void switchDialogues() {
-        if (this.dialogues == this.regDialogues) {
-            this.dialogues = this.hintDialogues;
-        }
-        else {
-            this.dialogues = this.regDialogues;
-        }
+    public ArrayList<String> getDialogues() {
+        return dialogues;
     }
+
+    public void setDialogues(ArrayList<String> dialogues) {
+        this.dialogues = dialogues;
+    }
+
+    public ArrayList<String> getRegDialogues() {
+        return regDialogues;
+    }
+
+    public void setRegDialogues(ArrayList<String> regDialogues) {
+        this.regDialogues = regDialogues;
+    }
+
+    public ArrayList<String> getHintDialogues() {
+        return hintDialogues;
+    }
+
+    public void setHintDialogues(ArrayList<String> hintDialogues) {
+        this.hintDialogues = hintDialogues;
+    }
+
+    public ArrayList<String> getHintDoneDialogues() {
+        return hintDoneDialogues;
+    }
+
+    public void setHintDoneDialogues(ArrayList<String> hintDoneDialogues) {
+        this.hintDoneDialogues = hintDoneDialogues;
+    }
+
+    public boolean isTalkedTo() {
+        return talkedTo;
+    }
+
+    public void setTalkedTo(boolean talkedTo) {
+        this.talkedTo = talkedTo;
+    }
+
 }

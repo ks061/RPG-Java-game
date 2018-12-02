@@ -240,6 +240,7 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
                     String dialog = npcInCurrentRoom.speak();
                     theController.getTheView().setStoryText(
                             npcInCurrentRoom.getName() + ": " + dialog);
+                    npcInCurrentRoom.setTalkedTo(true);
                 }
                 else {
                     theController.getTheView().setStoryText(
