@@ -28,7 +28,7 @@ public class Player extends RPGCharacter {
     /**
      * Default maximum health attribute for a player
      */
-    public static final int DEFAULT_MAX_HEALTH = 10;
+    public static final int DEFAULT_MAX_HEALTH = 100;
     /**
      * Default attack attribute for a player
      */
