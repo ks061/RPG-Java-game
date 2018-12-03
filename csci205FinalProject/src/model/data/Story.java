@@ -45,6 +45,9 @@ public class Story {
      */
     private final ArrayList<RoomContent> roomContents;
 
+    /**
+     * The final boss of the game
+     */
     private NPCImageViewWrapper finalBoss;
 
     /**
@@ -356,6 +359,13 @@ public class Story {
                         roomContents.size()));
     }
 
+    /**
+     * Gets the final boss of the game
+     *
+     * @return the final boss of the game
+     *
+     * @author lts010
+     */
     public NPCImageViewWrapper getFinalBoss() {
         return finalBoss;
     }

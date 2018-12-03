@@ -73,10 +73,6 @@ public class RPGModel {
      * Extension of the room background image file
      */
     private static final String ROOM_IMAGE_FILE_PATH_EXT = ".png";
-    /**
-     * Name of the NPC boss
-     */
-    private static final String FINAL_BOSS_NAME = "Angry Dance";
 
     /**
      * Constructor that initializes the model of the application
@@ -86,6 +82,7 @@ public class RPGModel {
     public RPGModel() {
         this.player = new Player("Student");
         this.currentRoom = initGridOfRooms();
+        this.finalBoss = Story.getInstance().getFinalBoss().getNPC();
     }
 
     /**
@@ -180,10 +177,6 @@ public class RPGModel {
                 roomContent = Story.getInstance().getRandomRoomContent();
                 r.setName(roomContent.getName());
                 r.setNPCViewWrapper(roomContent.getNPCWrapper());
-                if (roomContent.getNPCWrapper().getNPC().getName().equals(
-                        FINAL_BOSS_NAME)) {
-                    this.finalBoss = roomContent.getNPCWrapper().getNPC();
-                }
                 r.setHiddenItems(roomContent.getItems());
             }
         }
@@ -244,6 +237,14 @@ public class RPGModel {
         }
     }
 
+    /**
+     * Sees if the player has a specific item in their inventory
+     *
+     * @param itemName - the name of the item being searched for (a String)
+     * @return a boolean, true if the player has the specified item
+     *
+     * @author lts010
+     */
     public boolean playerHasItem(String itemName) {
         for (Item item : player.getInventory()) {
             if (item.getName().contentEquals(itemName)) {
@@ -253,6 +254,15 @@ public class RPGModel {
         return false;
     }
 
+    /**
+     * Finds an NPC in the map based on the given NPC name
+     *
+     * @param npcName - the name of the desired NPC (a String)
+     * @return the NPC requested if it can be found in map, returns null
+     * otherwise
+     *
+     * @author lts010
+     */
     public NPC getNPC(String npcName) {
         for (ArrayList<Room> row : map) {
             for (Room room : row) {
@@ -265,6 +275,15 @@ public class RPGModel {
         return null;
     }
 
+    /**
+     * Finds a room in the map based on the given room name
+     *
+     * @param roomName - the name of the desired room (a String)
+     * @return the room requested if it can be found in map, returns null
+     * otherwise
+     *
+     * @author lts010
+     */
     public Room getRoom(String roomName) {
         for (ArrayList<Room> row : map) {
             for (Room room : row) {
