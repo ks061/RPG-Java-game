@@ -275,4 +275,52 @@ public class Story {
                         roomContents.size()));
     }
 
+    public void updateGame() {
+        if (!getNPC("Beck").isAlive()) {
+
+        }
+        else if (playerHasItem("Java")) {
+
+        }
+        else if (!getNPC("Dill").isAlive()) {
+
+        }
+        else if (!getNPC("Robo-Dustin").isAlive()) {
+
+        }
+        else if (playerHasItem("Stack Overflow")) {
+
+        }
+        else if (playerHasItem("HTML")) {
+
+        }
+        else if (playerHasItem("Notepad")) {
+
+        }
+    }
+
+    public boolean playerHasItem(String itemName) {
+        for (RoomContent rc : this.roomContents) {
+            for (Item item : rc.getItems()) {
+                if (item.getName().contentEquals(itemName)) {
+                    return false;
+                }
+            }
+            for (Item item : rc.getNPCWrapper().getNPC().getInventory()) {
+                if (item.getName().contentEquals(itemName)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public NPC getNPC(String npcName) {
+        for (RoomContent rc : this.roomContents) {
+            if (rc.getNPCWrapper().getNPC().getName().contentEquals(npcName)) {
+                return rc.getNPCWrapper().getNPC();
+            }
+        }
+        return null;
+    }
 }
