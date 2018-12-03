@@ -72,8 +72,8 @@ public class RPGMain extends Application {
                        + " will navigate Bucknell's campus collecting items and talking with people to survive the most"
                        + " difficult course in Bucknell history. But beware, not all people you encounter will be friendly or willing"
                        + " to assist you. You must decide for yourself who you should listen to and who you must fight. You will be able"
-                       + " to view your inventory containing your collected items and weapons at all times. Pay close attentiong to"
-                       + " your mental health; failing to do so will result in a failing grade. You pass the class when you defeat "
+                       + " to view your inventory containing your collected items and weapons at all times. Pay close attention to"
+                       + " your health; if it reaches zero, the game is over. You pass the class when you defeat "
                        + "the most dangerous character: your angry professor. \n"
                        + "FIRST TASK: Navigate the rooms to find Dr. Dance. Good luck!";
 
