@@ -74,6 +74,11 @@ public class RPGModel {
      */
     private static final String ROOM_IMAGE_FILE_PATH_EXT = ".png";
 
+    boolean pane1Displayed = false;
+    boolean pane2Displayed = false;
+    boolean pane3Displayed = false;
+    boolean pane4Displayed = false;
+
     /**
      * Constructor that initializes the model of the application
      *
@@ -183,35 +188,39 @@ public class RPGModel {
     }
 
     public void updateGame() {
-        if (playerHasItem("Netbeans")) {
+        if (playerHasItem("Netbeans") && !pane4Displayed) {
             JOptionPane.showMessageDialog(null,
                                           "You forgot to refactor and Dr. Dance is now very A N G R Y !\nHe's gonna fail you unless you do something!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
             Room bana340 = getRoom("Bana 340");
             bana340.setNPCViewWrapper(Story.getInstance().getFinalBoss());
+            pane4Displayed = true;
         }
-        else if (playerHasItem("Java")) {
+        else if (playerHasItem("Java") && !pane3Displayed) {
             JOptionPane.showMessageDialog(null,
-                                          "Something is wrong with Beck's head!\nHe's on a rampage and you have to stop him!",
+                                          "Beck got a concussion while skydiving!\nHe's on a rampage and you have to stop him!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
             NPC drQueen = getNPC("Dr. Queen");
             drQueen.setDialogues(drQueen.getHintDialogues());
+            pane3Displayed = true;
         }
         else if (!getNPC("Dill").isAlive()) {
             NPC drQueen = getNPC("Dr. Queen");
             drQueen.setDialogues(drQueen.getHintDialogues());
         }
-        else if (!getNPC("Robo-Dustin").isAlive()) {
+        else if (!getNPC("Robo-Dustin").isAlive() && !pane2Displayed) {
             JOptionPane.showMessageDialog(null,
                                           "Dill was behind Robo-Dustin's rampage\nSomeone has to stop him!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
+            pane2Displayed = true;
         }
-        else if (playerHasItem("Stack Overflow")) {
+        else if (playerHasItem("Stack Overflow") && !pane1Displayed) {
             NPC martin = getNPC("Martin");
             martin.setDialogues(martin.getRegDialogues());
             JOptionPane.showMessageDialog(null,
                                           "Robo-Dustin is out of control!\nSomeone has to stop him!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
+            pane1Displayed = true;
         }
         else if (playerHasItem("HTML")) {
             NPC izi = getNPC("Izi");
@@ -221,7 +230,7 @@ public class RPGModel {
             dustin.setDialogues(dustin.getRegDialogues());
             martin.setDialogues(martin.getHintDialogues());
         }
-        else if (playerHasItem("Notepad")) {
+        else if (playerHasItem("Notepad++")) {
             NPC muz = getNPC("Muz");
             NPC drDance = getNPC("Dr. Dance");
             NPC izi = getNPC("Izi");

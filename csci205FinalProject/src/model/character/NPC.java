@@ -178,6 +178,7 @@ public class NPC extends RPGCharacter {
      */
     public void setDialogues(ArrayList<String> dialogues) {
         this.dialogues = dialogues;
+        this.dialogueIterator = this.dialogues.iterator();
     }
 
     /**

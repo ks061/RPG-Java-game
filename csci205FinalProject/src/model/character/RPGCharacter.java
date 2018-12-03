@@ -206,7 +206,6 @@ public abstract class RPGCharacter {
         if (this.characterStats.getAttack() < enemy.characterStats.getDefense()) {
             damage += this.characterStats.getAttack() - enemy.characterStats.getDefense();
         }
-        damage *= randomNumberGenerator.nextDouble();
 
         int roundedDamage = (int) Math.round(
                 damage * criticalHitModifier * accuracyModifier);

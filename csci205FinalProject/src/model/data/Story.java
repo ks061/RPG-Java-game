@@ -109,7 +109,7 @@ public class Story {
                           add("I'll make it worth your time if you find me something shiny");
                       }
                   }, true);
-        NPC angryDance = new NPC("Angry Dance", new RPGCharacterStats(30, 8, 8),
+        NPC angryDance = new NPC("Angry Dance", new RPGCharacterStats(6, 20, 15),
                                  new ArrayList<String>() {
                              {
                                  add("Karti B, stop slacking me so many questions!");
@@ -119,7 +119,7 @@ public class Story {
                              {
                                  add("Should not be displayed");
                              }
-                         }, true);
+                         }, false);
         NPC drQueen = new NPC("Dr. Queen", new RPGCharacterStats(20, 0, 0),
                               new ArrayList<String>() {
                           {
@@ -156,7 +156,7 @@ public class Story {
                              add("The boogers on the floor are hard as rocks.");
                          }
                      }, true);
-        NPC beck = new NPC("Beck", new RPGCharacterStats(20, 0, 0),
+        NPC beck = new NPC("Beck", new RPGCharacterStats(6, 15, 0),
                            new ArrayList<String>() {
                        {
                            add("I'm gonna grade lab13 while skydiving.");
@@ -166,8 +166,8 @@ public class Story {
                        {
                            add("Should not be displayed");
                        }
-                   }, true);
-        NPC roboDustin = new NPC("Robo-Dustin", new RPGCharacterStats(20, 0, 0),
+                   }, false);
+        NPC roboDustin = new NPC("Robo-Dustin", new RPGCharacterStats(6, 15, 0),
                                  new ArrayList<String>() {
                              {
                                  add("I... AM... Hello World... DUSTIN");
@@ -177,8 +177,8 @@ public class Story {
                              {
                                  add("Should not be displayed");
                              }
-                         }, true);
-        NPC dill = new NPC("Dill", new RPGCharacterStats(20, 0, 0),
+                         }, false);
+        NPC dill = new NPC("Dill", new RPGCharacterStats(6, 6, 0),
                            new ArrayList<String>() {
                        {
                            add("I will rule over the world!");
@@ -188,7 +188,7 @@ public class Story {
                        {
                            add("Should not be displayed");
                        }
-                   }, true);
+                   }, false);
 
         //Set 1
         Equipment weapon1 = new Equipment("Pen & Paper",
@@ -240,7 +240,7 @@ public class Story {
                                                   RAMEN);
 
         items.put(PEN_AND_PAPER, weapon1);
-        items.put(MACHINE_CODE, shield2);
+        items.put(MACHINE_CODE, shield1);
         items.put(API, armor1);
         items.put(NOTEPAD, weapon2);
         items.put(HTML, shield2);
@@ -312,6 +312,7 @@ public class Story {
                                           new ArrayList<Item>() {
                                       {
                                           add(shake);
+                                          add(time);
                                       }
                                   });
         RoomContent rc6 = new RoomContent("Crackmetal 169",
