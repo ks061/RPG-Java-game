@@ -23,14 +23,22 @@ import model.item.Item;
  * NPC Class creates constructor and methods associated with the NPCs throughout
  * the RPG.
  *
- * @author lts010, ks061
+ * @author lts010, ks061, ishk001
  */
 public class NPC extends RPGCharacter {
 
     /**
-     * Lines of dialogue
+     * Lines of dialogue currently in use
      */
-    private final ArrayList<String> dialogues;
+    private ArrayList<String> dialogues;
+    /**
+     * Lines of dialogue for laughs
+     */
+    private final ArrayList<String> regDialogues;
+    /**
+     * Lines of dialogue for the progression of the game
+     */
+    private final ArrayList<String> hintDialogues;
     /**
      * Iterator for lines of dialogue
      */
@@ -46,24 +54,26 @@ public class NPC extends RPGCharacter {
     /**
      * Default inventory size for the character
      */
-    public static final int DEFAULT_INVENTORY_SIZE = 1;
+    public static final int DEFAULT_INVENTORY_SIZE = 5;
 
     /**
      * Constructor for the NPC which initializes its values
      *
      * @param name name of NPC
      * @param npcStats statistics of the NPC
-     * @param dialogues series of dialogues
+     * @param regDialogues series of dialogues
      * @param isFriendly friendly or hostile attribute
      *
      * @author lts010, ks061
      */
     public NPC(String name, RPGCharacterStats npcStats,
-               ArrayList<String> dialogues, boolean isFriendly) {
+               ArrayList<String> regDialogues, ArrayList<String> hintDialogues,
+               boolean isFriendly) {
         super(name, npcStats, NPC.DEFAULT_INVENTORY_SIZE);
-
-        this.dialogues = dialogues;
-        setupDialogues(dialogues);
+        this.regDialogues = regDialogues;
+        this.hintDialogues = hintDialogues;
+        this.dialogues = regDialogues;
+        setupDialogues(regDialogues);
 
         this.isFriendly = isFriendly;
     }
@@ -146,5 +156,49 @@ public class NPC extends RPGCharacter {
      */
     public void setIsFriendly(boolean isFriendly) {
         this.isFriendly = isFriendly;
+    }
+
+    /**
+     * Gets the current set of dialogues on display
+     *
+     * @return current set of dialogues
+     *
+     * @author ishk001
+     */
+    public ArrayList<String> getDialogues() {
+        return dialogues;
+    }
+
+    /**
+     * Sets the current NPC dialogue to either regular or hint
+     *
+     * @param dialogues either regular or hint quotes
+     *
+     * @author ishk001
+     */
+    public void setDialogues(ArrayList<String> dialogues) {
+        this.dialogues = dialogues;
+    }
+
+    /**
+     * Gets the funny quotes
+     *
+     * @return the funny set of quotes
+     *
+     * @author ishk001
+     */
+    public ArrayList<String> getRegDialogues() {
+        return regDialogues;
+    }
+
+    /**
+     * Gets the quotes that progresses through the story
+     *
+     * @return hint quotes
+     *
+     * @author ishk001
+     */
+    public ArrayList<String> getHintDialogues() {
+        return hintDialogues;
     }
 }
