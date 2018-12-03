@@ -45,6 +45,8 @@ public class Story {
      */
     private final ArrayList<RoomContent> roomContents;
 
+    private NPCImageViewWrapper finalBoss;
+
     /**
      * Constructs Story, containing the starting data and/or story-line behind
      * the game map and game itself
@@ -67,6 +69,7 @@ public class Story {
                               add("Hey");
                           }
                       }, true);
+        drDance.setDialogues(drDance.getHintDialogues());
         NPC muz = new NPC("Muz", new RPGCharacterStats(20, 0, 0),
                           new ArrayList<String>() {
                       {
@@ -78,6 +81,7 @@ public class Story {
                           add("Hey");
                       }
                   }, true);
+        muz.setDialogues(muz.getHintDialogues());
         NPC reef = new NPC("Reef", new RPGCharacterStats(20, 0, 0),
                            new ArrayList<String>() {
                        {
@@ -212,6 +216,9 @@ public class Story {
                                          ARMOR, WINKLEVOSS_TWINS);
 
         Point2D npcLocation = new Point2D(0, 200);
+
+        instance.finalBoss = new NPCImageViewWrapper(angryDance, "Angry Dancee",
+                                                     npcLocation);
 
         /*
         @LOGAN
@@ -349,52 +356,7 @@ public class Story {
                         roomContents.size()));
     }
 
-    public void updateGame() {
-        if (!getNPC("Beck").isAlive()) {
-
-        }
-        else if (playerHasItem("Java")) {
-
-        }
-        else if (!getNPC("Dill").isAlive()) {
-
-        }
-        else if (!getNPC("Robo-Dustin").isAlive()) {
-
-        }
-        else if (playerHasItem("Stack Overflow")) {
-
-        }
-        else if (playerHasItem("HTML")) {
-
-        }
-        else if (playerHasItem("Notepad")) {
-
-        }
-    }
-
-    public boolean playerHasItem(String itemName) {
-        for (RoomContent rc : this.roomContents) {
-            for (Item item : rc.getItems()) {
-                if (item.getName().contentEquals(itemName)) {
-                    return false;
-                }
-            }
-            for (Item item : rc.getNPCWrapper().getNPC().getInventory()) {
-                if (item.getName().contentEquals(itemName)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    public NPC getNPC(String npcName) {
-        for (RoomContent rc : this.roomContents) {
-            if (rc.getNPCWrapper().getNPC().getName().contentEquals(npcName)) {
-                return rc.getNPCWrapper().getNPC();
-            }
-        }
-        return null;
+    public NPCImageViewWrapper getFinalBoss() {
+        return finalBoss;
     }
 }

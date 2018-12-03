@@ -16,9 +16,11 @@
 package model;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import model.character.NPC;
 import model.character.Player;
 import model.data.Story;
+import model.item.Item;
 import model.map.Room;
 import model.map.RoomContent;
 
@@ -185,6 +187,94 @@ public class RPGModel {
                 r.setHiddenItems(roomContent.getItems());
             }
         }
+    }
+
+    public void updateGame() {
+        if (playerHasItem("Netbeans")) {
+            JOptionPane.showMessageDialog(null,
+                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
+                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+            Room bana340 = getRoom("Bana 340");
+            bana340.setNPCViewWrapper(Story.getInstance().getFinalBoss());
+        }
+        else if (playerHasItem("Java")) {
+            JOptionPane.showMessageDialog(null,
+                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
+                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+            NPC drQueen = getNPC("Dr. Queen");
+            drQueen.setDialogues(drQueen.getHintDialogues());
+        }
+        else if (!getNPC("Dill").isAlive()) {
+            JOptionPane.showMessageDialog(null,
+                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
+                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+            NPC drQueen = getNPC("Dr. Queen");
+            drQueen.setDialogues(drQueen.getHintDialogues());
+        }
+        else if (!getNPC("Robo-Dustin").isAlive()) {
+            JOptionPane.showMessageDialog(null,
+                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
+                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+        }
+        else if (playerHasItem("Stack Overflow")) {
+            NPC martin = getNPC("Martin");
+            martin.setDialogues(martin.getRegDialogues());
+            JOptionPane.showMessageDialog(null,
+                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
+                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+        }
+        else if (playerHasItem("HTML")) {
+            NPC izi = getNPC("Izi");
+            NPC dustin = getNPC("Dustin");
+            NPC martin = getNPC("Martin");
+            izi.setDialogues(izi.getRegDialogues());
+            dustin.setDialogues(dustin.getRegDialogues());
+            martin.setDialogues(martin.getHintDialogues());
+        }
+        else if (playerHasItem("Notepad")) {
+            NPC muz = getNPC("Muz");
+            NPC drDance = getNPC("Dr. Dance");
+            NPC izi = getNPC("Izi");
+            NPC dustin = getNPC("Dustin");
+            muz.setDialogues(muz.getRegDialogues());
+            drDance.setDialogues(drDance.getRegDialogues());
+            izi.setDialogues(izi.getHintDialogues());
+            dustin.setDialogues((dustin.getHintDialogues()));
+
+        }
+    }
+
+    public boolean playerHasItem(String itemName) {
+        for (Item item : player.getInventory()) {
+            if (item.getName().contentEquals(itemName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public NPC getNPC(String npcName) {
+        for (ArrayList<Room> row : map) {
+            for (Room room : row) {
+                if (room.getNPCViewWrapper().getNPC().getName().contentEquals(
+                        npcName)) {
+                    return room.getNPCViewWrapper().getNPC();
+                }
+            }
+        }
+        return null;
+    }
+
+    public Room getRoom(String roomName) {
+        for (ArrayList<Room> row : map) {
+            for (Room room : row) {
+                if (room.getName().contentEquals(
+                        roomName)) {
+                    return room;
+                }
+            }
+        }
+        return null;
     }
 
     /**
