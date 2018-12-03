@@ -19,10 +19,13 @@ package controller;
 import controller.eventhandler.RPGDragEventHandler;
 import controller.eventhandler.RPGMouseEventHandler;
 import java.io.File;
+import java.util.EnumMap;
 import java.util.HashMap;
 import javafx.application.Platform;
+import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javax.swing.JOptionPane;
@@ -31,7 +34,9 @@ import model.character.NPC;
 import model.item.Item;
 import view.ImageKey;
 import view.RPGView;
+import view.wrapper.ItemImageViewWrapper;
 import view.wrapper.NPCImageViewWrapper;
+import view.wrapper.PlayerImageViewWrapper;
 
 /**
  * RPGController serves as the connector between the model and view in the RPG
@@ -65,6 +70,18 @@ public class RPGController {
      * Maps an ImageView to an NPC
      */
     private final HashMap<ImageView, NPC> mapImageViewToNPC;
+    /**
+     * Adds information and methods necessary to render an image of the player
+     */
+    private final PlayerImageViewWrapper playerImageView;
+    /**
+     * Starting x-coordinate of the player
+     */
+    private static final int PLAYER_STARTING_X_COORDINATE = 800;
+    /**
+     * Starting y-coordinate of the player
+     */
+    private static final int PLAYER_STARTING_Y_COORDINATE = 350;
 
     /**
      * Constructor that initializes references to the model and view of the
@@ -82,10 +99,15 @@ public class RPGController {
         this.theView = theView;
         this.attackActive = false;
         this.rpgMouseEventHandler = new RPGMouseEventHandler(this);
-        this.rpgDragEventHandler = new RPGDragEventHandler();
+        this.rpgDragEventHandler = new RPGDragEventHandler(this);
 
         this.mapImageViewToNPC = new HashMap<>();
 
+        Point2D location = new Point2D(PLAYER_STARTING_X_COORDINATE,
+                                       PLAYER_STARTING_Y_COORDINATE);
+        this.playerImageView = new PlayerImageViewWrapper(theModel.getPlayer(),
+                                                          location,
+                                                          theView.getImageViews());
         setMouseHandlerOfComponents();
 
         setDragHandlerOfComponents();
@@ -94,62 +116,17 @@ public class RPGController {
     }
 
     /**
-     * Sets the mouse event handler called when the up arrow is clicked, hovered
-     * over, or is no longer hovered over
+     * Sets the mouse event handler called when the arrow is clicked, hovered
+     * over, or is no longer hovered over.
      *
      * @author ks061, lts010
      */
-    private void setMouseEventHandlersForUpArrow() {
-        this.theView.getImageViews().get(ImageKey.UPARROW).setOnMouseClicked(
+    private void setEventHandlersForArrow(ImageKey key) {
+        this.theView.getImageViews().get(key).setOnMouseClicked(
                 this.rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.UPARROW).setOnMouseEntered(
+        this.theView.getImageViews().get(key).setOnMouseEntered(
                 this.rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.UPARROW).setOnMouseExited(
-                this.rpgMouseEventHandler);
-    }
-
-    /**
-     * Sets the mouse event handler called when the down arrow is clicked,
-     * hovered over, or is no longer hovered over
-     *
-     * @author ks061, lts010
-     */
-    private void setMouseEventHandlersForDownArrow() {
-        this.theView.getImageViews().get(ImageKey.DOWNARROW).setOnMouseClicked(
-                this.rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.DOWNARROW).setOnMouseEntered(
-                this.rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.DOWNARROW).setOnMouseExited(
-                this.rpgMouseEventHandler);
-    }
-
-    /**
-     * Sets the mouse event handler called when the left arrow is clicked,
-     * hovered over, or is no longer hovered over
-     *
-     * @author ks061, lts010
-     */
-    private void setMouseEventHandlersForLeftArrow() {
-        this.theView.getImageViews().get(ImageKey.LEFTARROW).setOnMouseClicked(
-                this.rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.LEFTARROW).setOnMouseEntered(
-                this.rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.LEFTARROW).setOnMouseExited(
-                this.rpgMouseEventHandler);
-    }
-
-    /**
-     * Sets the mouse event handler called when the right arrow is clicked,
-     * hovered over, or is no longer hovered over
-     *
-     * @author ks061, lts010
-     */
-    private void setMouseEventHandlersForRightArrow() {
-        this.theView.getImageViews().get(ImageKey.RIGHTARROW).setOnMouseClicked(
-                this.rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.RIGHTARROW).setOnMouseEntered(
-                this.rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.RIGHTARROW).setOnMouseExited(
+        this.theView.getImageViews().get(key).setOnMouseExited(
                 this.rpgMouseEventHandler);
     }
 
@@ -175,10 +152,10 @@ public class RPGController {
      * @author ks061, lts010
      */
     private void setMouseHandlerOfComponents() {
-        setMouseEventHandlersForUpArrow();
-        setMouseEventHandlersForDownArrow();
-        setMouseEventHandlersForLeftArrow();
-        setMouseEventHandlersForRightArrow();
+        setEventHandlersForArrow(ImageKey.UPARROW);
+        setEventHandlersForArrow(ImageKey.DOWNARROW);
+        setEventHandlersForArrow(ImageKey.LEFTARROW);
+        setEventHandlersForArrow(ImageKey.RIGHTARROW);
 
         setMouseEventHandlersForActionButtons();
     }
@@ -189,32 +166,54 @@ public class RPGController {
      * @author ks061
      */
     private void setDragHandlerOfComponents() {
+        EnumMap<ImageKey, ItemImageViewWrapper> imageViews = this.theView.getImageViews();
+        this.theView.getInventoryFP().setOnDragOver(rpgDragEventHandler);
+        this.theView.getInventoryFP().setOnDragDropped(rpgDragEventHandler);
+        this.theView.getCenterPane().setOnDragOver(rpgDragEventHandler);
+        this.theView.getCenterPane().setOnDragDropped(rpgDragEventHandler);
         this.theView.getImageViews().get(ImageKey.INVENTORY).setOnDragOver(
                 rpgDragEventHandler);
         this.theView.getImageViews().get(ImageKey.INVENTORY).setOnDragDropped(
                 rpgDragEventHandler);
-        this.theView.getImageViews().get(ImageKey.INVENTORY).setOnDragEntered(
+        this.theView.getImageViews().get(ImageKey.FACE).setOnDragOver(
                 rpgDragEventHandler);
-        this.theView.getImageViews().get(ImageKey.INVENTORY).setOnDragExited(
+        this.theView.getImageViews().get(ImageKey.FACE).setOnDragDropped(
                 rpgDragEventHandler);
-        this.theView.getImageViews().get(ImageKey.PEN_AND_PAPER).setOnDragDetected(
-                rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.NOTEPAD).setOnDragDetected(
-                rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.NETBEANS).setOnDragDetected(
-                rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.MACHINE_CODE).setOnDragDetected(
-                rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.HTML).setOnDragDetected(
-                rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.JAVA).setOnDragDetected(
-                rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.API).setOnDragDetected(
-                rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.STACK_OVERFLOW).setOnDragDetected(
-                rpgMouseEventHandler);
-        this.theView.getImageViews().get(ImageKey.WINKLEVOSS_TWINS).setOnDragDetected(
-                rpgMouseEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_ARMOR).setOnDragEntered(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_ARMOR).setOnDragExited(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_ARMOR).setOnDragOver(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_ARMOR).setOnDragDropped(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_SHIELD).setOnDragEntered(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_SHIELD).setOnDragExited(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_SHIELD).setOnDragOver(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_SHIELD).setOnDragDropped(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_WEAPON).setOnDragEntered(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_WEAPON).setOnDragExited(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_WEAPON).setOnDragOver(
+                rpgDragEventHandler);
+        this.theView.getImageViews().get(ImageKey.BLANK_WEAPON).setOnDragDropped(
+                rpgDragEventHandler);
+        for (ImageKey key : ImageKey.values()) {
+            if (key.ordinal() > ImageKey.DOWNARROW.ordinal()
+                && this.theView.getImageViews().get(key) != null) {
+                this.theView.getImageViews().get(key).setOnDragDetected(
+                        rpgMouseEventHandler);
+                if (key.ordinal() > ImageKey.RAMEN.ordinal()) {
+                    imageViews.get(key).setOnDragOver(rpgDragEventHandler);
+                    imageViews.get(key).setOnDragDropped(rpgDragEventHandler);
+                }
+            }
+        }
     }
 
     /**
@@ -223,10 +222,11 @@ public class RPGController {
      * @author ks061, lts010
      */
     private void refreshImageViewOfItem() {
-        ImageView imageViewOfImage;
+        ItemImageViewWrapper imageViewOfImage;
         for (Item item : this.theModel.getCurrentRoom().getHiddenItems()) {
             imageViewOfImage = this.theView.getImageViews().get(
                     item.getImageViewKey());
+            imageViewOfImage.setToRoomLocation();
             this.theView.getCenterPane().getChildren().add(imageViewOfImage);
         }
     }
@@ -242,12 +242,18 @@ public class RPGController {
      */
     public void refresh() {
         this.theView.getCenterPane().getChildren().clear();
+        //Note the order of these refreshs determine which item is on top
+        //InventoryFP should be first, ImageViewOfItems should be last so that
+        //items are on top and an visible. StatusBars can go anywhere since
+        //the aren't in the centerPane
+        refreshInventoryFP();
         refreshTravelArrows();
         refreshNPCsInRoom();
+        playerImageView.refresh(this.theView.getCenterPane());
         this.theView.refreshRoomName();
-        this.theView.setStoryText("");
         this.theView.loadCenterBackground(
                 this.theModel.getCurrentRoom().getBackgroundImagePath());
+
         refreshImageViewOfItem();
         this.theView.refreshStatusBars();
     }
@@ -276,8 +282,8 @@ public class RPGController {
     private void loadUpArrow() {
         ImageView tempImageView;
         tempImageView = theView.getImageViews().get(ImageKey.UPARROW);
-        tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
-        tempImageView.setY(150);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() * 0.46);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() * 0.15);
         tempImageView.setOpacity(0);
         this.theView.getCenterPane().getChildren().add(tempImageView);
     }
@@ -290,8 +296,8 @@ public class RPGController {
     private void loadDownArrow() {
         ImageView tempImageView;
         tempImageView = theView.getImageViews().get(ImageKey.DOWNARROW);
-        tempImageView.setX(this.theView.getCenterPane().getWidth() / 2 - 50);
-        tempImageView.setY(this.theView.getCenterPane().getHeight() - 170);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() * 0.46);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() * 0.82);
         tempImageView.setOpacity(0);
         this.theView.getCenterPane().getChildren().add(
                 theView.getImageViews().get(ImageKey.DOWNARROW));
@@ -305,8 +311,8 @@ public class RPGController {
     private void loadLeftArrow() {
         ImageView tempImageView;
         tempImageView = theView.getImageViews().get(ImageKey.LEFTARROW);
-        tempImageView.setX(100);
-        tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() * 0.09);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() * 0.48);
         tempImageView.setOpacity(0);
         this.theView.getCenterPane().getChildren().add(
                 theView.getImageViews().get(ImageKey.LEFTARROW));
@@ -320,8 +326,8 @@ public class RPGController {
     private void loadRightArrow() {
         ImageView tempImageView;
         tempImageView = theView.getImageViews().get(ImageKey.RIGHTARROW);
-        tempImageView.setX(this.theView.getCenterPane().getWidth() - 160);
-        tempImageView.setY(this.theView.getCenterPane().getHeight() / 2 - 30);
+        tempImageView.setX(this.theView.getCenterPane().getWidth() * 0.87);
+        tempImageView.setY(this.theView.getCenterPane().getHeight() * 0.48);
         tempImageView.setOpacity(0);
         this.theView.getCenterPane().getChildren().add(
                 theView.getImageViews().get(ImageKey.RIGHTARROW));
@@ -352,16 +358,37 @@ public class RPGController {
     }
 
     /**
+     * Refreshes the inventory display flow pane
+     *
+     * @author ks061, lts010
+     */
+    public void refreshInventoryFP() {
+        FlowPane inventoryFP = theView.getInventoryFP();
+        //The view's centerpane has likey been cleared, if so add our parent to it.
+        if (!(theView.getCenterPane().getChildren().contains(
+              inventoryFP.getParent()))) {
+            theView.getCenterPane().getChildren().add(inventoryFP.getParent());
+        }
+        inventoryFP.getChildren().clear();
+        for (Item item : theModel.getPlayer().getInventory()) {
+            theView.getImageViews().get(item.getImageViewKey()).zeroLocation();
+            inventoryFP.getChildren().add(theView.getImageViews().get(
+                    item.getImageViewKey()));
+        }
+    }
+
+    /**
      * Handles the defeat of a boss by displaying that the player has won in the
      * story text and exits the game
      *
      * @author ks061
      */
     private void handleBossDefeated() {
+        this.attackActive = false;
         theView.setStoryText("You win!");
-        JOptionPane.showMessageDialog(null,
-                                      "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
-                                      "The End", JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(null, "You excelled in CSCI 205!",
+                                      "Congratulations!",
+                                      JOptionPane.PLAIN_MESSAGE);
         System.exit(0);
     }
 
@@ -369,9 +396,10 @@ public class RPGController {
      * Handles the defeat of an NPC by displaying that the NPC has deceased in
      * the story text
      *
-     * @author ks061
+     * @author ks061, lts010
      */
     private void handleNPCDefeated() {
+        this.attackActive = false;
         theView.setStoryText(String.format("%s is dead!",
                                            theModel.getCurrentRoom().getNPCViewWrapper().getNPC().getName()));
     }
@@ -483,8 +511,9 @@ public class RPGController {
         if (!theModel.getPlayer().isAlive()) {
             theView.setStoryText("You have died!");
             JOptionPane.showMessageDialog(null,
-                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
-                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+                                          "Failure to refactor led to your dropping out of CSCI 205!",
+                                          "Game Over",
+                                          JOptionPane.PLAIN_MESSAGE);
             System.exit(0);
         }
     }
@@ -542,5 +571,16 @@ public class RPGController {
      */
     public void setAttackActive(boolean attackActive) {
         this.attackActive = attackActive;
+    }
+
+    /**
+     * Gets the image view wrapper of the player
+     *
+     * @return image view wrapper of the player
+     *
+     * @author ks061
+     */
+    public PlayerImageViewWrapper getPlayerImageView() {
+        return playerImageView;
     }
 }

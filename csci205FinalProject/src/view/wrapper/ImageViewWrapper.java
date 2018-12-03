@@ -36,6 +36,10 @@ public abstract class ImageViewWrapper extends ImageView {
      * Type of image
      */
     private ImageKey imageKey;
+    /**
+     * Stores the location of the object in the room.
+     */
+    private Point2D location;
 
     /**
      * Explicit constructor initializes the ImageView
@@ -53,9 +57,11 @@ public abstract class ImageViewWrapper extends ImageView {
                             ImageKey imageType) {
         super(image);
         this.wrappedObject = wrappedObject;
+        this.location = location;
         this.setX(location.getX());
         this.setY(location.getY());
         this.imageKey = imageType;
+        this.setPickOnBounds(true);
     }
 
     /**
@@ -102,4 +108,34 @@ public abstract class ImageViewWrapper extends ImageView {
         return imageKey;
     }
 
+    /**
+     * Sets the imageView for display in the room
+     *
+     * @author ks061, lts010
+     */
+    public void setToRoomLocation() {
+        this.setLayoutX(this.location.getX() - this.getLayoutBounds().getMinX());
+        this.setLayoutY(this.location.getY() - this.getLayoutBounds().getMinY());
+    }
+
+    /**
+     * Sets the imageView location to (0,0)
+     *
+     * @author ks061, lts010
+     */
+    public void zeroLocation() {
+        this.setX(0);
+        this.setY(0);
+    }
+
+    /**
+     * Sets the imageView location to the supplied value
+     *
+     * @param location the location for the image to be displayed.
+     *
+     * @author ks061, lts010
+     */
+    public void setLocation(Point2D location) {
+        this.location = location;
+    }
 }

@@ -257,5 +257,4 @@ public class Room {
     public void setBackgroundImagePath(String backgroundImagePath) {
         this.backgroundImagePath = backgroundImagePath;
     }
-
 }

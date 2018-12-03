@@ -16,6 +16,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 import model.character.NPC;
 import model.character.Player;
 import model.data.Story;
@@ -62,7 +63,6 @@ public class RPGModel {
      * Number of rows of rooms in the map
      */
     private static final int NUM_ROWS = 3;
-
     /**
      * Prefix of the room background image file
      */
@@ -230,4 +230,21 @@ public class RPGModel {
     public NPC getFinalBoss() {
         return this.finalBoss;
     }
+
+    /**
+     * Get random other room
+     *
+     * @return random room
+     *
+     * @author ks061
+     */
+    public Room getRandomOtherRoom() {
+        Room room = currentRoom;
+        while (room == currentRoom) {
+            room = map.get(new Random().nextInt(NUM_ROWS)).get(new Random().
+                    nextInt(NUM_ROOMS_PER_ROW));
+        }
+        return (room);
+    }
+
 }
