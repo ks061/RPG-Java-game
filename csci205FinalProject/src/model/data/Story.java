@@ -40,11 +40,7 @@ public class Story {
 
     private ArrayList<RoomContent> roomContents;
 
-    private ArrayList<Objective> objectives;
-
     private ArrayList<NPC> npcs;
-
-    private static final int NUMBER_OF_OBJECTIVES = 10;
 
     /**
      * Constructs Story, containing the starting data and/or story-line behind
@@ -87,7 +83,7 @@ public class Story {
                        }
                    }, new ArrayList<String>() {
                        {
-                           add("Hey");
+                           add("Hint");
                        }
                    }, true);
         NPC izi = new NPC("Izi", new RPGCharacterStats(25, 2, 3),
@@ -98,7 +94,11 @@ public class Story {
                       }
                   }, new ArrayList<String>() {
                       {
-                          add("Hey");
+                          add("Hint");
+                      }
+                  }, new ArrayList<String>() {
+                      {
+                          add("Hint Done");
                       }
                   }, true);
         NPC angryDance = new NPC("Angry Dance", new RPGCharacterStats(30, 8, 8),
@@ -109,7 +109,7 @@ public class Story {
                              }
                          }, new ArrayList<String>() {
                              {
-                                 add("Hey");
+                                 add("Hint");
                              }
                          }, true);
         NPC drQueen = new NPC("Dr. Queen", new RPGCharacterStats(20, 0, 0),
@@ -120,7 +120,7 @@ public class Story {
                           }
                       }, new ArrayList<String>() {
                           {
-                              add("Hey");
+                              add("Hint");
                           }
                       }, true);
         NPC martin = new NPC("Martin", new RPGCharacterStats(25, 4, 3),
@@ -131,7 +131,11 @@ public class Story {
                          }
                      }, new ArrayList<String>() {
                          {
-                             add("Hey");
+                             add("Hint");
+                         }
+                     }, new ArrayList<String>() {
+                         {
+                             add("Hint Done");
                          }
                      }, true);
         NPC dustin = new NPC("Dustin", new RPGCharacterStats(25, 4, 3),
@@ -142,7 +146,7 @@ public class Story {
                          }
                      }, new ArrayList<String>() {
                          {
-                             add("Hey");
+                             add("Hint");
                          }
                      }, true);
         NPC beck = new NPC("Beck", new RPGCharacterStats(20, 0, 0),
@@ -153,7 +157,7 @@ public class Story {
                        }
                    }, new ArrayList<String>() {
                        {
-                           add("Hey");
+                           add("Hint");
                        }
                    }, true);
         NPC roboDustin = new NPC("Robo-Dustin", new RPGCharacterStats(20, 0, 0),
@@ -343,7 +347,6 @@ public class Story {
 
         ///roomContents.add(rc10);
         //roomContents.add(rc11);
-        createObjectiveList();
     }
 
     /**
@@ -372,16 +375,6 @@ public class Story {
         return roomContents.remove(
                 new Random().nextInt(
                         roomContents.size()));
-    }
-
-    public ArrayList<Objective> getObjectives() {
-        return objectives;
-    }
-
-    private void createObjectiveList() {
-        for (int i = 0; i < NUMBER_OF_OBJECTIVES; i++) {
-            this.objectives.add(new Objective(false));
-        }
     }
 
     public ArrayList<NPC> getNpcs() {

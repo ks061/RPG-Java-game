@@ -19,7 +19,6 @@ package controller;
 import controller.eventhandler.RPGDragEventHandler;
 import controller.eventhandler.RPGMouseEventHandler;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
@@ -29,7 +28,6 @@ import javafx.scene.media.MediaPlayer;
 import javax.swing.JOptionPane;
 import model.RPGModel;
 import model.character.NPC;
-import model.data.Objective;
 import model.item.Item;
 import view.ImageKey;
 import static view.ImageKey.*;
@@ -492,31 +490,119 @@ public class RPGController {
         }
     }
 
-    public void updateObjectives(ArrayList<Objective> objectives) {
+    /**
+     * Hard-coded story. Implemented so that the first objective is at the
+     * bottom. This is to prevent the game from changing the game when it
+     * shouldn't be.
+     *
+     * @author ishk001
+     */
+    public void updateStoryline() {
         /*
-        If player talks to Izi while izi.quote is hint, obj2 is complete.
+        OBJECTIVE 11
+        If player defeats Beck, NETBEANS is available, "Fight Angry Dancy" Button
+        is available, and print narration for the fight with Angry Dance.
          */
-        if (theModel.getNPCs().get(1).isTalkedTo() == true) {
-            theModel.getObjectives().get(1).setDone(true);
+        if (!theModel.getNPCs().get(8).isAlive()) {
+            //NETBEANS is available
+            //Print narration
+            //Make "Final Fight" button available
         }
         /*
-        If player has NOTEPAD as their weapon, obj1 is complete.
+        OBJECTIVE 10
+        If player talks to Dr. Queen while drQueen.quote is hint, receive JAVA.
          */
-        else if (theModel.getPlayer().getWeapon().getImageViewKey() == NOTEPAD) {
-            theModel.getObjectives().get(0).setDone(true);
+        else if (theModel.getNPCs().get(7).isTalkedTo() == true) {
+            theModel.getPlayer().setShield(null); //JAVA - obtained
         }
-    }
-
-    public void updateStoryline(ArrayList<Objective> objectives) {
-        if (theModel.getObjectives().get(1).getDone()) {
+        /*
+        OBJECTIVE 9
+        If player defeats Dill, GOLD_NUGGET is available, set drQueen.quote to hint,
+        and print narration for the next task
+         */
+        else if (!theModel.getNPCs().get(6).isAlive()) {
+            //GOLD_NUGGET available
+            theModel.getNPCs().get(7).setDialogues(
+                    theModel.getNPCs().get(7).getHintDialogues());
+            //Display narration "Dr. Queen can turn this nugget into a shield"
+        }
+        /*
+        OBJECTIVE 8
+        If player defeats Robo-Dustin, WINKLEVOSS_TWINS is available via Search and
+        narration for the next task is printed.
+         */
+        else if (!theModel.getNPCs().get(5).isAlive()) {
+            //WINKLEVOSS_TWINS is available via Search (Add this item into the room item list
+            //Display narration "Go get eveil scientist Dill"
+        }
+        /*
+        OBJECTIVE 7
+        If player talks to Martin while martin.quote is hint done, give TIME to Martin,
+        set martin.quote to reg, and the narration for the next task is printed.
+         */
+        else if (theModel.getNPCs().get(3).isTalkedTo() == true) {
+            theModel.getPlayer().getInventory().remove(null); //TIME
+            theModel.getPlayer().setArmor(null); //STACK_OVERFLOW - obtained
+            //Display Narration "Robo-Dustin" is creating a Ruckus in the Science Quad"
+            theModel.getNPCs().get(3).setDialogues(
+                    theModel.getNPCs().get(3).getRegDialogues());
+        }
+        /*
+        OBJECTIVE 6
+        If player picks up TIME from Reef's room, set martin.quote to hint done.
+         */
+        else if (theModel.getPlayer().getInventory().contains(null)) { //TIME - Reef's room
+            theModel.getNPCs().get(3).setDialogues(
+                    theModel.getNPCs().get(3).getHintDoneDialogues());
+        }
+        /*
+        OBJECTIVE 5
+        If player talks to  Martin while martin.quote is hint, TIME is available
+        in Reef's room.
+         */
+        else if (theModel.getNPCs().get(3).isTalkedTo() == true) {
+            //TIME is available
+        }
+        /*
+        OBJECTIVE 4
+        If player talks to Izi while izi.quote is hint done, give BOOGERS to Izi,
+        set izi.quote to regular, set martin.quote to hint, and receive HTML from Izi.
+         */
+        else if (theModel.getNPCs().get(1).isTalkedTo() == true) {
+            theModel.getPlayer().getInventory().remove(null); //BOOGERS
+            theModel.getNPCs().get(1).setDialogues(
+                    theModel.getNPCs().get(1).getRegDialogues());
+            theModel.getNPCs().get(3).setDialogues(
+                    theModel.getNPCs().get(3).getHintDialogues());
+            theModel.getPlayer().setShield(null); //HTML - obtained
+        }
+        /*
+        OBJECTIVE 3
+        If player talks to Dustin while dustin.quote is hint, receive BOOGERS from
+        Dustin, set dustin.quote to regular, and set izi.quote to hint done.
+         */
+        else if (theModel.getNPCs().get(2).isTalkedTo() == true) {
+            theModel.getPlayer().getInventory().add(null); //BOOGERS - item obtained from Dustin
+            theModel.getNPCs().get(2).setDialogues(
+                    theModel.getNPCs().get(2).getRegDialogues());
+            theModel.getNPCs().get(1).setDialogues(
+                    theModel.getNPCs().get(1).getHintDoneDialogues());
+        }
+        /*
+        OBJECTIVE 2
+        If player talks to Izi while izi.quote is hint, set dustin.quote to hint
+        and BOOGERS is available through talking with Dustin.
+         */
+        else if (theModel.getNPCs().get(1).isTalkedTo() == true) {
             theModel.getNPCs().get(2).setDialogues(
                     theModel.getNPCs().get(2).getHintDialogues());
             //BOOGERS available (Dustin)
         }
         /*
-        If obj1 is complete, set muz.quote to regular and set izi.quote to hint.
+        OBJECTIVE 1
+        If player has NOTEPAD as their weapon, set muz.quote to regular and set izi.quote to hint.
          */
-        else if (theModel.getObjectives().get(0).getDone()) {
+        else if (theModel.getPlayer().getWeapon().getImageViewKey() == NOTEPAD) {
             theModel.getNPCs().get(0).setDialogues(
                     theModel.getNPCs().get(0).getRegDialogues());
             theModel.getNPCs().get(1).setDialogues(
