@@ -256,6 +256,7 @@ public class RPGController {
 
         refreshImageViewOfItem();
         this.theView.refreshStatusBars();
+        theModel.updateGame();
     }
 
     /**

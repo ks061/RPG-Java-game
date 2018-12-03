@@ -257,4 +257,8 @@ public class Room {
     public void setBackgroundImagePath(String backgroundImagePath) {
         this.backgroundImagePath = backgroundImagePath;
     }
+
+    public void setNpcWrapper(NPCImageViewWrapper npcWrapper) {
+        this.npcWrapper = npcWrapper;
+    }
 }

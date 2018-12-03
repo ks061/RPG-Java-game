@@ -95,7 +95,6 @@ public class Properties {
      */
     public static final String CRUNCH_IMG_FILE_PATH = "img/attack_effect/CRUNCH.png";
 
-    
     /**
      * File path of the NACHO_TOTS image
      */
@@ -111,7 +110,6 @@ public class Properties {
      */
     public static final String RAMEN_IMG_FILE_PATH = "img/food/RAMEN.png";
 
-    
     /**
      * File path of the level 1 weapon image
      */
@@ -175,4 +173,8 @@ public class Properties {
      * File path of the ten defense status bar icon
      */
     public static final String TEN_DEFENSE_ICON_FILE_PATH = "img/status_bar/shield25.png";
+
+    public static final String TIME_IMG_FILE_PATH = "img/time.png";
+    public static final String GOLD_NUGGET_IMG_FILE_PATH = "img/nugget.png";
+    public static final String BOOGER_IMG_FILE_PATH = "img/booger.png";
 }

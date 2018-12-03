@@ -592,6 +592,38 @@ public class RPGView {
                                                 Properties.SHIELD3_IMG_FILE_PATH,
                                                 ItemType.SHIELD,
                                                 ImageKey.JAVA));
+
+        this.imageKeytoItemImageMap.put(ImageKey.BOOGER,
+                                        RPGUtility.loadImage(
+                                                Properties.BOOGER_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.BOOGER));
+        this.imageKeytoItemImageMap.put(ImageKey.NUGGET,
+                                        RPGUtility.loadImage(
+                                                Properties.GOLD_NUGGET_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.NUGGET));
+        this.imageKeytoItemImageMap.put(ImageKey.TIME,
+                                        RPGUtility.loadImage(
+                                                Properties.TIME_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.TIME));
+        this.imageKeytoItemImageMap.put(ImageKey.NACHO_TOTS,
+                                        RPGUtility.loadImage(
+                                                Properties.NACHO_TOTS_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.NACHO_TOTS));
+        this.imageKeytoItemImageMap.put(ImageKey.OREO_MILKSHAKE,
+                                        RPGUtility.loadImage(
+                                                Properties.OREO_MILKSHAKE_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.OREO_MILKSHAKE));
+        this.imageKeytoItemImageMap.put(ImageKey.RAMEN,
+                                        RPGUtility.loadImage(
+                                                Properties.RAMEN_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.RAMEN));
+
     }
 
     /**

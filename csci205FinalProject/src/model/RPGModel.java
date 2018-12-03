@@ -17,9 +17,11 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JOptionPane;
 import model.character.NPC;
 import model.character.Player;
 import model.data.Story;
+import model.item.Item;
 import model.map.Room;
 import model.map.RoomContent;
 
@@ -71,10 +73,6 @@ public class RPGModel {
      * Extension of the room background image file
      */
     private static final String ROOM_IMAGE_FILE_PATH_EXT = ".png";
-    /**
-     * Name of the NPC boss
-     */
-    private static final String FINAL_BOSS_NAME = "Angry Dance";
 
     /**
      * Constructor that initializes the model of the application
@@ -84,6 +82,7 @@ public class RPGModel {
     public RPGModel() {
         this.player = new Player("Student");
         this.currentRoom = initGridOfRooms();
+        this.finalBoss = Story.getInstance().getFinalBoss().getNPC();
     }
 
     /**
@@ -178,13 +177,120 @@ public class RPGModel {
                 roomContent = Story.getInstance().getRandomRoomContent();
                 r.setName(roomContent.getName());
                 r.setNPCViewWrapper(roomContent.getNPCWrapper());
-                if (roomContent.getNPCWrapper().getNPC().getName().equals(
-                        FINAL_BOSS_NAME)) {
-                    this.finalBoss = roomContent.getNPCWrapper().getNPC();
-                }
                 r.setHiddenItems(roomContent.getItems());
             }
         }
+    }
+
+    public void updateGame() {
+        if (playerHasItem("Netbeans")) {
+            JOptionPane.showMessageDialog(null,
+                                          "You forgot to refactor and Dr. Dance is now very A N G R Y !\nHe's gonna fail you unless you do something!",
+                                          "Oh no!", JOptionPane.PLAIN_MESSAGE);
+            Room bana340 = getRoom("Bana 340");
+            bana340.setNPCViewWrapper(Story.getInstance().getFinalBoss());
+        }
+        else if (playerHasItem("Java")) {
+            JOptionPane.showMessageDialog(null,
+                                          "Something is wrong with Beck's head!\nHe's on a rampage and you have to stop him!",
+                                          "Oh no!", JOptionPane.PLAIN_MESSAGE);
+            NPC drQueen = getNPC("Dr. Queen");
+            drQueen.setDialogues(drQueen.getHintDialogues());
+        }
+        else if (!getNPC("Dill").isAlive()) {
+            NPC drQueen = getNPC("Dr. Queen");
+            drQueen.setDialogues(drQueen.getHintDialogues());
+        }
+        else if (!getNPC("Robo-Dustin").isAlive()) {
+            JOptionPane.showMessageDialog(null,
+                                          "Dill was behind Robo-Dustin's rampage\nSomeone has to stop him!",
+                                          "Oh no!", JOptionPane.PLAIN_MESSAGE);
+        }
+        else if (playerHasItem("Stack Overflow")) {
+            NPC martin = getNPC("Martin");
+            martin.setDialogues(martin.getRegDialogues());
+            JOptionPane.showMessageDialog(null,
+                                          "Robo-Dustin is out of control!\nSomeone has to stop him!",
+                                          "Oh no!", JOptionPane.PLAIN_MESSAGE);
+        }
+        else if (playerHasItem("HTML")) {
+            NPC izi = getNPC("Izi");
+            NPC dustin = getNPC("Dustin");
+            NPC martin = getNPC("Martin");
+            izi.setDialogues(izi.getRegDialogues());
+            dustin.setDialogues(dustin.getRegDialogues());
+            martin.setDialogues(martin.getHintDialogues());
+        }
+        else if (playerHasItem("Notepad")) {
+            NPC muz = getNPC("Muz");
+            NPC drDance = getNPC("Dr. Dance");
+            NPC izi = getNPC("Izi");
+            NPC dustin = getNPC("Dustin");
+            muz.setDialogues(muz.getRegDialogues());
+            drDance.setDialogues(drDance.getRegDialogues());
+            izi.setDialogues(izi.getHintDialogues());
+            dustin.setDialogues((dustin.getHintDialogues()));
+
+        }
+    }
+
+    /**
+     * Sees if the player has a specific item in their inventory
+     *
+     * @param itemName - the name of the item being searched for (a String)
+     * @return a boolean, true if the player has the specified item
+     *
+     * @author lts010
+     */
+    public boolean playerHasItem(String itemName) {
+        for (Item item : player.getInventory()) {
+            if (item.getName().contentEquals(itemName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Finds an NPC in the map based on the given NPC name
+     *
+     * @param npcName - the name of the desired NPC (a String)
+     * @return the NPC requested if it can be found in map, returns null
+     * otherwise
+     *
+     * @author lts010
+     */
+    public NPC getNPC(String npcName) {
+        for (ArrayList<Room> row : map) {
+            for (Room room : row) {
+                if (room.getNPCViewWrapper().getNPC().getName().contentEquals(
+                        npcName)) {
+                    return room.getNPCViewWrapper().getNPC();
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Finds a room in the map based on the given room name
+     *
+     * @param roomName - the name of the desired room (a String)
+     * @return the room requested if it can be found in map, returns null
+     * otherwise
+     *
+     * @author lts010
+     */
+    public Room getRoom(String roomName) {
+        for (ArrayList<Room> row : map) {
+            for (Room room : row) {
+                if (room.getName().contentEquals(
+                        roomName)) {
+                    return room;
+                }
+            }
+        }
+        return null;
     }
 
     /**
