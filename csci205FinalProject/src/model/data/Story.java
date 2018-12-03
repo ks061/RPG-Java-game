@@ -242,7 +242,8 @@ public class Story {
 
         Point2D npcLocation = new Point2D(0, 200);
 
-        instance.finalBoss = new NPCImageViewWrapper(angryDance, "Angry Dancee",
+        instance.finalBoss = new NPCImageViewWrapper(angryDance,
+                                                     "AngryDancee.png",
                                                      npcLocation);
 
         RoomContent rc1 = new RoomContent("Bana 340", new NPCImageViewWrapper(
@@ -281,7 +282,7 @@ public class Story {
                                           new ArrayList<Item>());
         RoomContent rc5 = new RoomContent("Rooke Chapel",
                                           new NPCImageViewWrapper(angryDance,
-                                                                  "Robo-Dustin.jpg",
+                                                                  "Robo-Dustin.png",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
                                       {
