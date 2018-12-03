@@ -85,7 +85,6 @@ public class Properties {
      * File path of the level 3 weapon image
      */
     public static final String WEAPON3_IMG_FILE_PATH = "img/weapon/sword3.png";
-
     /**
      * File path of the level 1 armor image
      */
@@ -136,4 +135,12 @@ public class Properties {
      * File path of the ten defense status bar icon
      */
     public static final String TEN_DEFENSE_ICON_FILE_PATH = "img/status_bar/shield25.png";
+
+    public static final String BOOGER_IMG_FILE_PATH = "img/time.png";
+    public static final String GOLD_NUGGET_IMG_FILE_PATH = "img/nugget.png";
+    public static final String TIME_IMG_FILE_PATH = "img/booger.png";
+    public static final String NACHO_TOTS_IMG_FILE_PATH = "img/nachotots.png";
+    public static final String MILKSHAKE_IMG_FILE_PATH = "img/oreomilkshake.png";
+    public static final String RAMEN_NOODLES_IMG_FILE_PATH = "img/ramen.png";
+
 }

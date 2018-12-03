@@ -535,6 +535,38 @@ public class RPGView {
                                                 Properties.SHIELD3_IMG_FILE_PATH,
                                                 ItemType.SHIELD,
                                                 ImageKey.JAVA));
+
+        this.imageKeytoItemImageMap.put(ImageKey.BOOGER,
+                                        RPGUtility.loadImage(
+                                                Properties.BOOGER_IMG_FILE_PATH,
+                                                ItemType.CONSUME,
+                                                ImageKey.BOOGER));
+        this.imageKeytoItemImageMap.put(ImageKey.GOLD_NUGGET,
+                                        RPGUtility.loadImage(
+                                                Properties.GOLD_NUGGET_IMG_FILE_PATH,
+                                                ItemType.CONSUME,
+                                                ImageKey.GOLD_NUGGET));
+        this.imageKeytoItemImageMap.put(ImageKey.TIME,
+                                        RPGUtility.loadImage(
+                                                Properties.TIME_IMG_FILE_PATH,
+                                                ItemType.CONSUME,
+                                                ImageKey.TIME));
+        this.imageKeytoItemImageMap.put(ImageKey.NACHO_TOTS,
+                                        RPGUtility.loadImage(
+                                                Properties.NACHO_TOTS_IMG_FILE_PATH,
+                                                ItemType.CONSUME,
+                                                ImageKey.NACHO_TOTS));
+        this.imageKeytoItemImageMap.put(ImageKey.MILKSHAKE,
+                                        RPGUtility.loadImage(
+                                                Properties.MILKSHAKE_IMG_FILE_PATH,
+                                                ItemType.CONSUME,
+                                                ImageKey.MILKSHAKE));
+        this.imageKeytoItemImageMap.put(ImageKey.RAMEN_NOODLES,
+                                        RPGUtility.loadImage(
+                                                Properties.RAMEN_NOODLES_IMG_FILE_PATH,
+                                                ItemType.CONSUME,
+                                                ImageKey.RAMEN_NOODLES));
+
     }
 
     /**

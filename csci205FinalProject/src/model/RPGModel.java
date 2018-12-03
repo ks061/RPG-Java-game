@@ -185,36 +185,33 @@ public class RPGModel {
     public void updateGame() {
         if (playerHasItem("Netbeans")) {
             JOptionPane.showMessageDialog(null,
-                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
-                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+                                          "You forgot to refactor and Dr. Dance is now very A N G R Y !\nHe's gonna fail you unless you do something!",
+                                          "Oh no!", JOptionPane.PLAIN_MESSAGE);
             Room bana340 = getRoom("Bana 340");
             bana340.setNPCViewWrapper(Story.getInstance().getFinalBoss());
         }
         else if (playerHasItem("Java")) {
             JOptionPane.showMessageDialog(null,
-                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
-                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+                                          "Something is wrong with Beck's head!\nHe's on a rampage and you have to stop him!",
+                                          "Oh no!", JOptionPane.PLAIN_MESSAGE);
             NPC drQueen = getNPC("Dr. Queen");
             drQueen.setDialogues(drQueen.getHintDialogues());
         }
         else if (!getNPC("Dill").isAlive()) {
-            JOptionPane.showMessageDialog(null,
-                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
-                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
             NPC drQueen = getNPC("Dr. Queen");
             drQueen.setDialogues(drQueen.getHintDialogues());
         }
         else if (!getNPC("Robo-Dustin").isAlive()) {
             JOptionPane.showMessageDialog(null,
-                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
-                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+                                          "Dill was behind Robo-Dustin's rampage\nSomeone has to stop him!",
+                                          "Oh no!", JOptionPane.PLAIN_MESSAGE);
         }
         else if (playerHasItem("Stack Overflow")) {
             NPC martin = getNPC("Martin");
             martin.setDialogues(martin.getRegDialogues());
             JOptionPane.showMessageDialog(null,
-                                          "Attention all Fortnite gamers: John Wick is in great danger and he needs your help to wipe out the squads in the Tilted Towers, but to do this he needs a golden scar and a couple of chug jugs. To help him, all he needs is your credit card number, the three digits on the back, and the expiration month and year. But, you gotta be quick, so John Wick can secure the bag and achieve the epic Victory Royal!",
-                                          "Game Over", JOptionPane.PLAIN_MESSAGE);
+                                          "Robo-Dustin is out of control!\nSomeone has to stop him!",
+                                          "Oh no!", JOptionPane.PLAIN_MESSAGE);
         }
         else if (playerHasItem("HTML")) {
             NPC izi = getNPC("Izi");

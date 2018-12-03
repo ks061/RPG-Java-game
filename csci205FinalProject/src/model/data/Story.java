@@ -20,6 +20,7 @@ import java.util.Random;
 import javafx.geometry.Point2D;
 import model.character.NPC;
 import model.character.RPGCharacterStats;
+import model.item.ConsumableItem;
 import model.item.Equipment;
 import model.item.Item;
 import model.item.ItemStatistics;
@@ -69,7 +70,8 @@ public class Story {
                           }
                       }, new ArrayList<String>() {
                           {
-                              add("Hey");
+                              add("Greetings! Equip the items you see around you to become stronger.");
+                              add("Seek the council of Muz, he has something very important to tell you.");
                           }
                       }, true);
         drDance.setDialogues(drDance.getHintDialogues());
@@ -81,21 +83,11 @@ public class Story {
                       }
                   }, new ArrayList<String>() {
                       {
-                          add("Hey");
+                          add("In order to survive here you must get the three sacred items");
+                          add("Seek the ways of Java, Netbeans, and the Winklevoss Twins");
                       }
                   }, true);
         muz.setDialogues(muz.getHintDialogues());
-        NPC reef = new NPC("Reef", new RPGCharacterStats(20, 0, 0),
-                           new ArrayList<String>() {
-                       {
-                           add("*watching fork-knife*");
-                           add("My name is not Reef");
-                       }
-                   }, new ArrayList<String>() {
-                       {
-                           add("Hint");
-                       }
-                   }, true);
         NPC izi = new NPC("Izi", new RPGCharacterStats(25, 2, 3),
                           new ArrayList<String>() {
                       {
@@ -104,7 +96,8 @@ public class Story {
                       }
                   }, new ArrayList<String>() {
                       {
-                          add("Hint");
+                          add("I'm looking for something to add to my mineral collection");
+                          add("I'll make it worth your time if you find me something shiny");
                       }
                   }, true);
         NPC angryDance = new NPC("Angry Dance", new RPGCharacterStats(30, 8, 8),
@@ -115,7 +108,7 @@ public class Story {
                              }
                          }, new ArrayList<String>() {
                              {
-                                 add("Hint");
+                                 add("Should not be displayed");
                              }
                          }, true);
         NPC drQueen = new NPC("Dr. Queen", new RPGCharacterStats(20, 0, 0),
@@ -126,7 +119,8 @@ public class Story {
                           }
                       }, new ArrayList<String>() {
                           {
-                              add("Hint");
+                              add("I've learned how to enchant precious metals");
+                              add("I'll show you how in my next lecture");
                           }
                       }, true);
         NPC martin = new NPC("Martin", new RPGCharacterStats(25, 4, 3),
@@ -137,7 +131,8 @@ public class Story {
                          }
                      }, new ArrayList<String>() {
                          {
-                             add("Hint");
+                             add("I FORGOT TO GRADE THE LABS");
+                             add("I NEED MORE TIME TO GRADE THE LABS");
                          }
                      }, true);
         NPC dustin = new NPC("Dustin", new RPGCharacterStats(25, 4, 3),
@@ -148,7 +143,8 @@ public class Story {
                          }
                      }, new ArrayList<String>() {
                          {
-                             add("Hint");
+                             add("Mind the snot on the floor.");
+                             add("The boogers on the floor are hard as rocks.");
                          }
                      }, true);
         NPC beck = new NPC("Beck", new RPGCharacterStats(20, 0, 0),
@@ -159,7 +155,7 @@ public class Story {
                        }
                    }, new ArrayList<String>() {
                        {
-                           add("Hint");
+                           add("Should not be displayed");
                        }
                    }, true);
         NPC roboDustin = new NPC("Robo-Dustin", new RPGCharacterStats(20, 0, 0),
@@ -170,7 +166,7 @@ public class Story {
                              }
                          }, new ArrayList<String>() {
                              {
-                                 add("Hint");
+                                 add("Should not be displayed");
                              }
                          }, true);
         NPC dill = new NPC("Dill", new RPGCharacterStats(20, 0, 0),
@@ -181,7 +177,7 @@ public class Story {
                        }
                    }, new ArrayList<String>() {
                        {
-                           add("Hint");
+                           add("Should not be displayed");
                        }
                    }, true);
 
@@ -218,23 +214,37 @@ public class Story {
                                          new ItemStatistics(0, 0, 3, 1),
                                          ARMOR, WINKLEVOSS_TWINS);
 
+        Item booger = new Item("Crystalized Booger", new ItemStatistics(0, 0, 0,
+                                                                        0),
+                               BOOGER);
+        Item nugget = new Item("Gold Nugget", new ItemStatistics(0, 0, 0, 0),
+                               GOLD_NUGGET);
+        Item time = new Item("Time", new ItemStatistics(0, 0, 0, 0), TIME);
+        ConsumableItem tots = new ConsumableItem("Nacho Tots",
+                                                 new ItemStatistics(20, 3, 0, 0),
+                                                 NACHO_TOTS);
+        ConsumableItem shake = new ConsumableItem("Oreo Milkshake",
+                                                  new ItemStatistics(20, 0, 3, 0),
+                                                  MILKSHAKE);
+        ConsumableItem ramen = new ConsumableItem("Ramen Noodles",
+                                                  new ItemStatistics(20, 0, 0, 3),
+                                                  RAMEN_NOODLES);
+
+        izi.getInventory().add(shield2);
+        izi.setDesiredItem(booger);
+        martin.getInventory().add(armor2);
+        martin.setDesiredItem(time);
+        roboDustin.getInventory().add(armor3);
+        dill.getInventory().add(nugget);
+        drQueen.getInventory().add(shield3);
+        drQueen.setDesiredItem(nugget);
+        beck.getInventory().add(weapon3);
+
         Point2D npcLocation = new Point2D(0, 200);
 
         instance.finalBoss = new NPCImageViewWrapper(angryDance, "Angry Dancee",
                                                      npcLocation);
 
-        /*
-        @LOGAN
-
-        DIFFERENT WEAPONS GO IN DIFFERENT PLACES SO REFER TO THE STORY DOCUMENT
-        TO SEE WHICH ITEMS GO WHERE.
-
-        WE ALSO NEED TO MAKE GRAPHICS FOR DIFFERENT ITEMS LIKE time, boogers, gold
-        nuggets, AND IMPLEMENT THEM INTO THE GAME.
-
-        CONSUMABLE ITEMS?
-
-         */
         RoomContent rc1 = new RoomContent("Bana 340", new NPCImageViewWrapper(
                                           drDance,
                                           "Dancee.png",
@@ -242,6 +252,8 @@ public class Story {
                                           new ArrayList<Item>() {
                                       {
                                           add(weapon1);
+                                          add(shield1);
+                                          add(armor1);
                                       }
                                   });
         RoomContent rc2 = new RoomContent("SAE",
@@ -250,7 +262,7 @@ public class Story {
                                                                   npcLocation),
                                           new ArrayList<Item>() {
                                       {
-                                          add(shield1);
+                                          add(weapon2);
                                       }
                                   });
         RoomContent rc3 = new RoomContent("Outside of Dustin's Secret Lab",
@@ -259,25 +271,21 @@ public class Story {
                                                                   npcLocation),
                                           new ArrayList<Item>() {
                                       {
-                                          add(armor1);
+                                          add(ramen);
                                       }
                                   });
         RoomContent rc4 = new RoomContent("Out and about",
                                           new NPCImageViewWrapper(izi,
                                                                   "Izi.png",
                                                                   npcLocation),
-                                          new ArrayList<Item>() {
-                                      {
-                                          add(weapon2);
-                                      }
-                                  });
+                                          new ArrayList<Item>());
         RoomContent rc5 = new RoomContent("Rooke Chapel",
                                           new NPCImageViewWrapper(angryDance,
                                                                   "Robo-Dustin.jpg",
                                                                   npcLocation),
                                           new ArrayList<Item>() {
                                       {
-                                          add(shield2);
+                                          add(shake);
                                       }
                                   });
         RoomContent rc6 = new RoomContent("Crackmetal 169",
@@ -285,21 +293,13 @@ public class Story {
                                                   drQueen,
                                                   "King.png",
                                                   npcLocation),
-                                          new ArrayList<Item>() {
-                                      {
-                                          add(armor2);
-                                      }
-                                  });
+                                          new ArrayList<Item>());
         RoomContent rc7 = new RoomContent("Crackmetal 164",
                                           new NPCImageViewWrapper(
                                                   martin,
                                                   "Martin.png",
                                                   npcLocation),
-                                          new ArrayList<Item>() {
-                                      {
-                                          add(weapon3);
-                                      }
-                                  });
+                                          new ArrayList<Item>());
         RoomContent rc8 = new RoomContent("Secret Lab in Bana",
                                           new NPCImageViewWrapper(
                                                   dustin,
@@ -307,7 +307,7 @@ public class Story {
                                                   npcLocation),
                                           new ArrayList<Item>() {
                                       {
-                                          add(shield3);
+                                          add(booger);
                                       }
                                   });
         RoomContent rc9 = new RoomContent("In the sky", new NPCImageViewWrapper(
@@ -316,7 +316,7 @@ public class Story {
                                           npcLocation),
                                           new ArrayList<Item>() {
                                       {
-                                          add(armor3);
+                                          add(tots);
                                       }
                                   });
 

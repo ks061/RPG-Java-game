@@ -45,7 +45,11 @@ public enum ImageKey {
     API("Able to use the API: defense +10"), STACK_OVERFLOW(
             "Able to use Stack Overflow: defense +20"),
     WINKLEVOSS_TWINS(
-            "Able to use the Winklevoss Twins: defense +30");
+            "Able to use the Winklevoss Twins: defense +30"),
+    BOOGER, GOLD_NUGGET, TIME,
+    NACHO_TOTS("Restores 20 health, and gives you +3 attack"),
+    MILKSHAKE("Restores 20 health, and gives you +3 defense"),
+    RAMEN_NOODLES("Restores 20 health, and gives you +3 inventory size");
 
     /**
      * String representing tooltip associated with each tool

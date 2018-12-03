@@ -21,5 +21,5 @@ package model.item;
  * @author ishk001, ks061
  */
 public enum ItemType {
-    CONTROL, WEAPON, SHIELD, ARMOR;
+    CONSUME, CONTROL, WEAPON, SHIELD, ARMOR;
 }
