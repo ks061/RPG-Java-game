@@ -82,10 +82,12 @@ public class RPGModel {
     /**
      * Constructor that initializes the model of the application
      *
+     * @param playerName the name of the player
+     *
      * @author ks061
      */
-    public RPGModel() {
-        this.player = new Player("Student");
+    public RPGModel(String playerName) {
+        this.player = new Player(playerName);
         this.currentRoom = initGridOfRooms();
         this.finalBoss = Story.getInstance().getFinalBoss().getNPC();
     }
