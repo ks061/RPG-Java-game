@@ -191,7 +191,7 @@ public class RPGModel {
      * Changes the dialogues the NPCs use and displays things based on the
      * player's accomplishments
      *
-     * @author lts010
+     * @author lts010 ishk001
      */
     public void updateGame() {
         if (playerHasItem("Netbeans") && !pane4Displayed) {
@@ -204,10 +204,10 @@ public class RPGModel {
         }
         else if (playerHasItem("Java") && !pane3Displayed) {
             JOptionPane.showMessageDialog(null,
-                                          "Beck got a concussion while skydiving!\nHe's on a rampage and you have to stop him!",
+                                          "Beck concussed himself and couldn't grade the lab in time.\nHe's furious and you have to calm him down!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
             NPC drQueen = getNPC("Dr. Queen");
-            drQueen.setDialogues(drQueen.getHintDialogues());
+            drQueen.setDialogues(drQueen.getRegDialogues());
             pane3Displayed = true;
         }
         else if (!getNPC("Dill").isAlive()) {
@@ -216,7 +216,7 @@ public class RPGModel {
         }
         else if (!getNPC("Robo-Dustin").isAlive() && !pane2Displayed) {
             JOptionPane.showMessageDialog(null,
-                                          "Dill was behind Robo-Dustin's rampage\nSomeone has to stop him!",
+                                          "Evil Scientist Dill hacked Dustin's AI machine to create Robo-Dustin.\nYou need to stop him!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
             pane2Displayed = true;
         }
@@ -224,7 +224,7 @@ public class RPGModel {
             NPC martin = getNPC("Martin");
             martin.setDialogues(martin.getRegDialogues());
             JOptionPane.showMessageDialog(null,
-                                          "Robo-Dustin is out of control!\nSomeone has to stop him!",
+                                          "D...Dustin? No... That's Robo-Dustin!\nHe's on a rampage! Someone has to stop him!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
             pane1Displayed = true;
         }
@@ -236,7 +236,7 @@ public class RPGModel {
             dustin.setDialogues(dustin.getRegDialogues());
             martin.setDialogues(martin.getHintDialogues());
         }
-        else if (playerHasItem("Notepad++")) {
+        else if (playerHasItem("Notepad")) {
             NPC muz = getNPC("Muz");
             NPC drDance = getNPC("Dr. Dance");
             NPC izi = getNPC("Izi");

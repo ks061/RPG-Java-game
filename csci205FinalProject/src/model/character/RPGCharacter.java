@@ -175,10 +175,9 @@ public abstract class RPGCharacter {
      */
     private int calculateDamage(RPGCharacter enemy, double criticalHitModifier,
                                 double accuracyModifier) {
-        Random randomNumberGenerator = new Random();
         double damage = MIN_BASE_DAMAGE;
 
-        if (this.characterStats.getAttack() < enemy.characterStats.getDefense()) {
+        if (this.characterStats.getAttack() > enemy.characterStats.getDefense()) {
             damage += this.characterStats.getAttack() - enemy.characterStats.getDefense();
         }
 

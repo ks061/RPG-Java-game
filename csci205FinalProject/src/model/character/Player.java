@@ -29,7 +29,7 @@ public class Player extends RPGCharacter {
     /**
      * Default maximum health attribute for a player
      */
-    public static final int DEFAULT_MAX_HEALTH = 100;
+    public static final int DEFAULT_MAX_HEALTH = 10;
     /**
      * Default attack attribute for a player
      */
@@ -134,23 +134,28 @@ public class Player extends RPGCharacter {
      * @author ks061, ishk001, lts010
      */
     private void adjustCharacterStatisticsFromConsume(
-                                                      ConsumableItem consumableItem) {
+            ConsumableItem consumableItem) {
         //For HEALTH potions
         int curHealth = this.getCharacterStats().getHealth();
         if (curHealth + consumableItem.getItemStatistics().getDeltaHealth() > this.getCharacterStats().getMaxHealth()) {
             //sets the health of the player to max health if health + potion turns
             //out to fill up the health bar of the player
-            this.getCharacterStats().setHealth(this.getCharacterStats().getMaxHealth());
+            this.getCharacterStats().setHealth(
+                    this.getCharacterStats().getMaxHealth());
         }
         else {
-            this.getCharacterStats().setHealth(curHealth + consumableItem.getItemStatistics().getDeltaHealth());
+            this.getCharacterStats().setHealth(
+                    curHealth + consumableItem.getItemStatistics().getDeltaHealth());
         }
         //For ATTACK potions
-        this.getCharacterStats().setAttack(this.getCharacterStats().getAttack() + consumableItem.getItemStatistics().getDeltaAttack());
+        this.getCharacterStats().setAttack(
+                this.getCharacterStats().getAttack() + consumableItem.getItemStatistics().getDeltaAttack());
         //For DEFENSE potions
-        this.getCharacterStats().setDefense(this.getCharacterStats().getDefense() + consumableItem.getItemStatistics().getDeltaDefense());
+        this.getCharacterStats().setDefense(
+                this.getCharacterStats().getDefense() + consumableItem.getItemStatistics().getDeltaDefense());
         //For items that permanantely increase inventory size
-        this.setInventorySize(this.getInventorySize() + consumableItem.getItemStatistics().getDeltaInventory());
+        this.setInventorySize(
+                this.getInventorySize() + consumableItem.getItemStatistics().getDeltaInventory());
     }
 
     /**
