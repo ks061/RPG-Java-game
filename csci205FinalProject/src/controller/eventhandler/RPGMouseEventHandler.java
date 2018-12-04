@@ -80,11 +80,13 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
                     theController.getTheView().setStoryText(
                             theController.getTheModel().getPlayer().trade(
                                     theController.getTheModel().getCurrentRoom().getNPCViewWrapper().getNPC()));
+                    theController.refresh();
                     break;
                 case SEARCH:
                     theController.getTheView().setStoryText(
                             theController.getTheModel().getPlayer().search(
                                     theController.getTheModel().getCurrentRoom().getNPCViewWrapper().getNPC()));
+                    theController.refresh();
                     break;
             }
         }
