@@ -192,10 +192,10 @@ public class RPGModel {
         }
         else if (playerHasItem("Java")) {
             JOptionPane.showMessageDialog(null,
-                                          "Something is wrong with Beck's head!\nHe's on a rampage and you have to stop him!",
+                                          "Beck concussed himself and couldn't grade the lab in time.\nHe's furious and you have to calm him down!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
             NPC drQueen = getNPC("Dr. Queen");
-            drQueen.setDialogues(drQueen.getHintDialogues());
+            drQueen.setDialogues(drQueen.getRegDialogues());
         }
         else if (!getNPC("Dill").isAlive()) {
             NPC drQueen = getNPC("Dr. Queen");
@@ -203,14 +203,14 @@ public class RPGModel {
         }
         else if (!getNPC("Robo-Dustin").isAlive()) {
             JOptionPane.showMessageDialog(null,
-                                          "Dill was behind Robo-Dustin's rampage\nSomeone has to stop him!",
+                                          "Evil Scientist Dill hacked Dustin's AI machine to create Robo-Dustin.\nYou need to stop him!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
         }
         else if (playerHasItem("Stack Overflow")) {
             NPC martin = getNPC("Martin");
             martin.setDialogues(martin.getRegDialogues());
             JOptionPane.showMessageDialog(null,
-                                          "Robo-Dustin is out of control!\nSomeone has to stop him!",
+                                          "D...Dustin? No... That's Robo-Dustin!\nHe's on a rampage! Someone has to stop him!",
                                           "Oh no!", JOptionPane.PLAIN_MESSAGE);
         }
         else if (playerHasItem("HTML")) {

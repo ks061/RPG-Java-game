@@ -60,12 +60,11 @@ public class Story {
     private Story() {
         this.roomContents = new ArrayList<>();
 
-        NPC drDance = new NPC("Dr. Dance", new RPGCharacterStats(20, 0, 0),
+        NPC drDance = new NPC("Dr. Dance", new RPGCharacterStats(60, 27, 10),
                               new ArrayList<String>() {
                           {
                               add("Class dismissed. Work on your"
-                                  + " homework and DON’T PROCRASTINATE...and R E F A C T O R ! Your textbook and the "
-                                  + "Java API are your best friends.");
+                                  + " homework and DON’T PROCRASTINATE...and R E F A C T O R !");
                               add("Don't forget to REFACTOR!");
                           }
                       }, new ArrayList<String>() {
@@ -90,7 +89,7 @@ public class Story {
                       }
                   }, true);
         muz.setDialogues(muz.getHintDialogues());
-        NPC izi = new NPC("Izi", new RPGCharacterStats(25, 2, 3),
+        NPC izi = new NPC("Izi", new RPGCharacterStats(20, 100, 0),
                           new ArrayList<String>() {
                       {
                           add("Food insecurity is a major problem on Bucknell's campus!");
@@ -102,7 +101,8 @@ public class Story {
                           add("I'll make it worth your time if you find me something shiny.");
                       }
                   }, true);
-        NPC angryDance = new NPC("Angry Dance", new RPGCharacterStats(30, 8, 8),
+        NPC angryDance = new NPC("Angry Dance",
+                                 new RPGCharacterStats(65, 27, 10),
                                  new ArrayList<String>() {
                              {
                                  add("Karti B, stop slacking me so many questions!");
@@ -123,9 +123,10 @@ public class Story {
                           {
                               add("I've learned how to enchant precious metals.");
                               add("I'll show you how in my next lecture.");
+                              add("By the way, have you seen Dill recently? He's been suspicicous lately...");
                           }
                       }, true);
-        NPC martin = new NPC("Martin", new RPGCharacterStats(25, 4, 3),
+        NPC martin = new NPC("Martin", new RPGCharacterStats(20, 0, 0),
                              new ArrayList<String>() {
                          {
                              add("I'll grade labs 9-12 by Monday!");
@@ -137,7 +138,7 @@ public class Story {
                              add("I NEED MORE *TIME* TO GRADE THE LABS.");
                          }
                      }, true);
-        NPC dustin = new NPC("Dustin", new RPGCharacterStats(25, 4, 3),
+        NPC dustin = new NPC("Dustin", new RPGCharacterStats(20, 0, 0),
                              new ArrayList<String>() {
                          {
                              add("I recoded Java last night. Took me a couple hours...");
@@ -150,7 +151,7 @@ public class Story {
                              add("The boogers on the floor are hard as rocks.");
                          }
                      }, true);
-        NPC beck = new NPC("Beck", new RPGCharacterStats(20, 0, 0),
+        NPC beck = new NPC("Beck", new RPGCharacterStats(20, 45, 5),
                            new ArrayList<String>() {
                        {
                            add("I'm gonna grade lab13 while skydiving.");
@@ -161,7 +162,7 @@ public class Story {
                            add("Should not be displayed");
                        }
                    }, true);
-        NPC roboDustin = new NPC("Robo-Dustin", new RPGCharacterStats(20, 0, 0),
+        NPC roboDustin = new NPC("Robo-Dustin", new RPGCharacterStats(35, 27, 5),
                                  new ArrayList<String>() {
                              {
                                  add("I... AM... Hello World... DUSTIN");
@@ -172,7 +173,7 @@ public class Story {
                                  add("Should not be displayed");
                              }
                          }, true);
-        NPC dill = new NPC("Dill", new RPGCharacterStats(20, 0, 0),
+        NPC dill = new NPC("Dill", new RPGCharacterStats(45, 30, 5),
                            new ArrayList<String>() {
                        {
                            add("I will rule over the world!");
@@ -186,51 +187,51 @@ public class Story {
 
         //Set 1
         Equipment weapon1 = new Equipment("Pen & Paper",
-                                          new ItemStatistics(0, 1, 0, 1),
+                                          new ItemStatistics(0, 5, 0, 1),
                                           WEAPON, PEN_AND_PAPER);
         Equipment shield1 = new Equipment("Machine Code",
-                                          new ItemStatistics(1, 0, 0, 1),
+                                          new ItemStatistics(5, 0, 0, 1),
                                           SHIELD, MACHINE_CODE);
         Equipment armor1 = new Equipment("API",
-                                         new ItemStatistics(0, 0, 1, 1),
+                                         new ItemStatistics(0, 0, 5, 1),
                                          ARMOR, API);
 
         //Set 2
         Equipment weapon2 = new Equipment("Notepad++",
-                                          new ItemStatistics(0, 2, 0, 1),
+                                          new ItemStatistics(0, 10, 0, 1),
                                           WEAPON, NOTEPAD);
         Equipment shield2 = new Equipment("HTML",
-                                          new ItemStatistics(2, 0, 0, 1),
+                                          new ItemStatistics(10, 0, 0, 1),
                                           SHIELD, HTML);
         Equipment armor2 = new Equipment("Stack Overflow",
-                                         new ItemStatistics(0, 0, 2, 1),
+                                         new ItemStatistics(0, 0, 10, 1),
                                          ARMOR, STACK_OVERFLOW);
 
         //Set 3
         Equipment weapon3 = new Equipment("Netbeans",
-                                          new ItemStatistics(0, 3, 0, 1),
+                                          new ItemStatistics(0, 20, 0, 1),
                                           WEAPON, NETBEANS);
         Equipment shield3 = new Equipment("Java",
-                                          new ItemStatistics(3, 0, 0, 1),
+                                          new ItemStatistics(20, 0, 0, 1),
                                           SHIELD, JAVA);
         Equipment armor3 = new Equipment("The Winklevoss Twins",
-                                         new ItemStatistics(0, 0, 3, 1),
+                                         new ItemStatistics(0, 0, 20, 1),
                                          ARMOR, WINKLEVOSS_TWINS);
 
         Item booger = new Item("Crystalized Booger", new ItemStatistics(0, 0, 0,
-                                                                        0),
+                                                                        1),
                                BOOGER);
-        Item nugget = new Item("Gold Nugget", new ItemStatistics(0, 0, 0, 0),
+        Item nugget = new Item("Gold Nugget", new ItemStatistics(0, 0, 0, 1),
                                GOLD_NUGGET);
-        Item time = new Item("Time", new ItemStatistics(0, 0, 0, 0), TIME);
+        Item time = new Item("Time", new ItemStatistics(0, 0, 0, 1), TIME);
         ConsumableItem tots = new ConsumableItem("Nacho Tots",
-                                                 new ItemStatistics(20, 3, 0, 0),
+                                                 new ItemStatistics(20, 3, 0, 1),
                                                  NACHO_TOTS);
         ConsumableItem shake = new ConsumableItem("Oreo Milkshake",
-                                                  new ItemStatistics(20, 0, 3, 0),
+                                                  new ItemStatistics(20, 0, 3, 1),
                                                   MILKSHAKE);
         ConsumableItem ramen = new ConsumableItem("Ramen Noodles",
-                                                  new ItemStatistics(20, 0, 0, 3),
+                                                  new ItemStatistics(20, 2, 2, 1),
                                                   RAMEN_NOODLES);
 
         izi.getInventory().add(shield2);
