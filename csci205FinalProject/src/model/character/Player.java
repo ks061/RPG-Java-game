@@ -98,6 +98,9 @@ public class Player extends RPGCharacter {
      * @return String represented what items have been traded
      */
     public String trade(NPC npc) {
+        if (!npc.isAlive()) {
+            return "Cannot trade with dead people";
+        }
         if (npc.getDesiredItem() == null) {
             return String.format("%s does not want to trade", npc.getName());
         }
