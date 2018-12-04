@@ -17,7 +17,6 @@ package model.character;
 
 import java.util.ArrayList;
 import junit.framework.TestCase;
-import static junit.framework.TestCase.assertTrue;
 import model.item.ConsumableItem;
 import model.item.Equipment;
 import model.item.ItemStatistics;
@@ -41,31 +40,6 @@ public class RPGCharacterTest extends TestCase {
 
     @Override
     public void tearDown() {
-    }
-
-    /**
-     * Test of use method, of class RPGCharacter.
-     */
-    @Test
-    public void testUse() {
-        System.out.println("use");
-        //make a consumable item and an equipment item for the player to use
-        ItemStatistics testStats = new ItemStatistics(3, 3, 3, 3);
-        ConsumableItem testConsumable = new ConsumableItem("testItem", testStats,
-                                                           ImageKey.NOTEPAD);
-        Equipment testArmor = new Equipment("testArmor", testStats,
-                                            ItemType.ARMOR, ImageKey.API
-        );
-        theTester.getInventory().add(testConsumable); //give the tester both items
-        theTester.getInventory().add(testArmor);
-        theTester.use(testConsumable);
-        assertTrue(!theTester.getInventory().contains(testConsumable)); //if the player uses the consumable they should no longer have it in their inventory
-        theTester.use(testArmor);
-        assertTrue(!theTester.getInventory().contains(testArmor));  //same is true for the equipment
-        assertTrue(theTester.getArmor() == testArmor); //but they'll be wearing it in the appropriate equipment slot slot
-        theTester.use(testArmor); //if we use the equipment again
-        assertTrue(theTester.getInventory().contains(testArmor)); //it'll unequip and go back to the inventory
-        assertTrue(theTester.getArmor() == null); //and they won't be wearing any equipment in that slot
     }
 
     /**

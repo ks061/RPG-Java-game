@@ -17,6 +17,7 @@ package model.character;
 
 import java.util.ArrayList;
 import junit.framework.TestCase;
+import static junit.framework.TestCase.assertTrue;
 import model.item.ConsumableItem;
 import model.item.ItemStatistics;
 import org.junit.Test;

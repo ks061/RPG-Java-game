@@ -258,6 +258,12 @@ public class Room {
         this.backgroundImagePath = backgroundImagePath;
     }
 
+    /**
+     * Sets the view wrapper for the NPC in this room
+     *
+     * @param npcWrapper the view wrapper for the NPC in this room
+     * @author ks061
+     */
     public void setNpcWrapper(NPCImageViewWrapper npcWrapper) {
         this.npcWrapper = npcWrapper;
     }

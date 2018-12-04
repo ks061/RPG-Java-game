@@ -15,6 +15,7 @@
  */
 package model.character;
 
+import model.item.ConsumableItem;
 import model.item.Item;
 
 /**
@@ -121,5 +122,48 @@ public class Player extends RPGCharacter {
             return String.format("%s does not have the item that %s wants",
                                  this.getName(), npc.getName());
         }
+    }
+
+    /**
+     * Adjusts the character statistics, such as maximum health, attack,
+     * defense, and inventory size, based upon the statistics of the consumable
+     * item and current statistics of this RPGCharacter
+     *
+     * @param consumableItem equipment being consumed by this RPGCharacter
+     *
+     * @author ks061, ishk001, lts010
+     */
+    private void adjustCharacterStatisticsFromConsume(
+                                                      ConsumableItem consumableItem) {
+        //For HEALTH potions
+        int curHealth = this.getCharacterStats().getHealth();
+        if (curHealth + consumableItem.getItemStatistics().getDeltaHealth() > this.getCharacterStats().getMaxHealth()) {
+            //sets the health of the player to max health if health + potion turns
+            //out to fill up the health bar of the player
+            this.getCharacterStats().setHealth(this.getCharacterStats().getMaxHealth());
+        }
+        else {
+            this.getCharacterStats().setHealth(curHealth + consumableItem.getItemStatistics().getDeltaHealth());
+        }
+        //For ATTACK potions
+        this.getCharacterStats().setAttack(this.getCharacterStats().getAttack() + consumableItem.getItemStatistics().getDeltaAttack());
+        //For DEFENSE potions
+        this.getCharacterStats().setDefense(this.getCharacterStats().getDefense() + consumableItem.getItemStatistics().getDeltaDefense());
+        //For items that permanantely increase inventory size
+        this.setInventorySize(this.getInventorySize() + consumableItem.getItemStatistics().getDeltaInventory());
+    }
+
+    /**
+     * Consumes the items and correspondingly change the health of item owner
+     *
+     * @param consumableItem consumable item being consumed by this character
+     * @return String representing what was consumed
+     *
+     * @author ishk001, lts010, ks061
+     */
+    public String consume(ConsumableItem consumableItem) {
+        adjustCharacterStatisticsFromConsume(consumableItem);
+        this.getInventory().remove(consumableItem);
+        return String.format("Consumed the %s", consumableItem.getName());
     }
 }

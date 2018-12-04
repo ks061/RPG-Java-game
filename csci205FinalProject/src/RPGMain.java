@@ -13,7 +13,7 @@
   * Description: This file contains RPGMain, which runs the RPG game application.
   * ****************************************
  */
-package main;
+
 
 import controller.RPGController;
 import javafx.application.Application;
