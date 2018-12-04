@@ -77,7 +77,9 @@ public class RPGCharacterTest extends TestCase {
         ArrayList<String> testDialogue = new ArrayList<String>();
         testDialogue.add("");
         testDialogue.add("");
-        NPC theEnemy = new NPC("theEnemy", testStats, testDialogue, false);
+        ArrayList<String> testHints = new ArrayList<String>();
+        NPC theEnemy = new NPC("theEnemy", testStats, testDialogue, testHints,
+                               false);
         String testString = theTester.attack(theEnemy);
         System.out.println(theEnemy.getCharacterStats().getHealth());
         assertTrue(

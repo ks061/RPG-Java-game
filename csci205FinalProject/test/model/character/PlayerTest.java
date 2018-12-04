@@ -43,9 +43,10 @@ public class PlayerTest extends TestCase {
         ArrayList<String> testDialogue = new ArrayList<>();
         testDialogue.add("testDialogue1");
         testDialogue.add("testDialogue2");
-        theFriend = new NPC("Friend", testStats1, testDialogue,
+        theFriend = new NPC("Friend", testStats1, testDialogue, testDialogue,
                             true);
-        theEnemy = new NPC("Enemy", testStats2, testDialogue, false);
+        theEnemy = new NPC("Enemy", testStats2, testDialogue, testDialogue,
+                           false);
         theRoom = new Room("Room1");
         theTester.setLocation(theRoom);
     }
