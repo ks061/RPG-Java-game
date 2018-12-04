@@ -190,10 +190,10 @@ public class Story {
                                           new ItemStatistics(0, 5, 0, 1),
                                           WEAPON, PEN_AND_PAPER);
         Equipment shield1 = new Equipment("Machine Code",
-                                          new ItemStatistics(5, 0, 0, 1),
+                                          new ItemStatistics(0, 0, 5, 1),
                                           SHIELD, MACHINE_CODE);
         Equipment armor1 = new Equipment("API",
-                                         new ItemStatistics(0, 0, 5, 1),
+                                         new ItemStatistics(5, 0, 0, 1),
                                          ARMOR, API);
 
         //Set 2
@@ -201,10 +201,10 @@ public class Story {
                                           new ItemStatistics(0, 10, 0, 1),
                                           WEAPON, NOTEPAD);
         Equipment shield2 = new Equipment("HTML",
-                                          new ItemStatistics(10, 0, 0, 1),
+                                          new ItemStatistics(0, 0, 10, 1),
                                           SHIELD, HTML);
         Equipment armor2 = new Equipment("Stack Overflow",
-                                         new ItemStatistics(0, 0, 10, 1),
+                                         new ItemStatistics(10, 0, 0, 1),
                                          ARMOR, STACK_OVERFLOW);
 
         //Set 3
@@ -212,10 +212,10 @@ public class Story {
                                           new ItemStatistics(0, 20, 0, 1),
                                           WEAPON, NETBEANS);
         Equipment shield3 = new Equipment("Java",
-                                          new ItemStatistics(20, 0, 0, 1),
+                                          new ItemStatistics(0, 0, 20, 1),
                                           SHIELD, JAVA);
         Equipment armor3 = new Equipment("The Winklevoss Twins",
-                                         new ItemStatistics(0, 0, 20, 1),
+                                         new ItemStatistics(20, 0, 0, 1),
                                          ARMOR, WINKLEVOSS_TWINS);
 
         Item booger = new Item("Crystalized Booger", new ItemStatistics(0, 0, 0,

@@ -37,15 +37,15 @@ public enum ImageKey {
     RIGHTARROW("Right arror: Click to move to room on right"),
     // Game entities
     NPC("Character: Click to talk to NPC"),
-    PEN_AND_PAPER("Code using pen and paper: attack +10"), NOTEPAD(
-            "Code using Notepad: attack +20"),
-    NETBEANS("Code using Netbeans: attack +30"),
-    MACHINE_CODE("Learned Assembly language: health +5"), HTML(
-            "Learned HTML: health +7"), JAVA("Learned Java: health +10"),
-    API("Able to use the API: defense +10"), STACK_OVERFLOW(
-            "Able to use Stack Overflow: defense +20"),
+    PEN_AND_PAPER("Code using pen and paper: attack +5"), NOTEPAD(
+            "Code using Notepad: attack +10"),
+    NETBEANS("Code using Netbeans: attack +20"),
+    MACHINE_CODE("Learned Assembly language: defense +5"), HTML(
+            "Learned HTML: defense +10"), JAVA("Learned Java: defense +20"),
+    API("Able to use the API: max health +5"), STACK_OVERFLOW(
+            "Able to use Stack Overflow: max health +10"),
     WINKLEVOSS_TWINS(
-            "Able to use the Winklevoss Twins: defense +30"),
+            "Able to use the Winklevoss Twins: max health +20"),
     BOOGER, GOLD_NUGGET, TIME,
     NACHO_TOTS("Restores 20 health, and gives you +3 attack"),
     MILKSHAKE("Restores 20 health, and gives you +3 defense"),
