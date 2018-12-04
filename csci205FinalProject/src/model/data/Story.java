@@ -65,7 +65,7 @@ public class Story {
                           {
                               add("Class dismissed. Work on your"
                                   + " homework and DON’T PROCRASTINATE...and R E F A C T O R ! Your textbook and the "
-                                  + "Java API are your best friends");
+                                  + "Java API are your best friends.");
                               add("Don't forget to REFACTOR!");
                           }
                       }, new ArrayList<String>() {
@@ -83,8 +83,10 @@ public class Story {
                       }
                   }, new ArrayList<String>() {
                       {
-                          add("In order to survive here you must get the three sacred items");
-                          add("Seek the ways of Java, Netbeans, and the Winklevoss Twins");
+                          add("In order to survive here you must get the three sacred items.");
+                          add("Seek the ways of Java, Netbeans, and the Winklevoss Twins...");
+                          add("Once you give Izi what she wants.");
+                          add("She won't let you continue on your journey until then.");
                       }
                   }, true);
         muz.setDialogues(muz.getHintDialogues());
@@ -96,8 +98,8 @@ public class Story {
                       }
                   }, new ArrayList<String>() {
                       {
-                          add("I'm looking for something to add to my mineral collection");
-                          add("I'll make it worth your time if you find me something shiny");
+                          add("I'm looking for something to add to my mineral collection.");
+                          add("I'll make it worth your time if you find me something shiny.");
                       }
                   }, true);
         NPC angryDance = new NPC("Angry Dance", new RPGCharacterStats(30, 8, 8),
@@ -119,8 +121,8 @@ public class Story {
                           }
                       }, new ArrayList<String>() {
                           {
-                              add("I've learned how to enchant precious metals");
-                              add("I'll show you how in my next lecture");
+                              add("I've learned how to enchant precious metals.");
+                              add("I'll show you how in my next lecture.");
                           }
                       }, true);
         NPC martin = new NPC("Martin", new RPGCharacterStats(25, 4, 3),
@@ -131,8 +133,8 @@ public class Story {
                          }
                      }, new ArrayList<String>() {
                          {
-                             add("I FORGOT TO GRADE THE LABS");
-                             add("I NEED MORE TIME TO GRADE THE LABS");
+                             add("I FORGOT TO GRADE THE LABS.");
+                             add("I NEED MORE *TIME* TO GRADE THE LABS.");
                          }
                      }, true);
         NPC dustin = new NPC("Dustin", new RPGCharacterStats(25, 4, 3),
@@ -140,6 +142,7 @@ public class Story {
                          {
                              add("I recoded Java last night. Took me a couple hours...");
                              add("Are you a double? The thought of you always floats inside my head. B)");
+                             add("*sounds of ladies falling for Dustin*");
                          }
                      }, new ArrayList<String>() {
                          {
