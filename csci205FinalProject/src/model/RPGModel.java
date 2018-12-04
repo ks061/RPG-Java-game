@@ -187,6 +187,12 @@ public class RPGModel {
         }
     }
 
+    /**
+     * Changes the dialogues the NPCs use and displays things based on the
+     * player's accomplishments
+     *
+     * @author lts010
+     */
     public void updateGame() {
         if (playerHasItem("Netbeans") && !pane4Displayed) {
             JOptionPane.showMessageDialog(null,
@@ -257,7 +263,21 @@ public class RPGModel {
                 return true;
             }
         }
-        return false;
+        if (player.getWeapon() != null && player.getWeapon().getName().contentEquals(
+                itemName)) {
+            return true;
+        }
+        else if (player.getShield() != null && player.getShield().getName().contentEquals(
+                itemName)) {
+            return true;
+        }
+        else if (player.getArmor() != null && player.getArmor().getName().contentEquals(
+                itemName)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**
