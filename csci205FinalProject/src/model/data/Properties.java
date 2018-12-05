@@ -173,8 +173,16 @@ public class Properties {
      * File path of the ten defense status bar icon
      */
     public static final String TEN_DEFENSE_ICON_FILE_PATH = "img/status_bar/shield25.png";
-
+    /**
+     * File path for the time icon
+     */
     public static final String TIME_IMG_FILE_PATH = "img/time.png";
+    /**
+     * File path for the gold nugget icon
+     */
     public static final String GOLD_NUGGET_IMG_FILE_PATH = "img/nugget.png";
+    /**
+     * File path for the booger icon
+     */
     public static final String BOOGER_IMG_FILE_PATH = "img/booger.png";
 }
