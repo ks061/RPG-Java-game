@@ -95,6 +95,7 @@ public class Story {
                           add("Seek the ways of Java, Netbeans, and the Winklevoss Twins...");
                           add("Once you give Izi what she wants.");
                           add("She won't let you continue on your journey until then.");
+                          add("I heard she likes rocks... Might have seen one near Dustin.");
                       }
                   }, true);
         muz.setDialogues(muz.getHintDialogues());
