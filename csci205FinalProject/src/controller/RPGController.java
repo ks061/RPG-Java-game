@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
 import model.RPGModel;
 import model.character.NPC;
 import model.item.Item;
+import utility.RPGUtility;
 import view.ImageKey;
 import view.RPGView;
 import view.wrapper.ItemImageViewWrapper;
@@ -406,7 +407,8 @@ public class RPGController {
     }
 
     /**
-     * Handles interactions with the attack button
+     * Handles interactions with the attack button Source for sound was
+     * https://www.youtube.com/watch?v=ZOKu36x_9LQ
      *
      * @param event interaction with the attack button
      *
@@ -433,7 +435,7 @@ public class RPGController {
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                        String sfx = "wav/batman1.wav";
+                        String sfx = RPGUtility.ATTACK_SOUND_EFFECT_FILE_PATH;
                         Media hit = new Media(new File(sfx).toURI().toString());
                         MediaPlayer mediaPlayer = new MediaPlayer(hit);
                         mediaPlayer.play();
@@ -455,7 +457,8 @@ public class RPGController {
      * Removes the attack ImageView given. Then, the NPC in the current room
      * attacks the player, and the appropriate attack ImageView and String are
      * displayed in the view. Finally, calls finishAttack after first pausing
-     * for two seconds.
+     * for two seconds. Source for sound was
+     * https://www.youtube.com/watch?v=ZOKu36x_9LQ
      *
      * @param imageView attack ImageView to be removed
      *

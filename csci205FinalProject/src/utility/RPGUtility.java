@@ -34,6 +34,12 @@ public class RPGUtility {
      * File path of the attack sound effect
      */
     public static final String ATTACK_SOUND_EFFECT_FILE_PATH = "wav/batman1.wav";
+
+    /**
+     * File path of the second attack sound effect
+     */
+    public static final String ATTACK_SOUND_EFFECT_FILE_PATH_2 = "wav/batman2.wav";
+
     /**
      * Amount of time that the thread is paused for while the sound effect has
      * been played just prior

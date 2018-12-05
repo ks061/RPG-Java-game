@@ -46,20 +46,20 @@ public enum ImageKey {
     RIGHTARROW("Right arror: Click to move to room on right"),
     //The next items are all consumables, RAMEN must remain last
     //From here down are items that can be dragged at the start of the game.
-    NACHO_TOTS("Nacho Tots: the perfect midnight snake: health +20 attack +3"),
-    OREO_MILKSHAKE("Oreo Milkshake: A tasty dessert: health +20 defense +3"),
-    RAMEN("Ramen: A legendary student super food: health +20 inventory +3"),
+    NACHO_TOTS("Restores 20 health, and gives you +3 attack"),
+    OREO_MILKSHAKE("Restores 20 health, and gives you +3 defense"),
+    RAMEN("Restores 20 health, and gives you +3 inventory size"),
     //Next is all eqipment that isn't equiped to an NPC  These items are
     //valid targets of drags if they are in the player pane
     PEN_AND_PAPER("Code using pen and paper: attack +10"),
     NOTEPAD("Code using Notepad: attack +20"),
     NETBEANS("Code using Netbeans: attack +30"),
     MACHINE_CODE("Learned Assembly language: health +5"),
-    HTML("Learned HTML: health +7"),
-    JAVA("Learned Java: health +10"),
-    API("Able to use the API: defense +10"),
-    STACK_OVERFLOW("Able to use Stack Overflow: defense +20"),
-    WINKLEVOSS_TWINS("Able to use the Winklevoss Twins: defense +30"),
+    HTML("Learned HTML: defense +7"),
+    JAVA("Learned Java: defense +10"),
+    API("Able to use the API: max health +10"),
+    STACK_OVERFLOW("Able to use Stack Overflow: max health +20"),
+    WINKLEVOSS_TWINS("Able to use the Winklevoss Twins: max health +30"),
     BOOGER, TIME, NUGGET;
 
     /**

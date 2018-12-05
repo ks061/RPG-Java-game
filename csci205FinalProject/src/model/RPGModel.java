@@ -74,10 +74,10 @@ public class RPGModel {
      */
     private static final String ROOM_IMAGE_FILE_PATH_EXT = ".png";
 
-    boolean pane1Displayed = false;
-    boolean pane2Displayed = false;
-    boolean pane3Displayed = false;
-    boolean pane4Displayed = false;
+    private boolean pane1Displayed = false;
+    private boolean pane2Displayed = false;
+    private boolean pane3Displayed = false;
+    private boolean pane4Displayed = false;
 
     /**
      * Constructor that initializes the model of the application
