@@ -56,3 +56,5 @@ Thumbs.db
 *.swp
 *.tmp
 tmp/
+/csci205FinalProject/dist/
+/dist/
