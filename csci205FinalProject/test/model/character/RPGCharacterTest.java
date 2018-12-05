@@ -49,29 +49,30 @@ public class RPGCharacterTest extends TestCase {
     public void testAttack() {
         System.out.println("attack");
         //create an NPC for the character to attack
-        RPGCharacterStats testStats = new RPGCharacterStats(10, 10, 5);
+        RPGCharacterStats testStats = new RPGCharacterStats(10, 10, 2);
         ArrayList<String> testDialogue = new ArrayList<String>();
         testDialogue.add("");
         testDialogue.add("");
         ArrayList<String> testHints = new ArrayList<String>();
+        theTester.getCharacterStats().setAttack(3);
         NPC theEnemy = new NPC("theEnemy", testStats, testDialogue, testHints,
                                false);
         //the player will attack the enemy
         String testString = theTester.attack(theEnemy);
         System.out.println(theEnemy.getCharacterStats().getHealth());
-        assertTrue( //the attack should do 5, 0, or 8 damage based on luck
-                theEnemy.getCharacterStats().getHealth() == 5 || theEnemy.getCharacterStats().getHealth() == 10 || theEnemy.getCharacterStats().getHealth() == 2);
-        if (theEnemy.getCharacterStats().getHealth() == 5) { //if it did 5 damage the message should be this
+        assertTrue( //the attack should do 6, 0, or 9 damage based on luck
+                theEnemy.getCharacterStats().getHealth() == 4 || theEnemy.getCharacterStats().getHealth() == 10 || theEnemy.getCharacterStats().getHealth() == 1);
+        if (theEnemy.getCharacterStats().getHealth() == 4) { //if it did 6 damage the message should be this
             assertTrue(testString.contentEquals(
-                    "Tester did 5 damage to theEnemy"));
+                    "Tester did 6 damage to theEnemy"));
         }
         else if (theEnemy.getCharacterStats().getHealth() == 10) { //this message when the damage is 0
             assertTrue(testString.contentEquals(
                     "Tester missed and did no damage to theEnemy"));
         }
-        else { //this message when the damage is 8
+        else { //this message when the damage is 9
             assertTrue(testString.contentEquals(
-                    "Critical Hit! Tester did 8 damage to theEnemy"));
+                    "Critical Hit! Tester did 9 damage to theEnemy"));
         }
         this.theTester.getCharacterStats().setAttack(100); //if we make the testers attack really high and hit the npc it should die
         this.theTester.attack(theEnemy);

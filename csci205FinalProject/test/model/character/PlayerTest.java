@@ -16,8 +16,10 @@
 package model.character;
 
 import java.util.ArrayList;
+import junit.framework.TestCase;
 import model.item.ConsumableItem;
 import model.item.ItemStatistics;
+import org.junit.Test;
 import view.ImageKey;
 
 /**
@@ -68,7 +70,7 @@ public class PlayerTest extends TestCase {
         assertTrue(testString.contentEquals("Enemy does not want to trade")); //thus the output for trading with the enemy should be this
         theEnemy.setIsAlive(false); //kill the enemy
         assertTrue(theTester.trade(theEnemy).contentEquals(
-                "Cannot trade with dead people.")); //now the message from the attempted trade should be this
+                "Cannot trade with dead people")); //now the message from the attempted trade should be this
         //make two items to exchange for the upcoming trade
         ItemStatistics testStats = new ItemStatistics(3, 3, 3, 3);
         ConsumableItem testItem1 = new ConsumableItem("TestItem1", testStats,
@@ -98,7 +100,7 @@ public class PlayerTest extends TestCase {
      * Test of search method, of class Player.
      */
     @Test
-    public void testSearch_NPC() {
+    public void testSearchNPC() {
         System.out.println("search");
         //make one item
         ItemStatistics testStats = new ItemStatistics(3, 3, 3, 3);
@@ -111,7 +113,7 @@ public class PlayerTest extends TestCase {
         assertTrue(testString.contains( //if the Player tries to search the enemy they will be stopped because the enemy is alive
                 "Cannot search the bodies of characters who are alive"));
 
-        theEnemy.setIsAlive(false); //now we'll kill the enemy
+        theEnemy.setIsAlive(false); //now we'll kill the enemyx
         String testString2 = theTester.search(theEnemy); //and the Player will search them
         assertTrue(!theEnemy.getInventory().contains(testItem)); //the enemy should no longer have the item
         assertTrue(theTester.getInventory().contains(testItem)); //the Player should now have the enemy's item
