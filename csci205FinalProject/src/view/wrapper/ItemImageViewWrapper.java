@@ -18,6 +18,8 @@ package view.wrapper;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import model.data.Story;
+import model.item.Item;
 import model.item.ItemType;
 import view.ImageKey;
 
@@ -51,10 +53,22 @@ public class ItemImageViewWrapper extends ImageViewWrapper {
      */
     public ItemImageViewWrapper(Image image, Point2D location, ItemType itemType,
                                 ImageKey imageKey) {
-        super(image, image, location, imageKey);
+        super(Story.getInstance().getItems().get(imageKey), image, location,
+              imageKey);
         this.itemType = itemType;
         this.tooltip = new Tooltip(imageKey.getTooltip());
         Tooltip.install(this, this.tooltip);
+    }
+
+    /**
+     * Gets the item that this image represents.
+     *
+     * @return the item that this image represents
+     *
+     * @author ks061, lts010
+     */
+    public Item getItem() {
+        return ((Item) this.getWrappedObject());
     }
 
     /**

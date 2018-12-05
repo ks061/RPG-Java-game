@@ -56,8 +56,8 @@ public class RPGUtility {
                                                  ImageKey imageType) {
         imagePath = new File(imagePath).toURI().toString();
         Image image = new Image(imagePath);
-        Point2D location = new Point2D(new Random().nextInt(1000) + 200,
-                                       new Random().nextInt(400) + 250);
+        Point2D location = new Point2D(new Random().nextInt(600) + 150,
+                                       new Random().nextInt(400) + 150);
         return new ItemImageViewWrapper(image, location, itemType, imageType);
     }
 }

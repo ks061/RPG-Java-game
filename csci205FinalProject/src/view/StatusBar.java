@@ -63,7 +63,7 @@ public class StatusBar extends HBox {
     /**
      * Formats and aligns the status bar
      *
-     * @author ks061
+     * @author ks061, lts010
      */
     private void formatStatusBar() {
         this.setPrefHeight(this.tensImage.getHeight());

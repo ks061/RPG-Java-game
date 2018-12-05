@@ -58,30 +58,37 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
      */
     @Override
     public void handle(MouseEvent event) {
-        System.out.println("mouse event = " + event.toString());
-        if (event.getSource() == theController.getTheView().getImageViews().get(
-                ImageKey.UPARROW)) {
-            handleUpArrow(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                ImageKey.DOWNARROW)) {
-            handleDownArrow(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                ImageKey.LEFTARROW)) {
-            handleLeftArrow(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                ImageKey.RIGHTARROW)) {
-            handleRightArrow(event);
-        }
-        else if (event.getSource() == theController.getTheView().getImageViews().get(
-                ImageKey.ATTACK)) {
-            if (!theController.isAttackActive()) {
-                theController.handleAttack(event);
+        if ((event.getSource() instanceof ItemImageViewWrapper)) {
+
+            ItemImageViewWrapper source = (ItemImageViewWrapper) event.getSource();
+            switch (source.getImageType()) {
+                case UPARROW:
+                case DOWNARROW:
+                case LEFTARROW:
+                case RIGHTARROW:
+                    handleArrow(event, source.getImageType());
+                    break;
+                case ATTACK:
+                    if (!theController.isAttackActive()) {
+                        theController.handleAttack(event);
+                    }
+                    break;
+                case INVENTORY:
+                    theController.getTheView().toggleInventoryFP();
+                    break;
+                case TRADE:
+                    theController.getTheView().setStoryText(
+                            theController.getTheModel().getPlayer().trade(
+                                    theController.getTheModel().getCurrentRoom().getNPCViewWrapper().getNPC()));
+                    break;
+                case SEARCH:
+                    theController.getTheView().setStoryText(
+                            theController.getTheModel().getPlayer().search(
+                                    theController.getTheModel().getCurrentRoom().getNPCViewWrapper().getNPC()));
+                    break;
             }
         }
-        else if (event.getEventType().equals(MouseEvent.DRAG_DETECTED)) {
+        if (event.getEventType().equals(MouseEvent.DRAG_DETECTED)) {
             handleDrag(event);
         }
         else {
@@ -90,102 +97,47 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
     }
 
     /**
-     * Handles interactions with the up arrow
+     * Handles interactions with the arrows
      *
-     * @param event interaction with the up arrow
+     * @param source the key for arrow under the cursor
      *
      * @author ks061, lts010
      */
-    private void handleUpArrow(MouseEvent event) {
+    private void handleArrow(MouseEvent event, ImageKey key) {
         if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            theController.getTheModel().setCurrentRoom(
-                    theController.getTheModel().getCurrentRoom().getNorth());
-            theController.refresh();
-        }
-        else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-            theController.getTheView().getImageViews().get(
-                    ImageKey.UPARROW).setOpacity(
-                            100);
-        }
-        else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            theController.getTheView().getImageViews().get(
-                    ImageKey.UPARROW).setOpacity(
-                            0);
-        }
-    }
 
-    /**
-     * Handles interactions with the down arrow
-     *
-     * @param event interaction with the down arrow
-     *
-     * @author ks061, lts010
-     */
-    private void handleDownArrow(MouseEvent event) {
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            theController.getTheModel().setCurrentRoom(
-                    theController.getTheModel().getCurrentRoom().getSouth());
+            if (null != key) {
+                switch (key) {
+                    case UPARROW:
+                        theController.getTheModel().setCurrentRoom(
+                                theController.getTheModel().getCurrentRoom().getNorth());
+                        break;
+                    case DOWNARROW:
+                        theController.getTheModel().setCurrentRoom(
+                                theController.getTheModel().getCurrentRoom().getSouth());
+                        break;
+                    case LEFTARROW:
+                        theController.getTheModel().setCurrentRoom(
+                                theController.getTheModel().getCurrentRoom().getWest());
+                        break;
+                    case RIGHTARROW:
+                        theController.getTheModel().setCurrentRoom(
+                                theController.getTheModel().getCurrentRoom().getEast());
+                        break;
+                    default:
+                        break;
+                }
+            }
+            theController.getTheView().setStoryText("");
             theController.refresh();
         }
         else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-            theController.getTheView().getImageViews().get(
-                    ImageKey.DOWNARROW).setOpacity(
-                            100);
+            theController.getTheView().getImageViews().get(key).
+                    setOpacity(100);
         }
         else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            theController.getTheView().getImageViews().get(
-                    ImageKey.DOWNARROW).setOpacity(
-                            0);
-        }
-    }
-
-    /**
-     * Handles interactions with the left arrow
-     *
-     * @param event interaction with the left arrow
-     *
-     * @author ks061, lts010
-     */
-    private void handleLeftArrow(MouseEvent event) {
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            theController.getTheModel().setCurrentRoom(
-                    theController.getTheModel().getCurrentRoom().getWest());
-            theController.refresh();
-        }
-        else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-            theController.getTheView().getImageViews().get(
-                    ImageKey.LEFTARROW).setOpacity(
-                            100);
-        }
-        else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            theController.getTheView().getImageViews().get(
-                    ImageKey.LEFTARROW).setOpacity(
-                            0);
-        }
-    }
-
-    /**
-     * Handles interactions with the right arrow
-     *
-     * @param event interaction with the right arrow
-     *
-     * @author ks061, lts010
-     */
-    private void handleRightArrow(MouseEvent event) {
-        if (event.getEventType() == MouseEvent.MOUSE_CLICKED) {
-            theController.getTheModel().setCurrentRoom(
-                    theController.getTheModel().getCurrentRoom().getEast());
-            theController.refresh();
-        }
-        else if (event.getEventType() == MouseEvent.MOUSE_ENTERED) {
-            theController.getTheView().getImageViews().get(
-                    ImageKey.RIGHTARROW).setOpacity(
-                            100);
-        }
-        else if (event.getEventType() == MouseEvent.MOUSE_EXITED) {
-            theController.getTheView().getImageViews().get(
-                    ImageKey.RIGHTARROW).setOpacity(
-                            0);
+            theController.getTheView().getImageViews().get(key).
+                    setOpacity(0);
         }
     }
 
@@ -201,6 +153,8 @@ public class RPGMouseEventHandler implements EventHandler<MouseEvent> {
         ItemImageViewWrapper source = (ItemImageViewWrapper) event.getSource();
         Dragboard db = source.startDragAndDrop(TransferMode.ANY);
         db.setDragView(source.getImage());
+        db.setDragViewOffsetX(source.getImage().getWidth() / 2);
+        db.setDragViewOffsetY(source.getImage().getHeight() / 2);
         ClipboardContent content = new ClipboardContent();
         content.putString(source.getImageType().name());
         db.setContent(content);

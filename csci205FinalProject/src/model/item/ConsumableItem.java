@@ -40,4 +40,15 @@ public class ConsumableItem extends Item {
         super(name, itemStatistics, imageViewKey);
     }
 
+    /**
+     * Gets the type of item
+     *
+     * @return type of item
+     *
+     * @author lts010, ks061
+     */
+    public ItemType getType() {
+        return ItemType.CONSUMABLE;
+    }
+
 }

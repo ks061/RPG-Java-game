@@ -17,24 +17,33 @@ package view;
 
 import java.io.File;
 import java.util.EnumMap;
+import java.util.Random;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.RPGModel;
@@ -67,11 +76,6 @@ public class RPGView {
      * value
      */
     private final EnumMap<ImageKey, ItemImageViewWrapper> imageKeytoItemImageMap;
-
-    /**
-     * Contains buttons that the player can click to perform game actions
-     */
-    private VBox rightPane;
 
     /**
      * Contains items that will change in the game scene view when the player
@@ -127,15 +131,24 @@ public class RPGView {
      * Contains text of game plot line
      */
     private final Text storyText;
+    /**
+     * Contains images of the items in the player's inventory
+     */
+    private FlowPane inventoryFP;
+
+    /*
+     * Random number generator so we can place objects at random place in room.
+     */
+    private final Random random;
 
     /**
      * Preferred window width
      */
-    private static final int PREF_WINDOW_WIDTH = 1600;
+    private static final int PREF_WINDOW_WIDTH = 1200;
     /**
      * Preferred window height
      */
-    private static final int PREF_WINDOW_HEIGHT = 1000;
+    private static final int PREF_WINDOW_HEIGHT = 750;
     /**
      * Preferred window padding
      */
@@ -149,9 +162,9 @@ public class RPGView {
      */
     private static final int PREF_CENTER_PANE_HEIGHT = 800;
     /**
-     * Preferred vertical gap between adjacent nodes
+     * Preferred gap between adjacent nodes
      */
-    private static final int PREF_VERT_GAP = 7;
+    private static final int PREF_GAP = 7;
     /**
      * Font size for the room name display
      */
@@ -160,6 +173,14 @@ public class RPGView {
      * Font size for the game plot line display
      */
     private static final int STORY_TEXT_FONT_SIZE = 16;
+    /**
+     * Preferred width for the inventory
+     */
+    private static final int INVENTORY_PREF_WIDTH = 400;
+    /**
+     * Preferred height for the inventory
+     */
+    private static final int INVENTORY_PREF_HEIGHT = 20;
 
     /**
      * Constructor that initializes a pointer to the model of the application
@@ -171,7 +192,7 @@ public class RPGView {
      */
     public RPGView(RPGModel theModel) {
         this.theModel = theModel;
-
+        this.random = new Random();
         // Importing the images to use in the view
         this.imageKeytoItemImageMap = new EnumMap<>(
                 ImageKey.class);
@@ -225,16 +246,37 @@ public class RPGView {
 
         this.statusGridPane = new GridPane();
         initStatusGridPane();
+        this.inventoryFP = new FlowPane();
+
+        this.inventoryFP.setPrefWidth(INVENTORY_PREF_WIDTH);
+        this.inventoryFP.setPrefHeight(INVENTORY_PREF_HEIGHT);
+        inventoryFP.setBorder(new Border(new BorderStroke(Color.BLACK,
+                                                          BorderStrokeStyle.SOLID,
+                                                          CornerRadii.EMPTY,
+                                                          BorderWidths.DEFAULT)));
+        inventoryFP.setBackground(new Background(new BackgroundFill(Color.WHITE,
+                                                                    CornerRadii.EMPTY,
+                                                                    Insets.EMPTY)));
+        this.inventoryFP.setPadding(new Insets(PREF_PADDING));
+        toggleInventoryFP();
+        VBox vBox = new VBox();
+        Region growRegion = new Region();
+        vBox.setPrefHeight(PREF_CENTER_PANE_HEIGHT);
+        vBox.alignmentProperty().setValue(Pos.BOTTOM_LEFT);
+        vBox.getChildren().add(growRegion);
+        vBox.getChildren().add(inventoryFP);
+        VBox.setVgrow(growRegion, Priority.ALWAYS);
+
+        this.centerPane.getChildren().add(vBox);
 
         this.centerBackPane = new StackPane();
-        formatCenterPanes();
+        formatCenterPane();
 
         this.centerBackPane.getChildren().add(this.statusGridPane);
         this.centerBackPane.getChildren().add(this.centerPane);
 
         // All elements added to the root node
         this.root.setCenter(this.centerBackPane);
-        this.root.setRight(this.rightPane);
         this.root.setBottom(this.bottomHBox);
         BorderPane.setAlignment(this.centerBackPane, Pos.CENTER_LEFT);
     }
@@ -257,7 +299,7 @@ public class RPGView {
     private void initBottomHBox() {
         bottomHBox.setPrefWidth(PREF_CENTER_PANE_WIDTH);
         bottomHBox.setAlignment(Pos.CENTER_RIGHT);
-        bottomHBox.setSpacing(PREF_VERT_GAP);
+        bottomHBox.setSpacing(PREF_GAP);
     }
 
     /**
@@ -284,7 +326,7 @@ public class RPGView {
     private void initStatusGridPane() {
         GridPane.setHgrow(this.roomNameDisplay, Priority.ALWAYS);
         GridPane.setHalignment(this.roomNameDisplay, HPos.CENTER);
-        this.statusGridPane.setVgap(PREF_VERT_GAP);
+        this.statusGridPane.setVgap(PREF_GAP);
         this.statusGridPane.add(this.playerHealthBar, 0, 0);
         this.statusGridPane.add(this.playerStrengthBar, 0, 1);
         this.statusGridPane.add(this.playerDefenseBar, 0, 2);
@@ -299,7 +341,7 @@ public class RPGView {
      *
      * @author ks061
      */
-    private void formatCenterPanes() {
+    private void formatCenterPane() {
         this.centerPane.setMinHeight(PREF_CENTER_PANE_HEIGHT);
         this.centerPane.setMinWidth(PREF_CENTER_PANE_WIDTH);
         this.centerBackPane.setMinHeight(PREF_CENTER_PANE_HEIGHT);
@@ -490,6 +532,21 @@ public class RPGView {
                                                 Properties.CRUNCH_IMG_FILE_PATH,
                                                 ItemType.CONTROL,
                                                 ImageKey.CRUNCH));
+        this.imageKeytoItemImageMap.put(ImageKey.NACHO_TOTS,
+                                        RPGUtility.loadImage(
+                                                Properties.NACHO_TOTS_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.NACHO_TOTS));
+        this.imageKeytoItemImageMap.put(ImageKey.OREO_MILKSHAKE,
+                                        RPGUtility.loadImage(
+                                                Properties.OREO_MILKSHAKE_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.OREO_MILKSHAKE));
+        this.imageKeytoItemImageMap.put(ImageKey.RAMEN,
+                                        RPGUtility.loadImage(
+                                                Properties.RAMEN_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.RAMEN));
         this.imageKeytoItemImageMap.put(ImageKey.PEN_AND_PAPER,
                                         RPGUtility.loadImage(
                                                 Properties.WEAPON1_IMG_FILE_PATH,
@@ -535,6 +592,38 @@ public class RPGView {
                                                 Properties.SHIELD3_IMG_FILE_PATH,
                                                 ItemType.SHIELD,
                                                 ImageKey.JAVA));
+
+        this.imageKeytoItemImageMap.put(ImageKey.BOOGER,
+                                        RPGUtility.loadImage(
+                                                Properties.BOOGER_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.BOOGER));
+        this.imageKeytoItemImageMap.put(ImageKey.NUGGET,
+                                        RPGUtility.loadImage(
+                                                Properties.GOLD_NUGGET_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.NUGGET));
+        this.imageKeytoItemImageMap.put(ImageKey.TIME,
+                                        RPGUtility.loadImage(
+                                                Properties.TIME_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.TIME));
+        this.imageKeytoItemImageMap.put(ImageKey.NACHO_TOTS,
+                                        RPGUtility.loadImage(
+                                                Properties.NACHO_TOTS_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.NACHO_TOTS));
+        this.imageKeytoItemImageMap.put(ImageKey.OREO_MILKSHAKE,
+                                        RPGUtility.loadImage(
+                                                Properties.OREO_MILKSHAKE_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.OREO_MILKSHAKE));
+        this.imageKeytoItemImageMap.put(ImageKey.RAMEN,
+                                        RPGUtility.loadImage(
+                                                Properties.RAMEN_IMG_FILE_PATH,
+                                                ItemType.CONSUMABLE,
+                                                ImageKey.RAMEN));
+
     }
 
     /**
@@ -577,7 +666,7 @@ public class RPGView {
                 theModel.getPlayer().getCharacterStats().getHealth());
         this.playerStrengthBar.setValue(
                 theModel.getPlayer().getCharacterStats().getAttack());
-        this.playerHealthBar.setValue(
+        this.playerDefenseBar.setValue(
                 theModel.getPlayer().getCharacterStats().getDefense());
 
         this.npcHealthBar.setValue(
@@ -603,6 +692,31 @@ public class RPGView {
         this.npcHealthBar.refresh();
         this.npcStrengthBar.refresh();
         this.npcDefenseBar.refresh();
+    }
+
+    /**
+     * Toggles the inventory display flow pane
+     *
+     * @author ks061
+     */
+    public void toggleInventoryFP() {
+        if (inventoryFP.isVisible()) {
+            inventoryFP.setVisible(false);
+        }
+        else {
+            inventoryFP.setVisible(true);
+        }
+    }
+
+    /**
+     * Gets the inventory display flow pane
+     *
+     * @return inventory display flow pane
+     *
+     * @author ks061
+     */
+    public FlowPane getInventoryFP() {
+        return inventoryFP;
     }
 
 }

@@ -79,6 +79,10 @@ public abstract class RPGCharacter {
      * standard hit
      */
     public static final double CRITICAL_HIT_FACTOR = 1.5;
+    /**
+     * The minimum base damage before Modifiers
+     */
+    public static final double MIN_BASE_DAMAGE = 5;
 
     /**
      * Constructor for RPGCharacter initializing all its attributes
@@ -170,9 +174,13 @@ public abstract class RPGCharacter {
      *
      * @author ks061
      */
-    private double getAccuracyModifier() {
+    private double getAccuracyModifier(RPGCharacter enemy) {
         Random randomNumberGenerator = new Random();
-        if (randomNumberGenerator.nextDouble() < RPGCharacter.DEFAULT_MISS_CHANCE) {
+        double missChance = DEFAULT_MISS_CHANCE;
+        if (this.characterStats.getAttack() < enemy.characterStats.getDefense()) {
+            missChance += randomNumberGenerator.nextDouble() * 0.5;
+        }
+        if (randomNumberGenerator.nextDouble() < missChance) {
             return 0.0;
         }
         else {
@@ -192,7 +200,13 @@ public abstract class RPGCharacter {
      */
     private int calculateDamage(RPGCharacter enemy, double criticalHitModifier,
                                 double accuracyModifier) {
-        double damage = this.characterStats.getAttack() - enemy.characterStats.getDefense();
+        Random randomNumberGenerator = new Random();
+        double damage = MIN_BASE_DAMAGE;
+
+        if (this.characterStats.getAttack() < enemy.characterStats.getDefense()) {
+            damage += this.characterStats.getAttack() - enemy.characterStats.getDefense();
+        }
+
         int roundedDamage = (int) Math.round(
                 damage * criticalHitModifier * accuracyModifier);
         if (roundedDamage <= 0) {
@@ -244,7 +258,7 @@ public abstract class RPGCharacter {
     public String attack(RPGCharacter enemy) {
 
         double criticalHitModifier = getCriticalHitModifier();
-        double accuracyModifier = getAccuracyModifier();
+        double accuracyModifier = getAccuracyModifier(enemy);
 
         int damage = calculateDamage(enemy, criticalHitModifier,
                                      accuracyModifier);
@@ -487,7 +501,7 @@ public abstract class RPGCharacter {
         switch (equipment.getType()) {
             case WEAPON:
                 if (this.getWeapon() != null) {
-                    return this.swapEquipment(this.getWeapon());
+                    return this.swapEquipment(equipment);
                 }
                 else {
                     this.setWeapon(equipment);
@@ -495,7 +509,7 @@ public abstract class RPGCharacter {
                 break;
             case ARMOR:
                 if (this.getArmor() != null) {
-                    return this.swapEquipment(this.getArmor());
+                    return this.swapEquipment(equipment);
                 }
                 else {
                     this.setArmor(equipment);
@@ -503,7 +517,7 @@ public abstract class RPGCharacter {
                 break;
             case SHIELD:
                 if (this.getShield() != null) {
-                    return this.swapEquipment(this.getShield());
+                    return this.swapEquipment(equipment);
                 }
                 else {
                     this.setShield(equipment);
@@ -524,7 +538,7 @@ public abstract class RPGCharacter {
      *
      * @author ks061, ishk001, lts010
      */
-    private void adjustCharacterStatisticsFromUnequip(Equipment equipment) {
+    public void adjustCharacterStatisticsFromUnequip(Equipment equipment) {
         this.getCharacterStats().setMaxHealth(
                 this.getCharacterStats().getMaxHealth() - equipment.getItemStatistics().getDeltaHealth());
         this.getCharacterStats().setAttack(
@@ -568,6 +582,24 @@ public abstract class RPGCharacter {
         adjustCharacterStatisticsFromUnequip(equipment);
         return String.format("Unequipped the %s and added it to your inventory",
                              equipment.getName());
+    }
+
+    /**
+     * Adds an item to the inventory if the inventory is not already full
+     *
+     * @param item The item to be added.
+     * @return true if the item was added, false if the inventory was full
+     *
+     * @author ishk001, lts010, ks061
+     */
+    public boolean addToInventory(Item item) {
+        if (isInventoryFull()) {
+            return (false);
+        }
+        else {
+            inventory.add(item);
+            return (true);
+        }
     }
 
     /**
@@ -650,5 +682,4 @@ public abstract class RPGCharacter {
         this.getInventory().remove(consumableItem);
         return String.format("Consumed the %s", consumableItem.getName());
     }
-
 }

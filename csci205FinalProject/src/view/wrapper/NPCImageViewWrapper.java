@@ -36,7 +36,7 @@ public class NPCImageViewWrapper extends ImageViewWrapper {
     /**
      * Height of the NPC view
      */
-    public static final int NPC_VIEW_HEIGHT = 70;
+    public static final int NPC_VIEW_HEIGHT = 100;
     /**
      * Image path of the parent NPC directory
      */
